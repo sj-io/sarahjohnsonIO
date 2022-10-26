@@ -3,10 +3,13 @@ project:
 
 website:
   title: "SJ"
+  favicon: blueshell.png
   navbar:
     left:
       - href: index.qmd
         text: Home
+      - href: ref.qmd
+        text: Reference
 
 format:
   html:
