@@ -1,7 +1,21 @@
 ---
-title: "sarahjohnsonIO"
+title: "Sarah Johnson"
+image: me.jpeg
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: sarahjohnson_io
+      href: https://twitter.com/sarahjohnson_io
+    - icon: github
+      text: sj-io
+      href: https://github.com/sj-io
+    - icon: linkedin
+      text: sj-io
+      href: https://linkedin.com/in/sj-io
+    - icon: envelope
+      text: email
+      href: mailto:sarahviamemphis@gmail.com
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Hello 👋 I’m the Intake/Outreach Coordinator at the Shelby County Department of Housing. I received my bachelor’s in economics and master’s in urban planning from the University of Memphis. I’m passionate about guaranteeing people access to healthy, safe, affordable housing.
