@@ -1,8 +1,22 @@
 ---
 title: "Reference"
 listing: 
-  contents: ref
-  type: grid
-  categories: true
+  - id: census
+    contents: "census/*.qmd"
+    type: grid
+  - id: law
+    contents: "ref/*.qmd"
+    type: grid
+    fields: [image, title, description, reading-time]
 comments: false
 ---
+
+## Census
+
+:::{#census}
+:::
+
+## Law
+
+:::{#law}
+:::
