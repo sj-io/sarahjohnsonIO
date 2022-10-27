@@ -4,6 +4,7 @@ listing:
   - id: census
     contents: "census/*.qmd"
     type: grid
+    fields: [image, title, description, reading-time]
   - id: law
     contents: "ref/*.qmd"
     type: grid
