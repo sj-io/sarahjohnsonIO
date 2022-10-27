@@ -1,21 +1,34 @@
 project:
   type: website
+  execute-dir: file
 
 website:
   title: "SJ"
   favicon: blueshell.png
+  site-url: https://sarahjohnson.io/
+  repo-url: https://github.com/sj-io/sarahjohnsonIO
   navbar:
     left:
       - href: index.qmd
         text: Home
       - href: ref.qmd
         text: Reference
+    right: 
+      - icon: twitter
+        href: https://twitter.com/sarahjohnson_io
+      - icon: github
+        href: https://github.com/sj-io
+      - icon: linkedin
+        href: https://linkedin.com/in/sj-io
+      - icon: controller
+        href: https://sarah.fyi/
 
 format:
   html:
-    theme: lux
+    theme: solar
     css: styles.css
     toc: true
-
-
+    
+comments: 
+  hypothesis: true
 

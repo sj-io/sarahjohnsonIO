@@ -3,4 +3,6 @@ title: "Reference"
 listing: 
   contents: ref
   type: grid
+  categories: true
+comments: false
 ---
