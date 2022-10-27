@@ -68,4 +68,4 @@ ggplot(hsg, aes(x = year, y = estimate, color = dataset)) +
        color = "Dataset") +
   theme_light()
 
-ggsave("census/img/survey.png")
+ggsave("census/img/survey.png", height = 4.5, width = 7)

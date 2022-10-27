@@ -5,7 +5,7 @@ project:
 website:
   title: "SJ"
   favicon: blueshell.png
-  site-url: https://sarahjohnson.io/
+  site-url: https://sarahjohnson.io
   repo-url: https://github.com/sj-io/sarahjohnsonIO
   navbar:
     left:
