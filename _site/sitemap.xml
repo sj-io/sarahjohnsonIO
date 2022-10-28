@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sarahjohnson.io/ref.html</loc>
-    <lastmod>2022-10-27T23:48:08.091Z</lastmod>
+    <lastmod>2022-10-28T04:27:30.687Z</lastmod>
   </url>
   <url>
     <loc>https://sarahjohnson.io/ref/hsg-acts.html</loc>
@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://sarahjohnson.io/index.html</loc>
-    <lastmod>2022-10-27T05:37:15.216Z</lastmod>
+    <lastmod>2022-10-28T03:55:46.667Z</lastmod>
   </url>
   <url>
     <loc>https://sarahjohnson.io/ref/URLTA.html</loc>
@@ -18,6 +18,10 @@
   </url>
   <url>
     <loc>https://sarahjohnson.io/census/surveys.html</loc>
-    <lastmod>2022-10-27T07:52:38.052Z</lastmod>
+    <lastmod>2022-10-28T00:27:21.720Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/census/variables.html</loc>
+    <lastmod>2022-10-28T04:25:19.042Z</lastmod>
   </url>
 </urlset>

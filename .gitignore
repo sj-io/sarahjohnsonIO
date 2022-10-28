@@ -31,6 +31,9 @@ vignettes/*.pdf
 *_cache/
 /cache/
 
+# large csv files
+census/data/v_acs1.csv
+
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md

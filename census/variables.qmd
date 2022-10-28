@@ -1,0 +1,394 @@
+---
+title: "ACS Variables"
+description: |
+  An overview of Census ACS variables, particularly related to housing.
+categories:
+  - census
+image: "img/variables.png"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, message = FALSE, warning = FALSE)
+```
+
+The Census releases [a lot of information](https://api.census.gov/data/2020/acs/acs5/variables.html). I created a tree to visualize Census variables related to housing using R and the command line.
+
+# Housing variables
+
+The following tree shows top-level 2021 ACS variables related to housing.
+
+``` zsh
+.
+├── AGE-OF-HOUSEHOLDER
+│   ├── GROSS-RENT-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
+│   │   └── B25072-(2005-2021)
+│   ├── MEALS-INCLUDED-IN-RENT
+│   │   └── B25055-(2005-2021)
+│   └── SELECTED-MONTHLY-OWNER-COSTS-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
+│       └── B25093-(2005-2021)
+├── ANNUAL-OTHER-FUEL-COSTS
+│   └── B25135-(2021)
+├── ANNUAL-WATER-AND-SEWER-COSTS
+│   └── B25134-(2021)
+├── AVERAGE-HOUSEHOLD-SIZE-OF-OCCUPIED-HOUSING-UNITS
+│   └── TENURE
+│       └── B25010-(2005-2021)
+├── BEDROOMS
+│   ├── B25041-(2005-2021)
+│   └── GROSS-RENT
+│       └── B25068-(2005-2021)
+├── CONTRACT-RENT
+│   └── B25056-(2005-2021)
+├── GROSS-RENT
+│   └── B25063-(2005-2021)
+├── GROSS-RENT-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
+│   └── B25070-(2005-2021)
+├── HOUSE-HEATING-FUEL
+│   └── B25040-(2005-2021)
+├── HOUSEHOLD-INCOME
+│   ├── GROSS-RENT-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
+│   │   └── B25074-(2005-2021)
+│   └── SELECTED-MONTHLY-OWNER-COSTS-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
+│       └── B25095-(2009-2021)
+├── HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS-IN-ACSYEAR-INFLATION-ADJUSTED-DOLLARS
+│   ├── GROSS-RENT
+│   │   └── B25122-(2005-2021)
+│   └── VALUE
+│       └── B25121-(2005-2021)
+├── HOUSING-UNITS
+│   └── B25001-(2005-2021)
+├── INCLUSION-OF-UTILITIES-IN-RENT
+│   └── B25069-(2005-2021)
+├── KITCHEN-FACILITIES
+│   └── MEALS-INCLUDED-IN-RENT
+│       └── B25054-(2005-2021)
+├── KITCHEN-FACILITIES-FOR-ALL-HOUSING-UNITS
+│   └── B25051-(2005-2021)
+├── KITCHEN-FACILITIES-FOR-OCCUPIED-HOUSING-UNITS
+│   └── B25052-(2005-2021)
+├── LOWER-CONTRACT-RENT-QUARTILE-DOLLARS
+│   └── B25057-(2005-2021)
+├── LOWER-VALUE-QUARTILE-DOLLARS
+│   └── B25076-(2005-2021)
+├── MEDIAN-CONTRACT-RENT-DOLLARS
+│   └── B25058-(2005-2021)
+├── MEDIAN-GROSS-RENT
+│   ├── BEDROOMS
+│   │   └── B25031-(2015-2021)
+│   ├── YEAR-HOUSEHOLDER-MOVED-INTO-UNIT
+│   │   └── B25113-(2005-2021)
+│   └── YEAR-STRUCTURE-BUILT
+│       └── B25111-(2005-2021)
+├── MEDIAN-GROSS-RENT-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS-DOLLARS
+│   └── B25071-(2005-2021)
+├── MEDIAN-GROSS-RENT-DOLLARS
+│   └── B25064-(2005-2021)
+├── MEDIAN-HOUSEHOLD-INCOME-THE-PAST-12-MONTHS-IN-ACSYEAR-INFLATION-ADJUSTED-DOLLARS
+│   └── TENURE
+│       └── B25119-(2005-2021)
+├── MEDIAN-MONTHLY-HOUSING-COSTS-DOLLARS
+│   └── B25105-(2005-2021)
+├── MEDIAN-NUMBER-OF-ROOMS
+│   ├── B25018-(2005-2021)
+│   └── TENURE
+│       └── B25021-(2005-2021)
+├── MEDIAN-SELECTED-MONTHLY-OWNER-COSTS-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
+│   └── B25092-(2005-2021)
+├── MEDIAN-SELECTED-MONTHLY-OWNER-COSTS-DOLLARS
+│   └── MORTGAGE-STATUS
+│       └── B25088-(2005-2021)
+├── MEDIAN-VALUE
+│   ├── YEAR-HOUSEHOLDER-MOVED-INTO-UNIT
+│   │   └── B25109-(2005-2021)
+│   └── YEAR-STRUCTURE-BUILT
+│       └── B25107-(2005-2021)
+├── MEDIAN-VALUE-DOLLARS
+│   └── B25077-(2005-2021)
+├── MEDIAN-VALUE-DOLLARS-FOR-MOBILE-HOMES
+│   └── B25083-(2005-2021)
+├── MEDIAN-YEAR-HOUSEHOLDER-MOVED-INTO-UNIT
+│   └── TENURE
+│       └── B25039-(2005-2021)
+├── MEDIAN-YEAR-STRUCTURE-BUILT
+│   ├── B25035-(2005-2021)
+│   └── TENURE
+│       └── B25037-(2005-2021)
+├── MONTHLY-ELECTRICITY-COSTS
+│   └── B25132-(2021)
+├── MONTHLY-GAS-COSTS
+│   └── B25133-(2021)
+├── MONTHLY-HOUSING-COSTS
+│   └── B25104-(2005-2021)
+├── MORTGAGE-STATUS
+│   ├── B25081-(2005-2021)
+│   ├── AGE-OF-HOUSEHOLDER
+│   │   └── B25027-(2009-2021)
+│   ├── HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS-IN-ACSYEAR-INFLATION-ADJUSTED-DOLLARS
+│   │   └── B25098-(2005-2021)
+│   ├── MEDIAN-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS-IN-ACSYEAR-INFLATION-ADJUSTED-DOLLARS
+│   │   └── B25099-(2005-2021)
+│   ├── MEDIAN-REAL-ESTATE-TAXES-PAID-DOLLARS
+│   │   └── B25103-(2005-2021)
+│   ├── MEDIAN-VALUE-DOLLARS
+│   │   └── B25097-(2005-2021)
+│   ├── MONTHLY-HOUSING-COSTS-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
+│   │   └── B25101-(2005-2021)
+│   ├── RATIO-OF-VALUE-TO-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
+│   │   └── B25100-(2005-2021)
+│   ├── REAL-ESTATE-TAXES-PAID
+│   │   └── B25102-(2005-2021)
+│   ├── SELECTED-MONTHLY-OWNER-COSTS-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
+│   │   └── B25091-(2005-2021)
+│   └── VALUE
+│       └── B25096-(2005-2021)
+├── MORTGAGE-STATUS-AND-SELECTED-MONTHLY-OWNER-COSTS
+│   └── B25087-(2005-2021)
+├── OCCUPANCY-STATUS
+│   └── B25002-(2005-2021)
+├── OTHER-VACANCY-STATUS
+│   └── B25130-(2021)
+├── PLUMBING-FACILITIES
+│   └── OCCUPANTS-PER-ROOM
+│       └── YEAR-STRUCTURE-BUILT
+│           └── B25050-(2005-2021)
+├── PLUMBING-FACILITIES-FOR-ALL-HOUSING-UNITS
+│   └── B25047-(2005-2021)
+├── PLUMBING-FACILITIES-FOR-OCCUPIED-HOUSING-UNITS
+│   └── B25048-(2005-2021)
+├── PRICE-ASKED
+│   └── B25085-(2005-2021)
+├── RACE-OF-HOUSEHOLDER
+│   └── B25006-(2005-2021)
+├── RENT-ASKED
+│   └── B25061-(2005-2021)
+├── ROOMS
+│   └── B25017-(2005-2021)
+├── SELECTED-MONTHLY-OWNER-COSTS
+│   └── B25094-(2005-2021)
+├── TENURE
+│   ├── B25003-(2005-2021)
+│   ├── AGE-OF-HOUSEHOLDER
+│   │   ├── B25007-(2005-2021)
+│   │   ├── OCCUPANTS-PER-ROOM
+│   │   │   └── B25015-(2005-2021)
+│   │   ├── UNITS-IN-STRUCTURE
+│   │   │   └── B25125-(2010-2021)
+│   │   ├── YEAR-HOUSEHOLDER-MOVED-INTO-UNIT
+│   │   │   └── B25128-(2010-2021)
+│   │   └── YEAR-STRUCTURE-BUILT
+│   │       └── B25126-(2010-2021)
+│   ├── BEDROOMS
+│   │   └── B25042-(2005-2021)
+│   ├── EDUCATIONAL-ATTAINMENT-OF-HOUSEHOLDER
+│   │   └── B25013-(2005-2021)
+│   ├── FAMILIES-AND-PRESENCE-OF-OWN-CHILDREN
+│   │   └── B25012-(2005-2021)
+│   ├── HOUSE-HEATING-FUEL
+│   │   └── B25117-(2005-2021)
+│   ├── HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS-IN-ACSYEAR-INFLATION-ADJUSTED-DOLLARS
+│   │   └── B25118-(2005-2021)
+│   ├── HOUSEHOLD-SIZE
+│   │   ├── B25009-(2005-2021)
+│   │   ├── AGE-OF-HOUSEHOLDER
+│   │   │   └── B25116-(2005-2021)
+│   │   └── UNITS-IN-STRUCTURE
+│   │       └── B25124-(2010-2021)
+│   ├── HOUSEHOLD-TYPE-AND-PRESENCE-AND-AGE-OF-OWN-CHILDREN
+│   │   └── B25115-(2005-2021)
+│   ├── HOUSEHOLD-TYPE-INCLUDING-LIVING-ALONE-AND-AGE-OF-HOUSEHOLDER
+│   │   └── B25011-(2005-2021)
+│   ├── HOUSING-COSTS-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
+│   │   └── B25106-(2005-2021)
+│   ├── KITCHEN-FACILITIES
+│   │   └── B25053-(2005-2021)
+│   ├── OCCUPANTS-PER-ROOM
+│   │   └── B25014-(2005-2021)
+│   ├── PLUMBING-FACILITIES
+│   │   ├── B25049-(2005-2021)
+│   │   └── OCCUPANTS-PER-ROOM
+│   │       └── B25016-(2005-2021)
+│   ├── ROOMS
+│   │   └── B25020-(2005-2021)
+│   ├── SELECTED-PHYSICAL-AND-FINANCIAL-CONDITIONS
+│   │   └── B25123-(2005-2021)
+│   ├── TELEPHONE-SERVICE-AVAILABLE
+│   │   └── AGE-OF-HOUSEHOLDER
+│   │       └── B25043-(2005-2021)
+│   ├── UNITS-IN-STRUCTURE
+│   │   └── B25032-(2005-2021)
+│   ├── VEHICLES-AVAILABLE
+│   │   └── B25044-(2005-2021)
+│   │   └── AGE-OF-HOUSEHOLDER
+│   │       └── B25045-(2005-2021)
+│   ├── YEAR-HOUSEHOLDER-MOVED-INTO-UNIT
+│   │   ├── B25038-(2005-2021)
+│   │   └── UNITS-IN-STRUCTURE
+│   │       └── B25129-(2010-2021)
+│   └── YEAR-STRUCTURE-BUILT
+│       ├── B25036-(2005-2021)
+│       └── UNITS-IN-STRUCTURE
+│           └── B25127-(2010-2021)
+├── TOTAL-POPULATION-IN-OCCUPIED-HOUSING-UNITS
+│   └── TENURE
+│       ├── B25008-(2005-2021)
+│       ├── UNITS-IN-STRUCTURE
+│       │   └── B25033-(2005-2021)
+│       └── YEAR-HOUSEHOLDER-MOVED-INTO-UNIT
+│           └── B25026-(2009-2021)
+├── UNITS-IN-STRUCTURE
+│   ├── B25024-(2005-2021)
+│   ├── BEDROOMS
+│   │   └── B25029-(2005)
+│   ├── GROSS-RENT-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
+│   │   └── B25073-(2005-2013)
+│   ├── KITCHEN-FACILITIES
+│   │   └── B25031-(2005)
+│   ├── PLUMBING-FACILITIES
+│   │   └── B25030-(2005)
+│   ├── RESIDENCE-STATUS
+│   │   └── B25026-(2005)
+│   ├── ROOMS
+│   │   └── B25028-(2005)
+│   ├── VACANCY-STATUS
+│   │   └── B25025-(2005)
+│   └── YEAR-STRUCTURE-BUILT
+│       └── B25027-(2005)
+├── UPPER-CONTRACT-RENT-QUARTILE-DOLLARS
+│   └── B25059-(2005-2021)
+├── UPPER-VALUE-QUARTILE-DOLLARS
+│   └── B25078-(2005-2021)
+├── VACANCY-DURATION
+│   └── B25131-(2021)
+├── VACANCY-STATUS
+│   └── B25004-(2005-2021)
+├── VACANT-CURRENT-RESIDENCE-ELSEWHERE
+│   └── B25005-(2005-2021)
+├── VALUE
+│   └── B25075-(2005-2021)
+└── YEAR-STRUCTURE-BUILT
+    └── B25034-(2005-2021)
+
+248 directories, 0 files
+```
+
+# How to make the tree
+
+## R
+
+First, load the tidyverse and tidycensus packages.
+
+```{r}
+library(tidyverse)
+library(tidycensus)
+```
+
+Use the `load_variables()` function to get Census variables. 
+
+```{r}
+# Get variables for one year
+v20 <- load_variables(2020, "acs1")
+
+# Get variables for ALL years
+# Might crash your session, there are 517,605 variables
+
+# ACS1 data is available from 2005-2021
+# Remember there was no 2020 ACS1 release
+yrs <- c(2005:2019, 2021)
+
+vACS1 <- map_dfr(yrs, ~ {
+  load_variables(.x, "acs1")
+}, id = "yr")
+```
+
+Narrow for housing variables and clean up.
+
+```{r}
+hsg <- vACS1 %>% 
+  filter(str_detect(name, "^B25"))
+
+# Narrowed down the number of variables from 517,605 to 33,125
+
+# Get the top level variables
+hsg_top <- hsg %>% 
+  filter(str_detect(name, "_001$"),           #' only top-level variables
+         !str_detect(name, "[:alpha:]_"),     #' omit race variables
+         !str_detect(label, "Estimate!!Aggregate") #' omit aggregates, medians, etc.
+  ) %>% 
+  # Standardize inflation variables across years
+  mutate(across(c(label, concept), ~ str_replace_all(.x, "\\b20\\d{2}\\b", "ACSYEAR"))) %>% 
+  select(-label)
+```
+
+Find the first and last year the variable appeared. Note that the "concept" column is currently broken for 2010 & 2011 ACS1, and a couple variables changed over the years, so group by name AND concept.
+
+```{r}
+min_yr <- hsg_top %>% 
+  filter(!is.na(concept)) %>% 
+  group_by(name, concept) %>% 
+  slice_min(yr) %>% 
+  mutate(nm = "min")
+
+max_yr <- hsg_top %>% 
+  filter(!is.na(concept)) %>% 
+  group_by(name, concept) %>% 
+  slice_max(yr) %>% 
+  mutate(nm = "max")
+
+#' Join together and combine the first and last year
+#' in a pretty format
+hsg_yrs <- rbind(min_yr, max_yr) %>% 
+  pivot_wider(names_from = nm, values_from = yr) %>% 
+  mutate(years = case_when(
+    min != max & min != 2012 ~ paste0("(", min, "-", max, ")"),
+    min != max & min == 2012 ~ paste0("(2010-", max, ")"),
+    TRUE ~ paste0("(", min, ")")
+  )) %>% 
+  arrange(name, min, max) %>% 
+  select(-c(min, max)) %>% 
+  distinct()
+# 93 of 117 variables are unchanged from 2005-2021
+```
+
+Format for the command line.
+
+```{r}
+hsg_vs <- hsg_yrs %>% 
+  mutate(concept = str_replace_all(concept, "-(?=[:alpha:])", " "),
+         concept = str_remove_all(concept, "[:punct:]"),
+         concept = str_replace_all(concept, " BY ", "/"),
+         name = str_remove(name, "_001")
+         ) %>% 
+  unite(col = "name", name, years, sep = "-", na.rm = TRUE) %>% 
+  unite(col = "fileStr", concept, name, sep = "/", na.rm = TRUE) %>% 
+  mutate(fileStr = str_replace_all(fileStr, "\\s", "-"),
+         fileStr = str_replace_all(fileStr, "-{2,}", "-"))
+
+vACS1 <- hsg_vs$fileStr
+
+write_lines(vACS1, file = "Documents/vACS1.txt")
+```
+
+To make the tree, we will convert this text file to a directory structure.
+
+## Command Line
+
+In the terminal, make a new directory to house your Census tree.
+
+``` zsh
+mkdir ~/Documents/census
+cd Documents/census
+```
+
+Convert the text file to a file directory using the following code.
+
+``` zsh
+xargs -I {} mkdir -p "{}" < "../vACS1.txt"
+```
+
+Finally, create a tree of the file directory. Note: requires the [tree](Turn the column into a list of values.) package.
+
+``` zsh
+tree
+```
+
+The output is the tree at the top of this page.
