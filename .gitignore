@@ -33,6 +33,8 @@ vignettes/*.pdf
 
 # large csv files
 census/data/v_acs1.csv
+census/data/2021-1yr-api-changes.csv
+census/data/2021_DataProductList.xlsx
 
 # Temporary files created by R markdown
 *.utf8.md

@@ -1,0 +1,366 @@
+---
+title: "Geographic Boundaries"
+description: |
+  Mapping all available Census boundaries for one area.
+image: "img/boundaries.png"
+execute: 
+  freeze: true
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r library}
+library(tidyverse)
+library(sf)
+library(tigris)
+options(tigris_use_cache = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+nation <- nation()
+regions <- regions() %>% filter(NAME == "South")
+divisions <- divisions() %>% filter(str_detect(NAME, "South Central"))
+states <- states() %>% filter(DIVISION %in% c(6, 7))
+```
+
+```{r}
+memST <- list("TN", "MS", "AR")
+csa <- combined_statistical_areas() %>% filter(str_detect(NAME, "Memphis")) 
+cbsa <- core_based_statistical_areas() %>% filter(str_detect(NAME, "Memphis")) 
+csaCounties <- map_dfr((memST), ~{counties(.x)}) %>% st_filter(csa, .predicate = st_within)
+counties <- csaCounties[cbsa, op = st_within]
+sld <- state_legislative_districts("TN") %>% st_filter(cbsa, .predicate = st_within)
+places <- map_dfr((memST), ~{places(.x)}) %>% st_filter(cbsa, .predicate = st_within)
+urb <- urban_areas() %>% filter(str_detect(NAME10, "Memphis"))
+zcta <- zctas(cb = TRUE, starts_with = c("38", "72")) %>% st_filter(urb)
+puma <- map_dfr((memST), ~{pumas(.x)}) %>% st_filter(urb)
+```
+
+```{r}
+shelby <- counties %>% filter(NAME == "Shelby")
+memphis <- places %>% filter(NAME == "Memphis")
+```
+
+```{r}
+csd <- county_subdivisions("TN", "Shelby")
+tracts <- tracts("TN", "Shelby")
+blkgrp <- block_groups("TN", "Shelby")
+vote <- voting_districts("TN", "Shelby")
+school <- school_districts("TN") %>% st_filter(shelby, .predicate = st_within)
+cong <- congressional_districts("TN") %>% st_filter(shelby, .predicate = st_within)
+```
+
+```{r}
+library(leaflet)
+```
+
+```{r mapBuild}
+map <- leaflet() %>%
+  addProviderTiles(providers$CartoDB.Positron, group = "CartoDB (default)") %>%
+  addTiles(group = "OSM") %>%
+  addProviderTiles(providers$Esri.WorldImagery, group = "ESRI World Imagery") %>%
+  addPolygons(
+    data = csaCounties,
+    group = "CSA Counties",
+    label = csaCounties$NAMELSAD,
+    fillOpacity = 0.2,
+    color = "maroon",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = counties,
+    group = "Metro Counties",
+    label = counties$NAMELSAD,
+    fillOpacity = 0.2,
+    color = "salmon",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = urb,
+    group = "Urban Area",
+    label = urb$NAMELSAD10,
+    fillOpacity = 0.2,
+    color = "orangered",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = places,
+    group = "Places",
+    label = places$NAME,
+    fillOpacity = 0.2,
+    color = "chocolate",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = sld,
+    group = "State Legislative Districts",
+    label = sld$NAMELSAD,
+    fillOpacity = 0.2,
+    color = "goldenrod",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = zcta,
+    group = "ZCTAs",
+    label = zcta$ZCTA5CE20,
+    fillOpacity = 0.2,
+    color = "forestgreen",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = puma,
+    group = "PUMAs",
+    label = puma$NAMELSAD10,
+    fillOpacity = 0.2,
+    color = "darkgreen",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = shelby,
+    group = "Shelby County",
+    label = shelby$NAMELSAD,
+    fillOpacity = 0.2,
+    color = "turquoise",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = memphis,
+    group = "Memphis",
+    label = memphis$NAME,
+    fillOpacity = 0.2,
+    color = "teal",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = school,
+    group = "School Districts",
+    label = school$NAME,
+    fillOpacity = 0.2,
+    color = "dodgerblue",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = cong,
+    group = "Congressional Districts",
+    label = cong$NAMELSAD,
+    fillOpacity = 0.2,
+    color = "navy",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = vote,
+    group = "Voting Districts",
+    label = vote$NAMELSAD20,
+    fillOpacity = 0.2,
+    color = "mediumslateblue",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = csd,
+    group = "County Subdivisions",
+    label = csd$NAMELSAD,
+    fillOpacity = 0.2,
+    color = "darkmagenta",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = tracts,
+    group = "Census Tracts",
+    label = tracts$NAMELSAD,
+    fillOpacity = 0.2,
+    color = "mediumvioletred",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = blkgrp,
+    group = "Block Groups",
+    label = blkgrp$GEOID,
+    fillOpacity = 0.2,
+    color = "palevioletred",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addLayersControl(
+    baseGroups = c("CartoDB (default)", "OSM", "ESRI World Imagery"),
+    overlayGroups = c(
+      "CSA Counties",
+      "Metro Counties",
+      "Shelby County",
+      "Places",
+      "Memphis",
+      "Urban Area",
+      "ZCTAs",
+      "PUMAs",
+      "State Legislative Districts",
+      "Congressional Districts",
+      "Voting Districts",
+      "School Districts",
+      "County Subdivisions",
+      "Census Tracts",
+      "Block Groups"
+    ),
+    options = layersControlOptions(collapsed = FALSE)
+  ) %>%
+  addScaleBar(position = "bottomleft")
+```
+
+Below is an interactive map of boundaries related to the Memphis area. Layers will stack in the order they are selected.
+
+```{r mapMake}
+#| column: screen-inset-shaded
+#| fig-height: 7.5
+
+map %>% hideGroup(
+  c(
+    "CSA Counties",
+    "Urban Area",
+    "Places",
+    "State Legislative Districts",
+    "ZCTAs",
+    "PUMAs",
+    "Shelby County",
+    "School Districts",
+    "Congressional Districts",
+    "Voting Districts",
+    "County Subdivisions",
+    "Census Tracts",
+    "Block Groups"
+  )
+)
+```
+
+# Census Boundaries
+
+Every ten years, the Census attempts to count every person living in the US, as required by the Constitution. Data is collected on individuals, households, and housing units and then that data is made public and used to determine important things like political boundaries.
+
+Due to the personal nature of the data, it is anonymized and not released at too fine of a geographic level.[^1] Instead, housing units are categorized into Census blocks, roughly equivalent to a neighborhood block. These blocks are then used to form other boundaries. Some boundaries nest within each other, like blocks into block groups into tracts, while others do not.
+
+[^1]: The Census also alters some data to hide personally identifying info. For instance, if someone is the only person of a certain race in a block, the Census may swap that person's info to another block within the block group to protect their identity. According to the Census, these adjustments should not significantly impact data analysis. For more information, see that [Census's page on statistical safeguards](https://www.census.gov/about/policies/privacy/statistical_safeguards.html).
+
+Below is a diagram of Census geographic hierarchies, available at <https://www.census.gov/programs-surveys/geography/guidance/hierarchy.html>.
+
+![Census Geographic Hierarchy](img/geo-hierarchy.png)
+
+Boundary data is available from the [Census TIGER/Line Shapefiles page](https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html). Datasets are also easily accessed in R using the **tigris** package.
+
+# Memphis Boundary Map
+
+I decided to not include boundaries from the national-state level, instead focusing just on the Memphis region. The broadest geography is the Memphis-Forrest City **combined statistical area** (CSA), which includes the Memphis Metro Area and Forrest City Micro Area. **Metro** and **Micro** areas are collectively known as **core-based statistical areas** (CBSAs), and are created using counties with "a high degree of social and economic integration" (measured by commute to work).[@uscensusbureau2021mm] Because Forrest City is relatively small, there is only one county difference between the CSA and CBSA boundaries. I plan to use the CBSA/Metro boundaries more often, which is why that layer is visible by default.
+
+There are a few more boundaries that may have unfamiliar abbreviations. **ZCTAs**, which stands for [ZIP Code Tabulation Areas](https://www.census.gov/programs-surveys/geography/guidance/geo-areas/zctas.html), are approximate Census boundaries of USPS ZIP Codes and are not bound by county, place, tract, or blocks. **PUMAs**, or Public Use Microdata Areas, are boundaries set every 10 years which contain at least 100,000 people. They are notably used with Public Use Microdata Sample (PUMS) data, which are anonymized individual-level Census records.[^2] This data is useful to researchers who want to create custom queries of data rather than using pre-tabulated estimates provided by the Census Bureau.
+
+[^2]: [Until the API is complete](https://developer.ipums.org/docs/apiprogram/), PUMAs data is available for download from <https://www.ipums.org/>.
+
+# The Code
+
+This post, the map, and all data collection was completed using [R](https://www.r-project.org/)/[RStudio](https://www.rstudio.com/products/rstudio/). Boundaries were pulled using the **tigris** package. A full list of available datasets and their corresponding functions is available in Chapter 5 of the book [Analyzing US Census Data](https://walker-data.com/census-r/census-geographic-data-and-applications-in-r.html#data-availability-in-tigris).
+
+The Memphis Metro area covers three states, meaning sometimes I needed to run the same function three times for Tennessee, Arkansas, and Mississippi. I used **purrr**'s `map_dfr()` to do this automatically. Boundaries were then filtered in one of two ways, either using **dplyr**'s `filter()` function for table data or **sf**'s `st_filter()` to filter one geometry by another.
+
+In summary, these are the packages I used to get started (I also recommend caching your datasets, but it's optional).
+
+``` r
+library(tidyverse)
+library(sf)
+library(tigris)
+options(tigris_use_cache = TRUE)
+```
+
+Below is a full list of how I gathered boundaries related to Memphis, grouped by how they're filtered.
+
+``` r
+#' Broad regions, filtered by known NAME/DIVISIONs relevant to Memphis Area
+nation <- nation()
+regions <- regions() %>% 
+  filter(NAME == "South")
+divisions <- divisions() %>% 
+  filter(str_detect(NAME, "South Central"))
+states <- states() %>% 
+  filter(DIVISION %in% c(6, 7))
+memST <- list("TN", "MS", "AR")
+
+#' Metro and Urban areas, filtered by "Memphis"
+csa <- combined_statistical_areas() %>% 
+  filter(str_detect(NAME, "Memphis")) 
+cbsa <- core_based_statistical_areas() %>% 
+  filter(str_detect(NAME, "Memphis")) 
+urb <- urban_areas() %>% 
+  filter(str_detect(NAME10, "Memphis"))
+
+#' Areas in Metro or Urban area
+csaCounties <- map_dfr((memST), ~{counties(.x)}) %>% 
+  st_filter(csa, .predicate = st_within)
+counties <- csaCounties[cbsa, op = st_within]
+places <- map_dfr((memST), ~{places(.x)}) %>% 
+  st_filter(cbsa, .predicate = st_within)
+sld <- state_legislative_districts("TN") %>% 
+  st_filter(cbsa, .predicate = st_within)
+zcta <- zctas(cb = TRUE, starts_with = c("38", "72")) %>% 
+  st_filter(urb)
+puma <- map_dfr((memST), ~{pumas(.x)}) %>% 
+  st_filter(urb)
+
+#' Shelby County and Memphis
+shelby <- counties %>% filter(NAME == "Shelby")
+memphis <- places %>% filter(NAME == "Memphis")
+
+#' Areas within Shelby County
+school <- school_districts("TN") %>% 
+  st_filter(shelby, .predicate = st_within)
+cong <- congressional_districts("TN") %>% 
+  st_filter(shelby, .predicate = st_within)
+vote <- voting_districts("TN", "Shelby")
+csd <- county_subdivisions("TN", "Shelby")
+tracts <- tracts("TN", "Shelby")
+blkgrp <- block_groups("TN", "Shelby")
+```
+
+The above code may look like a lot, but running it will quickly pull from 18 datasets and automatically filter for the Memphis area. Of course, unless you're also trying to map all the boundaries at once, there's no reason to do this. Instead, the above code chunk is meant to be used as a reference, to quickly copy and paste whichever specific boundary is needed.
+
+The final map was created using **leaflet**. The [website](https://rstudio.github.io/leaflet/) and [package documentation](https://cran.r-project.org/web/packages/leaflet/leaflet.pdf) were useful when I got stuck.
+
+# Acknowledgements {.appendix}
+
+To make this post, I heavily referenced the book [Analyzing US Census Data](https://walker-data.com/census-r/index.html) by Kyle Walker, particularly [Chapter 5](https://walker-data.com/census-r/census-geographic-data-and-applications-in-r.html), which covers basic usage of **tigris**, and [Chapter 7](https://walker-data.com/census-r/spatial-analysis-with-us-census-data.html), which explains how to spatially filter data. There is also a more in--depth explanation of Census boundaries in [Chapter 1](https://walker-data.com/census-r/the-united-states-census-and-the-r-programming-language.html).
+
+# Note on CRS {.appendix}
+
+A coordinate reference system (crs), in essence, tells a map how to look. If your map doesn't look right, like it's skewed or warped or whatever, you probably need to reangle the map by setting the crs. If you plan to combine maps, defining the crs ensures projections are consistent.
+
+If you do not define a crs, **tigris** and **sf** will default to **4269 (NAD 1983)**. The package [**crsuggest**](https://github.com/walkerke/crsuggest) can help find the correct crs for your map. I also found the website [epsg.io](https://epsg.io/) useful; for example, you can quickly see the boundaries for the crs code **6510** at <https://epsg.io/6510>.
+
+This crs was the top suggestion for my maps, but the projection excluded Tennessee and I found the difference minimal from the default. For simplicity, I stuck with the default.
+
+You can check a table's crs using `st_crs()`. If you need to adjust the crs of a dataset, one way is to use `st_transform(crs = ####)`. For more info, see the [section on crs in Analyzing US Census Data](https://walker-data.com/census-r/census-geographic-data-and-applications-in-r.html#coordinate-reference-systems).

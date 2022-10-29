@@ -12,6 +12,8 @@ listing:
 comments: false
 ---
 
+A collection of useful pages for housing research.
+
 ## Census
 
 :::{#census}

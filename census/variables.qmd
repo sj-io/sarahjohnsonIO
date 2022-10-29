@@ -11,21 +11,60 @@ image: "img/variables.png"
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE, message = FALSE, warning = FALSE)
 ```
 
-The Census releases [a lot of information](https://api.census.gov/data/2020/acs/acs5/variables.html). I created a tree to visualize Census variables related to housing using R and the command line.
+The R `tidycensus` package is an amazingly simple way to access Census data.[^1] When you use the package to call Census data, you need to know the variable code for the table or piece of data you're trying to find. The `load_variables()` function allows you to quickly see all variables released in a given year by a survey or program. Census data is well organized and mostly consistent across years.[^2] This page is meant to help sort through the tens of thousands of variables to find the information you need.
 
-# Housing variables
+[^1]: The `tidycensus` package was created by [Kyle Walker](https://twitter.com/kyle_e_walker), and he also published an amazingly helpful book [Analyzing US Census Data](https://walker-data.com/census-r/index.html), which I strongly recommend for anyone interested in accessing Census data with R.
 
-The following tree shows top-level 2021 ACS variables related to housing.
+[^2]: The Census Bureau releases [information](https://www.census.gov/data/developers/data-sets/acs-1year.2021.html) on which variables have changed from the previous year.
+
+# ACS Variables
+
+Variables for the ACS Detailed Tables all begin with the same pattern: a letter (B or C) followed by five digits. The first two digits correspond to a general topic of information, defined in the table below. Variables that start with "C" correspond to a "B" table, but provide more condensed information, such as fewer age groups or income categories. These can be useful when you feel like a graph has too much info and needs to be simplified.
+
+```{r libs, eval=TRUE, echo=FALSE}
+library(tidyverse)
+library(DT)
+
+v_acs <- read_csv("data/v_acs_categories.csv") %>% 
+  mutate(category = str_remove_all(category, " \\(Condensed\\)")) %>% 
+  separate(v_start, into = c("let", "num"), sep = 1) %>% 
+  pivot_wider(names_from = "let", values_from = "num") %>% 
+  mutate(v_start = ifelse(!is.na(C),
+                          paste0("B", B, " & C", B),
+                          paste0("B", B)
+                          )) %>% 
+  select(v_start, category)
+
+v_acs %>% 
+  datatable(
+    colnames = c("Start of Variable", "Category"),
+    rownames = FALSE,
+    style = "bootstrap",
+    options = list(pageLength = 12,
+                   autoWidth = TRUE,
+                   dom = 'tp',
+                   columnDefs = list(
+                     list(className = 'dt-right', targets = 0)
+                     )))
+  
+```
+
+# Housing Variables
+
+Housing variables start with "B25", or "C25" for condensed versions. Sometimes a specific topic will have a lot of different subvariables. For instance, information on tenure (whether a household rents or owns) can be broken down by age, what year the structure was built, etc. I created a directory tree as a simple way to visualize how Census variable relate to each other. The following tree shows top-level ACS 1-Year variables related to housing (excluding condensed variables). The variables that start with "B" are usually also present in the 5-Year ACS.
 
 ``` zsh
 .
 ├── AGE-OF-HOUSEHOLDER
+│   ├── C25055-(2005-2021)
 │   ├── GROSS-RENT-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
-│   │   └── B25072-(2005-2021)
+│   │   ├── B25072-(2005-2021)
+│   │   └── C25072-(2005-2012)
 │   ├── MEALS-INCLUDED-IN-RENT
 │   │   └── B25055-(2005-2021)
 │   └── SELECTED-MONTHLY-OWNER-COSTS-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
-│       └── B25093-(2005-2021)
+│       ├── B25093-(2005-2021)
+│       └── C25093-(2005-2021)
 ├── ANNUAL-OTHER-FUEL-COSTS
 │   └── B25135-(2021)
 ├── ANNUAL-WATER-AND-SEWER-COSTS
@@ -36,9 +75,11 @@ The following tree shows top-level 2021 ACS variables related to housing.
 ├── BEDROOMS
 │   ├── B25041-(2005-2021)
 │   └── GROSS-RENT
-│       └── B25068-(2005-2021)
+│       ├── B25068-(2005-2021)
+│       └── C25068-(2005-2021)
 ├── CONTRACT-RENT
-│   └── B25056-(2005-2021)
+│   ├── B25056-(2005-2021)
+│   └── C25056-(2005-2021)
 ├── GROSS-RENT
 │   └── B25063-(2005-2021)
 ├── GROSS-RENT-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
@@ -47,19 +88,24 @@ The following tree shows top-level 2021 ACS variables related to housing.
 │   └── B25040-(2005-2021)
 ├── HOUSEHOLD-INCOME
 │   ├── GROSS-RENT-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
-│   │   └── B25074-(2005-2021)
+│   │   ├── B25074-(2005-2021)
+│   │   └── C25074-(2005-2021)
 │   └── SELECTED-MONTHLY-OWNER-COSTS-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
-│       └── B25095-(2009-2021)
+│       ├── B25095-(2009-2021)
+│       └── C25095-(2009-2021)
 ├── HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS-IN-ACSYEAR-INFLATION-ADJUSTED-DOLLARS
 │   ├── GROSS-RENT
-│   │   └── B25122-(2005-2021)
+│   │   ├── B25122-(2005-2021)
+│   │   └── C25122-(2005-2021)
 │   └── VALUE
-│       └── B25121-(2005-2021)
+│       ├── B25121-(2005-2021)
+│       └── C25121-(2005-2021)
 ├── HOUSING-UNITS
 │   └── B25001-(2005-2021)
 ├── INCLUSION-OF-UTILITIES-IN-RENT
 │   └── B25069-(2005-2021)
 ├── KITCHEN-FACILITIES
+│   ├── C25054-(2005-2012)
 │   └── MEALS-INCLUDED-IN-RENT
 │       └── B25054-(2005-2021)
 ├── KITCHEN-FACILITIES-FOR-ALL-HOUSING-UNITS
@@ -122,7 +168,8 @@ The following tree shows top-level 2021 ACS variables related to housing.
 ├── MORTGAGE-STATUS
 │   ├── B25081-(2005-2021)
 │   ├── AGE-OF-HOUSEHOLDER
-│   │   └── B25027-(2009-2021)
+│   │   ├── B25027-(2009-2021)
+│   │   └── C25027-(2009-2012)
 │   ├── HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS-IN-ACSYEAR-INFLATION-ADJUSTED-DOLLARS
 │   │   └── B25098-(2005-2021)
 │   ├── MEDIAN-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS-IN-ACSYEAR-INFLATION-ADJUSTED-DOLLARS
@@ -149,6 +196,7 @@ The following tree shows top-level 2021 ACS variables related to housing.
 │   └── B25130-(2021)
 ├── PLUMBING-FACILITIES
 │   └── OCCUPANTS-PER-ROOM
+│       ├── C25050-(2005-2012)
 │       └── YEAR-STRUCTURE-BUILT
 │           └── B25050-(2005-2021)
 ├── PLUMBING-FACILITIES-FOR-ALL-HOUSING-UNITS
@@ -156,11 +204,13 @@ The following tree shows top-level 2021 ACS variables related to housing.
 ├── PLUMBING-FACILITIES-FOR-OCCUPIED-HOUSING-UNITS
 │   └── B25048-(2005-2021)
 ├── PRICE-ASKED
-│   └── B25085-(2005-2021)
+│   ├── B25085-(2005-2021)
+│   └── C25085-(2005-2021)
 ├── RACE-OF-HOUSEHOLDER
 │   └── B25006-(2005-2021)
 ├── RENT-ASKED
-│   └── B25061-(2005-2021)
+│   ├── B25061-(2005-2021)
+│   └── C25061-(2005-2012)
 ├── ROOMS
 │   └── B25017-(2005-2021)
 ├── SELECTED-MONTHLY-OWNER-COSTS
@@ -170,7 +220,8 @@ The following tree shows top-level 2021 ACS variables related to housing.
 │   ├── AGE-OF-HOUSEHOLDER
 │   │   ├── B25007-(2005-2021)
 │   │   ├── OCCUPANTS-PER-ROOM
-│   │   │   └── B25015-(2005-2021)
+│   │   │   ├── B25015-(2005-2021)
+│   │   │   └── C25015-(2005-2012)
 │   │   ├── UNITS-IN-STRUCTURE
 │   │   │   └── B25125-(2010-2021)
 │   │   ├── YEAR-HOUSEHOLDER-MOVED-INTO-UNIT
@@ -184,17 +235,22 @@ The following tree shows top-level 2021 ACS variables related to housing.
 │   ├── FAMILIES-AND-PRESENCE-OF-OWN-CHILDREN
 │   │   └── B25012-(2005-2021)
 │   ├── HOUSE-HEATING-FUEL
-│   │   └── B25117-(2005-2021)
+│   │   ├── B25117-(2005-2021)
+│   │   └── C25117-(2005-2012)
 │   ├── HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS-IN-ACSYEAR-INFLATION-ADJUSTED-DOLLARS
 │   │   └── B25118-(2005-2021)
 │   ├── HOUSEHOLD-SIZE
 │   │   ├── B25009-(2005-2021)
 │   │   ├── AGE-OF-HOUSEHOLDER
-│   │   │   └── B25116-(2005-2021)
+│   │   │   ├── B25116-(2005-2021)
+│   │   │   └── C25116-(2005-2012)
 │   │   └── UNITS-IN-STRUCTURE
 │   │       └── B25124-(2010-2021)
+│   ├── HOUSEHOLD-TYPE
+│   │   └── C25115-(2006-2012)
 │   ├── HOUSEHOLD-TYPE-AND-PRESENCE-AND-AGE-OF-OWN-CHILDREN
-│   │   └── B25115-(2005-2021)
+│   │   ├── B25115-(2005-2021)
+│   │   └── C25115-(2005)
 │   ├── HOUSEHOLD-TYPE-INCLUDING-LIVING-ALONE-AND-AGE-OF-HOUSEHOLDER
 │   │   └── B25011-(2005-2021)
 │   ├── HOUSING-COSTS-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
@@ -202,24 +258,32 @@ The following tree shows top-level 2021 ACS variables related to housing.
 │   ├── KITCHEN-FACILITIES
 │   │   └── B25053-(2005-2021)
 │   ├── OCCUPANTS-PER-ROOM
-│   │   └── B25014-(2005-2021)
+│   │   ├── B25014-(2005-2021)
+│   │   └── C25014-(2005-2012)
 │   ├── PLUMBING-FACILITIES
 │   │   ├── B25049-(2005-2021)
 │   │   └── OCCUPANTS-PER-ROOM
-│   │       └── B25016-(2005-2021)
+│   │       ├── B25016-(2005-2021)
+│   │       └── C25016-(2005-2012)
 │   ├── ROOMS
-│   │   └── B25020-(2005-2021)
+│   │   ├── B25020-(2005-2021)
+│   │   └── C25020-(2005-2012)
 │   ├── SELECTED-PHYSICAL-AND-FINANCIAL-CONDITIONS
-│   │   └── B25123-(2005-2021)
+│   │   ├── B25123-(2005-2021)
+│   │   └── C25123-(2005-2012)
 │   ├── TELEPHONE-SERVICE-AVAILABLE
+│   │   ├── C25043-(2006-2012)
 │   │   └── AGE-OF-HOUSEHOLDER
-│   │       └── B25043-(2005-2021)
+│   │       ├── B25043-(2005-2021)
+│   │       └── C25043-(2005)
 │   ├── UNITS-IN-STRUCTURE
-│   │   └── B25032-(2005-2021)
+│   │   ├── B25032-(2005-2021)
+│   │   └── C25032-(2005-2021)
 │   ├── VEHICLES-AVAILABLE
-│   │   └── B25044-(2005-2021)
+│   │   ├── B25044-(2005-2021)
+│   │   ├── C25045-(2005-2021)
 │   │   └── AGE-OF-HOUSEHOLDER
-│   │       └── B25045-(2005-2021)
+│   │       └── B25045-(2005-2021)
 │   ├── YEAR-HOUSEHOLDER-MOVED-INTO-UNIT
 │   │   ├── B25038-(2005-2021)
 │   │   └── UNITS-IN-STRUCTURE
@@ -232,15 +296,19 @@ The following tree shows top-level 2021 ACS variables related to housing.
 │   └── TENURE
 │       ├── B25008-(2005-2021)
 │       ├── UNITS-IN-STRUCTURE
-│       │   └── B25033-(2005-2021)
+│       │   ├── B25033-(2005-2021)
+│       │   └── C25033-(2005-2021)
 │       └── YEAR-HOUSEHOLDER-MOVED-INTO-UNIT
 │           └── B25026-(2009-2021)
 ├── UNITS-IN-STRUCTURE
 │   ├── B25024-(2005-2021)
+│   ├── C25026-(2005)
 │   ├── BEDROOMS
-│   │   └── B25029-(2005)
+│   │   ├── B25029-(2005)
+│   │   └── C25029-(2005)
 │   ├── GROSS-RENT-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS
-│   │   └── B25073-(2005-2013)
+│   │   ├── B25073-(2005-2013)
+│   │   └── C25073-(2005-2012)
 │   ├── KITCHEN-FACILITIES
 │   │   └── B25031-(2005)
 │   ├── PLUMBING-FACILITIES
@@ -248,11 +316,14 @@ The following tree shows top-level 2021 ACS variables related to housing.
 │   ├── RESIDENCE-STATUS
 │   │   └── B25026-(2005)
 │   ├── ROOMS
-│   │   └── B25028-(2005)
+│   │   ├── B25028-(2005)
+│   │   └── C25028-(2005)
 │   ├── VACANCY-STATUS
-│   │   └── B25025-(2005)
+│   │   ├── B25025-(2005)
+│   │   └── C25025-(2005)
 │   └── YEAR-STRUCTURE-BUILT
-│       └── B25027-(2005)
+│       ├── B25027-(2005)
+│       └── C25027-(2005)
 ├── UPPER-CONTRACT-RENT-QUARTILE-DOLLARS
 │   └── B25059-(2005-2021)
 ├── UPPER-VALUE-QUARTILE-DOLLARS
@@ -260,15 +331,17 @@ The following tree shows top-level 2021 ACS variables related to housing.
 ├── VACANCY-DURATION
 │   └── B25131-(2021)
 ├── VACANCY-STATUS
-│   └── B25004-(2005-2021)
+│   ├── B25004-(2005-2021)
+│   └── C25004-(2005-2021)
 ├── VACANT-CURRENT-RESIDENCE-ELSEWHERE
 │   └── B25005-(2005-2021)
 ├── VALUE
-│   └── B25075-(2005-2021)
+│   ├── B25075-(2005-2021)
+│   └── C25075-(2006-2021)
 └── YEAR-STRUCTURE-BUILT
     └── B25034-(2005-2021)
 
-248 directories, 0 files
+285 directories, 0 files
 ```
 
 # How to make the tree
@@ -282,7 +355,7 @@ library(tidyverse)
 library(tidycensus)
 ```
 
-Use the `load_variables()` function to get Census variables. 
+Use the `load_variables()` function to get Census variables.
 
 ```{r}
 # Get variables for one year
@@ -304,7 +377,7 @@ Narrow for housing variables and clean up.
 
 ```{r}
 hsg <- vACS1 %>% 
-  filter(str_detect(name, "^B25"))
+  filter(str_detect(name, "^[BC]25"))
 
 # Narrowed down the number of variables from 517,605 to 33,125
 
@@ -365,7 +438,7 @@ hsg_vs <- hsg_yrs %>%
 
 vACS1 <- hsg_vs$fileStr
 
-write_lines(vACS1, file = "Documents/vACS1.txt")
+write_lines(vACS1, file = "~/Documents/vACS1.txt")
 ```
 
 To make the tree, we will convert this text file to a directory structure.
@@ -385,10 +458,10 @@ Convert the text file to a file directory using the following code.
 xargs -I {} mkdir -p "{}" < "../vACS1.txt"
 ```
 
-Finally, create a tree of the file directory. Note: requires the [tree](Turn the column into a list of values.) package.
+Finally, create a tree of the file directory. Note: requires the [tree](https://formulae.brew.sh/formula/tree#default) package.
 
 ``` zsh
 tree
 ```
 
-The output is the tree at the top of this page.
+The output is the tree above.
