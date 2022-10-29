@@ -27,9 +27,6 @@ format:
   html:
     theme: solar
     css: styles.css
-    toc: true
-    toc-title: Table of Contents
-    toc-location: left
     
 comments: 
   hypothesis: true
