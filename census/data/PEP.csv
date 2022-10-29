@@ -1,11 +1,11 @@
-NAME,GEOID,variable,year,dataset,estimate
-"Shelby County, Tennessee",47157,HUEST,2010,PEP,398273
-"Shelby County, Tennessee",47157,HUEST,2011,PEP,398979
-"Shelby County, Tennessee",47157,HUEST,2012,PEP,399547
-"Shelby County, Tennessee",47157,HUEST,2013,PEP,400990
-"Shelby County, Tennessee",47157,HUEST,2014,PEP,402246
-"Shelby County, Tennessee",47157,HUEST,2015,PEP,402818
-"Shelby County, Tennessee",47157,HUEST,2016,PEP,404141
-"Shelby County, Tennessee",47157,HUEST,2017,PEP,405455
-"Shelby County, Tennessee",47157,HUEST,2018,PEP,406116
-"Shelby County, Tennessee",47157,HUEST,2019,PEP,407273
+year,GEOID,NAME,variable,estimate
+2010,47157,"Shelby County, Tennessee",HUEST,398273
+2011,47157,"Shelby County, Tennessee",HUEST,398979
+2012,47157,"Shelby County, Tennessee",HUEST,399547
+2013,47157,"Shelby County, Tennessee",HUEST,400990
+2014,47157,"Shelby County, Tennessee",HUEST,402246
+2015,47157,"Shelby County, Tennessee",HUEST,402818
+2016,47157,"Shelby County, Tennessee",HUEST,404141
+2017,47157,"Shelby County, Tennessee",HUEST,405455
+2018,47157,"Shelby County, Tennessee",HUEST,406116
+2019,47157,"Shelby County, Tennessee",HUEST,407273

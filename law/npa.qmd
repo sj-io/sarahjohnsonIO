@@ -1,7 +1,7 @@
 ---
 title: "NPA"
 description: |
-  Full text of Tennessee's Neighborhood Preservation Act, which regulates control of derelict housing.
+  Full text of Tennessee's Neighborhood Preservation Act, which regulates control of neglected houses.
 categories:
   - law
 image: "img/npa.jpg" 

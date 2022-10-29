@@ -11,7 +11,7 @@ bibliography: references.bib
 
 # Census Surveys and Programs
 
-The Census conducts over 130 surveys and programs each year, and the amount of resulting data can be overwhelming. In this post I will compare three datasets that provide information on population and housing units: the American Community Survey (1-year & 5-year) and the Population Estimates Program.
+The Census conducts over 130 surveys and programs each year, but a handful are especially useful for housing research. In this post I will compare four datasets that provide information on population and housing units: the American Community Survey (1-year & 5-year) and the Population Estimates Program.
 
 ## American Community Survey
 
@@ -39,7 +39,7 @@ The Census recommends the PEP over the ACS for basic counts of population and ho
 
 [^1]: For more information on when to use the ACS vs the PEP, see the Census webinar/presentation/transcript: [Comparing the American Community Survey and the Population Estimates Program](https://www.census.gov/data/academy/webinars/2021/comparing-the-acs-and-the-pop-est-program.html).
 
-I decided to see how the ACS and PEP data compare. Below is an interactive graph comparing ACS and PEP estimates of the number of housing units in Shelby County from 2010 to 2020.[^2] Though ACS 5-Year estimates are not really recommended for yearly time series, I included it for curiosity. Clicking on a dataset in the legend will show/hide the line.
+I decided to see how the ACS and PEP data compare. Below is an interactive graph comparing ACS and PEP estimates of the number of housing units in Shelby County from 2010 to 2021.[^2] Though ACS 5-Year estimates are not really recommended for yearly time series, I included it for curiosity. Clicking on a dataset in the legend will show/hide the line.
 
 [^2]: The regular 1-year ACS for 2020 was not released. Due to low response rates, the Census Bureau instead released a set of experimental estimates for the 2020 1-year ACS. These estimates can be downloaded [here](https://www.census.gov/programs-surveys/acs/data/experimental-data/1-year.html).
 
@@ -48,31 +48,83 @@ library(tidyverse)
 library(plotly)
 ```
 
+```{r eval=FALSE}
+library(tidycensus)
+
+# Doesn't work yet. 
+# Five year data will release on 12/8/22
+B25 <- get_acs(
+  survey = "acs5",
+  geography = "county",
+  state = "TN", 
+  county = "Shelby",
+  variables = "B25001_001",
+  year = 2021
+) %>% 
+  mutate(year = 2021, .before = GEOID)
+
+ACS5 <- rbind(ACS5, B25)
+
+write_csv(ACS5, "data/ACS5.csv")
+
+# PEP releases eventually
+# HU <- get_estimates(
+#   geography = "county",
+#   state = "TN",
+#   county = "Shelby",
+#   variables = "HUEST",
+#   year = 2020
+# )
+```
+
 ```{r}
-ACS1 <- read_csv("data/ACS1.csv")
-ACS5 <- read_csv("data/ACS5.csv")
-PEP <- read_csv("data/PEP.csv")
+ACS1 <- read_csv("data/ACS1.csv") %>%
+  mutate(dataset = "ACS1") %>%
+  filter(variable == "B25001_001")
+ACS5 <- read_csv("data/ACS5.csv") %>%
+  mutate(dataset = "ACS5") %>%
+  filter(variable == "B25001_001")
+PEP <- read_csv("data/PEP.csv") %>%
+  mutate(dataset = "PEP") %>%
+  filter(variable == "HUEST")
 ```
 
 
 ```{r hsg}
+comma <- scales::label_number(big.mark = ",")
+
 hsg <- PEP %>% 
   full_join(ACS1) %>% 
-  full_join(ACS5)
+  full_join(ACS5) %>% 
+  mutate(label = paste0(
+    "<b>", dataset, "<br>Year: </b>", year,
+    "<br>", comma(estimate)
+    ))
 ```
 
 ```{r hsgPlot}
 gg <- ggplot(hsg, aes(x = year, y = estimate, color = dataset)) +
   geom_line() +
-  geom_point() +
+  geom_point(aes(text = label)) +
   scale_x_continuous(breaks = unique(hsg$year)) +
-  labs(title = "Housing Units in Shelby County, 2010-2020",
-       y = "Estimate",
-       x = "Year",
-       color = "Dataset") +
-  theme_light()
+  scale_y_continuous(labels = scales::label_number(scale = .001, suffix = "K")) +
+  scale_color_manual(values = c("#2aa198", "#073642", "#d33682")) +
+  labs(title = "Housing Units in Shelby County, 2010-2021",
+       y = "",
+       x = "",
+       color = "Dataset:") +
+  theme_minimal() +
+  theme(panel.border = element_rect(fill = NA, size = .2),
+        plot.background = element_rect(fill = NA),
+        legend.background = element_rect(fill = "white"),
+        panel.background = element_rect(fill = "white"),
+        legend.text = element_text(colour = "#04323d"),
+        legend.title = element_text(colour = "#04323d"),
+        title = element_text(colour = "#fdf6e3"),
+        axis.text = element_text(colour = "#b2c1c4"),
+        axis.ticks = element_line(size = .2))
 
-ggplotly(gg)
+ggplotly(gg, tooltip = "text")
 ```
 
 Presently, the ACS 1-Year and PEP estimates are near identical; there was only a 30-unit difference in 2019 values. There was a bit of variation in 2011 and 2014-2016, mostly with the ACS overestimating the PEP values, but the variation was never more than 1,882 units (\<0.5% of total estimate). Yet while the counts have been similar, the PEP values gradually increased over the decade while the ACS was more erratic, fluctuating downward in 2011 and 2017.
