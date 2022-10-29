@@ -6,7 +6,7 @@ listing:
     type: grid
     fields: [image, title, description, reading-time]
   - id: law
-    contents: "ref/*.qmd"
+    contents: "law/*.qmd"
     type: grid
     fields: [image, title, description, reading-time]
 comments: false
