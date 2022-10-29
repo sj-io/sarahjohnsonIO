@@ -8,49 +8,35 @@ execute:
 bibliography: references.bib
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-```
+# Boundary Map
 
 ```{r library}
 library(tidyverse)
 library(sf)
 library(tigris)
 options(tigris_use_cache = TRUE)
-```
-
-```{r eval=FALSE, include=FALSE}
-nation <- nation()
-regions <- regions() %>% filter(NAME == "South")
-divisions <- divisions() %>% filter(str_detect(NAME, "South Central"))
-states <- states() %>% filter(DIVISION %in% c(6, 7))
+options(tigris_year = 2021)
 ```
 
 ```{r}
-memST <- list("TN", "MS", "AR")
-csa <- combined_statistical_areas() %>% filter(str_detect(NAME, "Memphis")) 
-cbsa <- core_based_statistical_areas() %>% filter(str_detect(NAME, "Memphis")) 
-csaCounties <- map_dfr((memST), ~{counties(.x)}) %>% st_filter(csa, .predicate = st_within)
-counties <- csaCounties[cbsa, op = st_within]
-sld <- state_legislative_districts("TN") %>% st_filter(cbsa, .predicate = st_within)
-places <- map_dfr((memST), ~{places(.x)}) %>% st_filter(cbsa, .predicate = st_within)
-urb <- urban_areas() %>% filter(str_detect(NAME10, "Memphis"))
-zcta <- zctas(cb = TRUE, starts_with = c("38", "72")) %>% st_filter(urb)
-puma <- map_dfr((memST), ~{pumas(.x)}) %>% st_filter(urb)
-```
-
-```{r}
-shelby <- counties %>% filter(NAME == "Shelby")
-memphis <- places %>% filter(NAME == "Memphis")
-```
-
-```{r}
-csd <- county_subdivisions("TN", "Shelby")
-tracts <- tracts("TN", "Shelby")
-blkgrp <- block_groups("TN", "Shelby")
-vote <- voting_districts("TN", "Shelby")
-school <- school_districts("TN") %>% st_filter(shelby, .predicate = st_within)
-cong <- congressional_districts("TN") %>% st_filter(shelby, .predicate = st_within)
+csa <- read_sf("geo/combined_statistical_area.shp")
+cbsa <- read_sf("geo/core_based_statistical_area.shp")
+csaCounties <- read_sf("geo/counties_in_csa.shp")
+counties <- read_sf("geo/counties_in_cbsa.shp")
+sld <- read_sf("geo/state_legislative_districts.shp")
+places <- read_sf("geo/places_in_cbsa.shp")
+urb <- read_sf("geo/urban_area.shp")
+zcta <- read_sf("geo/zctas.shp")
+puma <- read_sf("geo/pumas.shp")
+shelby <- read_sf("geo/shelby.shp")
+memphis <- read_sf("geo/memphis.shp")
+csd <- read_sf("geo/county_subdivisions.shp")
+tracts <- read_sf("geo/tracts_21.shp")
+blkgrp <- read_sf("geo/block_groups.shp")
+vote <- read_sf("geo/voting_districts.shp")
+school <- read_sf("geo/school_districts.shp")
+cong <- read_sf("geo/congressional_districts.shp")
+cong2 <- read_sf("geo/congressional_districts_2.shp")
 ```
 
 ```{r}
@@ -236,11 +222,11 @@ map <- leaflet() %>%
   addScaleBar(position = "bottomleft")
 ```
 
-Below is an interactive map of boundaries related to the Memphis area. Layers will stack in the order they are selected.
+Below is an interactive map of 2021 TIGRIS boundaries related to the Memphis area. Layers will stack in the order they are selected.
 
 ```{r mapMake}
-#| column: screen-inset-shaded
-#| fig-height: 7.5
+#| column: screen-inset-right
+#| fig-height: 7
 
 map %>% hideGroup(
   c(
@@ -261,7 +247,7 @@ map %>% hideGroup(
 )
 ```
 
-# Census Boundaries
+# About TIGRIS Boundaries
 
 Every ten years, the Census attempts to count every person living in the US, as required by the Constitution. Data is collected on individuals, households, and housing units and then that data is made public and used to determine important things like political boundaries.
 
@@ -275,7 +261,7 @@ Below is a diagram of Census geographic hierarchies, available at <https://www.c
 
 Boundary data is available from the [Census TIGER/Line Shapefiles page](https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html). Datasets are also easily accessed in R using the **tigris** package.
 
-# Memphis Boundary Map
+# Making the Map
 
 I decided to not include boundaries from the national-state level, instead focusing just on the Memphis region. The broadest geography is the Memphis-Forrest City **combined statistical area** (CSA), which includes the Memphis Metro Area and Forrest City Micro Area. **Metro** and **Micro** areas are collectively known as **core-based statistical areas** (CBSAs), and are created using counties with "a high degree of social and economic integration" (measured by commute to work).[@uscensusbureau2021mm] Because Forrest City is relatively small, there is only one county difference between the CSA and CBSA boundaries. I plan to use the CBSA/Metro boundaries more often, which is why that layer is visible by default.
 
@@ -283,54 +269,55 @@ There are a few more boundaries that may have unfamiliar abbreviations. **ZCTAs*
 
 [^2]: [Until the API is complete](https://developer.ipums.org/docs/apiprogram/), PUMAs data is available for download from <https://www.ipums.org/>.
 
-# The Code
+## Using tigris and sf
 
-This post, the map, and all data collection was completed using [R](https://www.r-project.org/)/[RStudio](https://www.rstudio.com/products/rstudio/). Boundaries were pulled using the **tigris** package. A full list of available datasets and their corresponding functions is available in Chapter 5 of the book [Analyzing US Census Data](https://walker-data.com/census-r/census-geographic-data-and-applications-in-r.html#data-availability-in-tigris).
+Boundaries were pulled using the **tigris** package. A full list of available datasets and their corresponding functions is available in Chapter 5 of the book [Analyzing US Census Data](https://walker-data.com/census-r/census-geographic-data-and-applications-in-r.html#data-availability-in-tigris).
 
 The Memphis Metro area covers three states, meaning sometimes I needed to run the same function three times for Tennessee, Arkansas, and Mississippi. I used **purrr**'s `map_dfr()` to do this automatically. Boundaries were then filtered in one of two ways, either using **dplyr**'s `filter()` function for table data or **sf**'s `st_filter()` to filter one geometry by another.
 
 In summary, these are the packages I used to get started (I also recommend caching your datasets, but it's optional).
 
-``` r
+```{r, echo = TRUE, eval = FALSE}
 library(tidyverse)
 library(sf)
 library(tigris)
 options(tigris_use_cache = TRUE)
+options(tigris_year = 2021) # currently defaults to 2020
 ```
 
 Below is a full list of how I gathered boundaries related to Memphis, grouped by how they're filtered.
 
-``` r
+```{r, echo = TRUE, eval = FALSE}
 #' Broad regions, filtered by known NAME/DIVISIONs relevant to Memphis Area
 nation <- nation()
-regions <- regions() %>% 
-  filter(NAME == "South")
-divisions <- divisions() %>% 
-  filter(str_detect(NAME, "South Central"))
-states <- states() %>% 
-  filter(DIVISION %in% c(6, 7))
+regions <- regions() %>% filter(NAME == "South")
+divisions <- divisions() %>% filter(str_detect(NAME, "South Central"))
+states <- states() %>% filter(DIVISION %in% c(6, 7))
+
+# The Memphis MSA include Tennessee, Mississippi, & Arkansas
 memST <- list("TN", "MS", "AR")
 
 #' Metro and Urban areas, filtered by "Memphis"
-csa <- combined_statistical_areas() %>% 
-  filter(str_detect(NAME, "Memphis")) 
+csa <- combined_statistical_areas() %>% filter(str_detect(NAME, "Memphis")) 
 cbsa <- core_based_statistical_areas() %>% 
   filter(str_detect(NAME, "Memphis")) 
-urb <- urban_areas() %>% 
-  filter(str_detect(NAME10, "Memphis"))
+urb <- urban_areas() %>% filter(str_detect(NAME10, "Memphis"))
 
 #' Areas in Metro or Urban area
 csaCounties <- map_dfr((memST), ~{counties(.x)}) %>% 
   st_filter(csa, .predicate = st_within)
+
 counties <- csaCounties[cbsa, op = st_within]
+
 places <- map_dfr((memST), ~{places(.x)}) %>% 
   st_filter(cbsa, .predicate = st_within)
+
 sld <- state_legislative_districts("TN") %>% 
   st_filter(cbsa, .predicate = st_within)
-zcta <- zctas(cb = TRUE, starts_with = c("38", "72")) %>% 
-  st_filter(urb)
-puma <- map_dfr((memST), ~{pumas(.x)}) %>% 
-  st_filter(urb)
+
+zcta <- zctas(cb = TRUE, starts_with = c("38", "72")) %>% st_filter(urb)
+puma <- map_dfr((memST), ~{pumas(.x)}) %>% st_filter(urb)
+
 
 #' Shelby County and Memphis
 shelby <- counties %>% filter(NAME == "Shelby")
@@ -339,8 +326,13 @@ memphis <- places %>% filter(NAME == "Memphis")
 #' Areas within Shelby County
 school <- school_districts("TN") %>% 
   st_filter(shelby, .predicate = st_within)
+
 cong <- congressional_districts("TN") %>% 
   st_filter(shelby, .predicate = st_within)
+# cong2 <- congressional_districts("TN") %>% 
+#   st_filter(shelby)
+# includes the very large district 8
+
 vote <- voting_districts("TN", "Shelby")
 csd <- county_subdivisions("TN", "Shelby")
 tracts <- tracts("TN", "Shelby")

@@ -215,7 +215,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -255,15 +255,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="htmlwidget-f9e218023566f127e796" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f9e218023566f127e796">{"x":{"style":"bootstrap","filter":"none","vertical":false,"data":[["B01","B02 &amp; C02","B03 &amp; C03","B04 &amp; C04","B05 &amp; C05","B06 &amp; C06","B07 &amp; C07","B08 &amp; C08","B09 &amp; C09","B10","B11 &amp; C11","B12","B13","B14 &amp; C14","B15 &amp; C15","B16 &amp; C16","B17 &amp; C17","B18 &amp; C18","B19 &amp; C19","B20","B21 &amp; C21","B22 &amp; C22","B23 &amp; C23","B24 &amp; C24","B25 &amp; C25","B26","B27 &amp; C27","B28","B29","B98","B99"],["Population Overview","Race","Race and Ethnicity","Ancestry","Nativity","Place of Birth","Geographic Mobility","Workers","Children Under 18","Grandparents","Household Type","Marriage","Women with Recent Birth","School Enrollment","Educational Attainment","Language Spoken at Home","Poverty Status","Disability","Household Income","Income for Working Population","Veterans","Food Stamps/SNAP","Employment Status and Workers","Occupation and Industry","Housing","Group Quarters","Health Insurance","Computers and Internet","Citizen, Voting-Age Population","Unweighted Sample and Coverage, Response, and Allocation Rates","Allocation"]],"container":"<table class=\"table table-striped table-hover row-border order-column display\">\n  <thead>\n    <tr>\n      <th>Start of Variable<\/th>\n      <th>Category<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"dom":"tp","columnDefs":[{"className":"dt-right","targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9a38c11136660223faf4" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9a38c11136660223faf4">{"x":{"style":"bootstrap","filter":"none","vertical":false,"data":[["B01","B02 &amp; C02","B03 &amp; C03","B04 &amp; C04","B05 &amp; C05","B06 &amp; C06","B07 &amp; C07","B08 &amp; C08","B09 &amp; C09","B10","B11 &amp; C11","B12","B13","B14 &amp; C14","B15 &amp; C15","B16 &amp; C16","B17 &amp; C17","B18 &amp; C18","B19 &amp; C19","B20","B21 &amp; C21","B22 &amp; C22","B23 &amp; C23","B24 &amp; C24","B25 &amp; C25","B26","B27 &amp; C27","B28","B29","B98","B99"],["Population Overview","Race","Race and Ethnicity","Ancestry","Nativity","Place of Birth","Geographic Mobility","Workers","Children Under 18","Grandparents","Household Type","Marriage","Women with Recent Birth","School Enrollment","Educational Attainment","Language Spoken at Home","Poverty Status","Disability","Household Income","Income for Working Population","Veterans","Food Stamps/SNAP","Employment Status and Workers","Occupation and Industry","Housing","Group Quarters","Health Insurance","Computers and Internet","Citizen, Voting-Age Population","Unweighted Sample and Coverage, Response, and Allocation Rates","Allocation"]],"container":"<table class=\"table table-striped table-hover row-border order-column display\">\n  <thead>\n    <tr>\n      <th>Start of Variable<\/th>\n      <th>Category<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"dom":"tp","columnDefs":[{"className":"dt-right","targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
-<section id="housing-variables" class="level1">
+<section id="housing-variables" class="level1 page-columns page-full">
 <h1>Housing Variables</h1>
 <p>Housing variables start with “B25”, or “C25” for condensed versions. Sometimes a specific topic will have a lot of different subvariables. For instance, information on tenure (whether a household rents or owns) can be broken down by age, what year the structure was built, etc. I created a directory tree as a simple way to visualize how Census variable relate to each other. The following tree shows top-level ACS 1-Year variables related to housing (excluding condensed variables). The variables that start with “B” are usually also present in the 5-Year ACS.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span></span>
+<div class="cell column-page-right">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> AGE-OF-HOUSEHOLDER</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">│&nbsp;&nbsp;</span> ├── C25055-<span class="op">(2005-2021)</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">│&nbsp;&nbsp;</span> ├── GROSS-RENT-AS-A-PERCENTAGE-OF-HOUSEHOLD-INCOME-IN-THE-PAST-12-MONTHS</span>
@@ -551,6 +552,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a>    <span class="ex">└──</span> B25034-<span class="op">(2005-2021)</span></span>
 <span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a><span class="ex">285</span> directories, 0 files</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="how-to-make-the-tree" class="level1">
 <h1>How to make the tree</h1>

@@ -53,7 +53,9 @@ v_acs %>%
 
 Housing variables start with "B25", or "C25" for condensed versions. Sometimes a specific topic will have a lot of different subvariables. For instance, information on tenure (whether a household rents or owns) can be broken down by age, what year the structure was built, etc. I created a directory tree as a simple way to visualize how Census variable relate to each other. The following tree shows top-level ACS 1-Year variables related to housing (excluding condensed variables). The variables that start with "B" are usually also present in the 5-Year ACS.
 
-``` zsh
+```{zsh}
+#| column: page-right
+
 .
 ├── AGE-OF-HOUSEHOLDER
 │   ├── C25055-(2005-2021)
