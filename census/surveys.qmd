@@ -11,7 +11,7 @@ bibliography: references.bib
 
 # Census Surveys and Programs
 
-The Census conducts over 130 surveys and programs each year, but a handful are especially useful for housing research. In this post I will compare four datasets that provide information on population and housing units: the American Community Survey (1-year & 5-year) and the Population Estimates Program.
+The Census conducts over 130 surveys and programs each year, but a handful are especially useful for housing research. In this post I will compare three datasets that provide information on population and housing units: the American Community Survey (1-year & 5-year) and the Population Estimates Program.
 
 ## American Community Survey
 
@@ -103,6 +103,8 @@ hsg <- PEP %>%
 ```
 
 ```{r hsgPlot}
+#| column: page-inset-right
+
 gg <- ggplot(hsg, aes(x = year, y = estimate, color = dataset)) +
   geom_line() +
   geom_point(aes(text = label)) +
@@ -114,17 +116,20 @@ gg <- ggplot(hsg, aes(x = year, y = estimate, color = dataset)) +
        x = "",
        color = "Dataset:") +
   theme_minimal() +
-  theme(panel.border = element_rect(fill = NA, size = .2),
+  theme(panel.background = element_rect(fill = "white"),
         plot.background = element_rect(fill = NA),
         legend.background = element_rect(fill = "white"),
-        panel.background = element_rect(fill = "white"),
         legend.text = element_text(colour = "#04323d"),
         legend.title = element_text(colour = "#04323d"),
         title = element_text(colour = "#fdf6e3"),
         axis.text = element_text(colour = "#b2c1c4"),
         axis.ticks = element_line(size = .2))
 
-ggplotly(gg, tooltip = "text")
+ggplotly(gg, tooltip = "text") %>% 
+  config(modeBarButtonsToRemove = c(
+    "zoom", "pan", "select", "lasso2d", "autoScale", "resetScale",
+    "zoomIn", "zoomOut"
+  ))
 ```
 
 Presently, the ACS 1-Year and PEP estimates are near identical; there was only a 30-unit difference in 2019 values. There was a bit of variation in 2011 and 2014-2016, mostly with the ACS overestimating the PEP values, but the variation was never more than 1,882 units (\<0.5% of total estimate). Yet while the counts have been similar, the PEP values gradually increased over the decade while the ACS was more erratic, fluctuating downward in 2011 and 2017.
