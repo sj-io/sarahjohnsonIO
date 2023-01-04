@@ -1,0 +1,77 @@
+---
+title: "Capstone Draft"
+csl: chicago-note-bibliography-with-ibid.csl
+bibliography: references.bib
+---
+
+# Health and Housing
+
+> Shelter is one of the three fundamental needs of human existence. No housing program can be sound unless the shelter it provides is healthful.
+>
+> C.-E. A. Winslow, Dr.P.H., *Chairman*,\
+> Allan A. Twichell, *Technical Secretary*,\
+> *Committee on the Hygiene of Housing (Mar., 1938)*
+
+## History (1850s-1930s)
+
+Dr. John H. Griscom stood before an audience in January 1852 and gave a lecture on the importance of clean air, a topic he believed "was not so much studied as it ought to be." His words were summarized on the front page of the New-York Daily Times the next day, concluding with Dr. Griscom's statement that "ventilation in houses should be attended to as one of the best means of preserving health" [@lectures1852]. The idea quickly spread---two and a half years later, an article describing the poor conditions of a building in Buffalo declared, "we intended to speak on the ventilation, but we are sick of the subject" [@thebuff1854].
+
+Over the next half century, large population influx into urban areas led to widespread development of tenement housing [@soifer2014 7]. These homes offered little in the way of space, sanitation, light, or fresh air, a fact made well-known by Jacob Riis's 1890 book *How the Other Half Lives*. The conditions documented by Riis led New York City to adopt the first housing codes in the United States.
+
+Housing reformers continued to demand better living conditions into the 20th century. Catherine Bauer's landmark 1934 book *Modern Housing* stated that for a home to be "modern", it must allow for cross-ventilation and sunlight; adequate privacy, space, and sanitary facilities; adjacent play space for children; and "finally it will be available at a price which citizens of average income or less can afford" [@bauer1934 xv]. Modern housing, Bauer said, was constructed for "efficient use" rather than "quick profit", and planned to retain quality for the long term, in "complete neighborhoods" with parks, schools, and other community facilities.
+
+Inspired by post-war European housing programs, Bauer advocated for housing to be treated as a public utility and for the government to ensure comprehensively planned, decent, and stable housing for the working class, not just low-income households [@goetz2013 23; @radford1996 76, 183]. She believed modern homes and neighborhoods were a means to an end, and could "never deteriorate into a slum, or a 'blighted area'" [@bauer1934 xv].
+
+Bauer's thesis contradicted the limited federal housing legislation that existed at the time. A post-Depression policy enacted under Hoover provided loans to corporations wholly focused on low-income housing and slum reconstruction [@emergenc1932]. However, a lack of private investment led FDR to alter the program a year later into a public works initiative which directly funded construction of low cost housing and slum clearance projects [@national1933; @goetz2013 26]. Outside of wartime efforts, this was the first instance of the US federal government constructing housing for its citizens.
+
+Bauer was later a primary author on the National Housing Act of 1937, which officially established public housing in America and called for "the elimination of unsafe and insanitary housing conditions" and to remedy "the acute shortage of decent, safe, and sanitary dwellings for families of low-income, in rural or urban communities" [@national1937; @mccarty2019].
+
+However, the Act was a compromise. Limits were placed on construction costs and tenant incomes, and an "equivalent elimination" clause required one unit of substandard housing be taken down for every unit of public housing built. This ensured the bulk of public housing projects would be in previous slum areas, and was meant to prevent public housing from competing with the private market [@goetz2013 27-28; @radford1996 188-189].
+
+The bill's co-sponsor, Senator Wagner, stated "the most important consideration is, that public housing projects should not be brought into competition with private industry... To reach those who are really entitled to public assistance, and to get into the field where private enterprise cannot operate, is the objective of this bill" [@goetz2013 28; @federal1985]. Still, the bill faced significant lobbying efforts that threatened its passage. The organizations that mobilized against the bill were the U.S. Chamber of Commerce, National Association of Real Estate Boards, the U.S. League of Building and Loans, and the National Retail Lumber Dealers Association [@radford1996 188].
+
+## Healthy Homes
+
+The 1937 Act led to the creation of the Committee on the Hygiene of Housing, appointed by the American Public Health Association. The following year, the committee published the Basic Principles of Healthful Housing in the *American Journal of Public Health*. The manual outlined 30 principles "believed to be fundamental minima required for the promotion of physical, mental, and social health," whether the housing be high or low cost, urban or rural [@apha1938]. The fundamental needs were divided into four categories: physiological needs (e.g. protection from elements), psychological needs (e.g. adequate privacy), protection against contagion (e.g. safe water supply), and protection against accidents (e.g. fire prevention).
+
+Six decades after *Healthful Housing* was published, the manual found renewed relevance in 1999. Recognizing that "health, home construction, and home maintenance are inseparable because of their overlapping goals," HUD and CDC joined together to launch the Healthy Homes Initiative [@cdc2006 31, 34]. Most of the basic principles originally laid out in the 1938 manual were used to create the Healthy Home Rating System (HHRS).
+
+The below table lists all 29 hazards of the modern HHRS, along with a short description and list of populations are most vulnerable to the each hazard [@hud].
+
+```{r library}
+library(tidyverse)
+library(DT)
+HHRS <- read_csv("data/HH-hazards.csv")
+```
+
+```{r HHRS}
+datatable(
+  HHRS,
+  rownames = FALSE,
+  caption = "The 29 Healthy Home Hazards",
+  options = list(
+    pageLength = 5,
+    lengthMenu = c(5, 10, 15, 20, 25, 29)
+  )
+)
+```
+
+The HHRS established a standardized way for inspectors to identify and rate the risk of home health hazards. Once a hazard is identified, it is further assessed for severity and the effect it is having, or could have, on the occupants. The greater the risk or more serious the outcome, the higher the overall score. The system provides a way to compare risks associated with different types of hazards.
+
+According to @hud, this system lets local housing and health departments know which hazards are most serious to occupants, allowing them to prioritize funding. It also lets local policy makers identify which areas of the community are in greatest need and what health impacts those communities are facing.
+
+## Modern Research
+
+There is a plethora of literature from the field of public health related to the impact of housing quality on residents. The more time a person spends indoors, the more exposed they are to biological, chemical, and physical agents that can affect their health and safety [@cdc2006 63]. Research and findings in the field can lead to national legislation to protect the public health. For instance, the effects of lead-based paint were found to be so severe that all lead-based paint was banned for residential use in 1978 [@lead2020].
+
+Extensive research has been conducted on the relationship between asthma and housing quality. Asthma, a respiratory disease which causes episodes of wheezing, breathlessness, chest tightness, and coughing, has been linked to mold exposure and dampness [@mendell2011]. Additionally, the degree of household disrepair contributes to the amount of allergens carried by pests such as cockroaches [@rauh2002].
+
+In recent years, increased attention has been directed at the connection between housing and mental health, particularly related to housing instability. For nine months, @tsai2020 monitored the health and housing status of 121 tenants who had appeared in eviction court. Persistent housing and mental health issues were present: 42% of tenants had appeared in eviction court before; 44% had previously been homeless; 39% screened positive for generalized anxiety disorder; 37% for post-traumatic stress disorder; 33% for major depressive disorder; and 17% reported suicidal ideation.
+
+## Maintenance in the Private Rental Market
+
+Large structural damages can create major health risks, but repairs can be expensive and difficult to implement. Low-income renters can face added difficulty, as tenants have little or no power to repair such problems. A study of low-income parents of children with asthma found landlords were directly involved in keeping homes in poor condition, even when asked by the tenant to fix the property, and a cycle of fear, poverty, and lack of power compounded to make tenants hesitant to report problems [@grineski2010]. Relocating families can reduce health risks, but higher rents associated with safer housing can make it financially difficult or impossible for some families to move [@mclaine2006].
+
+Current regulation of private rental housing quality assumes that tenants will take action to report substandard housing, yet this is often not the case. To understand the disconnect between the law's expectations and reality, @chisholm2018 collected existing qualitative literature to explore power dynamics in the landlord-tenant relationship. The research showed that, for the most part, tenants who "reported housing quality problems found it a stressful experience, with repairs taking a long time to be carried out, or not at all." This experience often impacted future behavior, causing tenants to avoid reporting problems because they did not think it would be effective.
+
+In some cases, tenants would rather move out than work towards a resolution, leaving the issue open for future tenants. In other instances, tenants with low incomes were aware of the lack of alternative housing, causing them to remain silent. Fear of eviction prevented tenants from reporting problems, and this fear was not unfounded; in three of the 15 studies, tenants who reported housing problems were evicted or forced to move. Though laws against retaliatory action might exist, no-cause evictions allow landlords to still remove the tenant from the unit. The authors conclude that tenants do not report housing quality problems because the regulation that relies on their reporting fails to protect many tenants.
