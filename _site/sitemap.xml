@@ -1,47 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://sarahjohnson.io/ref/hsg-acts.html</loc>
-    <lastmod>2022-10-29T06:28:14.038Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/ref/URLTA.html</loc>
-    <lastmod>2022-10-29T06:25:48.639Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/ref/npa.html</loc>
-    <lastmod>2022-10-29T06:25:49.687Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/index.html</loc>
-    <lastmod>2022-10-29T23:44:44.510Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/ref.html</loc>
-    <lastmod>2022-10-29T23:59:42.314Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/census/variables.html</loc>
-    <lastmod>2022-10-29T21:22:22.135Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/census/boundaries.html</loc>
-    <lastmod>2022-10-29T21:19:02.495Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/census/surveys.html</loc>
-    <lastmod>2022-10-29T23:59:41.251Z</lastmod>
-  </url>
-  <url>
     <loc>https://sarahjohnson.io/law/hsg-acts.html</loc>
-    <lastmod>2022-10-29T19:58:09.864Z</lastmod>
+    <lastmod>2023-01-04T23:34:17.712Z</lastmod>
   </url>
   <url>
     <loc>https://sarahjohnson.io/law/URLTA.html</loc>
-    <lastmod>2022-10-29T19:58:12.239Z</lastmod>
+    <lastmod>2023-01-04T23:34:19.588Z</lastmod>
   </url>
   <url>
     <loc>https://sarahjohnson.io/law/npa.html</loc>
-    <lastmod>2022-10-29T21:33:07.879Z</lastmod>
+    <lastmod>2023-01-04T23:34:20.449Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/index.html</loc>
+    <lastmod>2023-01-04T23:34:20.874Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/ref.html</loc>
+    <lastmod>2023-01-04T23:34:21.595Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/census/variables.html</loc>
+    <lastmod>2023-01-04T23:34:30.562Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/census/boundaries.html</loc>
+    <lastmod>2023-01-04T23:34:33.657Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/census/surveys.html</loc>
+    <lastmod>2023-01-04T23:34:38.206Z</lastmod>
   </url>
 </urlset>
