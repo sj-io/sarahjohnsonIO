@@ -1,0 +1,19 @@
+# Default for table of contents
+toc: true
+toc-title: Table of Contents
+toc-location: left
+
+# Default knitr options
+execute:
+  echo: false
+  message: false
+  warning: false
+
+# Default author
+author:
+  - name: Sarah Johnson
+    url: https://sarahjohnson.io
+
+# Default fields for citation
+citation: true
+

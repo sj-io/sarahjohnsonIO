@@ -1,0 +1,960 @@
+---
+title: "Capstone Draft"
+csl: chicago-note-bibliography-with-ibid.csl
+bibliography: references.bib
+---
+
+# Health and Housing
+
+> Shelter is one of the three fundamental needs of human existence. No housing program can be sound unless the shelter it provides is healthful.
+>
+> C.-E. A. Winslow, Dr.P.H., *Chairman*,\
+> Allan A. Twichell, *Technical Secretary*,\
+> *Committee on the Hygiene of Housing (Mar., 1938)*
+
+## History (1850s-1930s)
+
+Dr. John H. Griscom stood before an audience in January 1852 and gave a lecture on the importance of clean air, a topic he believed "was not so much studied as it ought to be." His words were summarized on the front page of the New-York Daily Times the next day, concluding with Dr. Griscom's statement that "ventilation in houses should be attended to as one of the best means of preserving health" [@lectures1852]. The idea quickly spread---two and a half years later, an article describing the poor conditions of a building in Buffalo declared, "we intended to speak on the ventilation, but we are sick of the subject" [@thebuff1854].
+
+Over the next half century, large population influx into urban areas led to widespread development of tenement housing [@soifer2014 7]. These homes offered little in the way of space, sanitation, light, or fresh air, a fact made well-known by Jacob Riis's 1890 book *How the Other Half Lives*. The conditions documented by Riis led New York City to adopt the first housing codes in the United States.
+
+Housing reformers continued to demand better living conditions into the 20th century. Catherine Bauer's landmark 1934 book *Modern Housing* stated that for a home to be "modern", it must allow for cross-ventilation and sunlight; adequate privacy, space, and sanitary facilities; adjacent play space for children; and "finally it will be available at a price which citizens of average income or less can afford" [@bauer1934 xv]. Modern housing, Bauer said, was constructed for "efficient use" rather than "quick profit", and planned to retain quality for the long term, in "complete neighborhoods" with parks, schools, and other community facilities.
+
+Inspired by post-war European housing programs, Bauer advocated for housing to be treated as a public utility and for the government to ensure comprehensively planned, decent, and stable housing for the working class, not just low-income households [@goetz2013 23; @radford1996 76, 183]. She believed modern homes and neighborhoods were a means to an end, and could "never deteriorate into a slum, or a 'blighted area'" [@bauer1934 xv].
+
+Bauer's thesis contradicted the limited federal housing legislation that existed at the time. A post-Depression policy enacted under Hoover provided loans to corporations wholly focused on low-income housing and slum reconstruction [@emergenc1932]. However, a lack of private investment led FDR to alter the program a year later into a public works initiative which directly funded construction of low cost housing and slum clearance projects [@national1933; @goetz2013 26]. Outside of wartime efforts, this was the first instance of the US federal government constructing housing for its citizens.
+
+Bauer was later a primary author on the National Housing Act of 1937, which officially established public housing in America and called for "the elimination of unsafe and insanitary housing conditions" and to remedy "the acute shortage of decent, safe, and sanitary dwellings for families of low-income, in rural or urban communities" [@national1937; @mccarty2019].
+
+However, the Act was a compromise. Limits were placed on construction costs and tenant incomes, and an "equivalent elimination" clause required one unit of substandard housing be taken down for every unit of public housing built. This ensured the bulk of public housing projects would be in previous slum areas, and was meant to prevent public housing from competing with the private market [@goetz2013 27-28; @radford1996 188-189].
+
+The bill's co-sponsor, Senator Wagner, stated "the most important consideration is, that public housing projects should not be brought into competition with private industry... To reach those who are really entitled to public assistance, and to get into the field where private enterprise cannot operate, is the objective of this bill" [@goetz2013 28; @federal1985]. Still, the bill faced significant lobbying efforts that threatened its passage. The organizations that mobilized against the bill were the U.S. Chamber of Commerce, National Association of Real Estate Boards, the U.S. League of Building and Loans, and the National Retail Lumber Dealers Association [@radford1996 188].
+
+## Healthy Homes
+
+The 1937 Act led to the creation of the Committee on the Hygiene of Housing, appointed by the American Public Health Association. The following year, the committee published the Basic Principles of Healthful Housing in the *American Journal of Public Health*. The manual outlined 30 principles "believed to be fundamental minima required for the promotion of physical, mental, and social health," whether the housing be high or low cost, urban or rural [@apha1938]. The fundamental needs were divided into four categories: physiological needs (e.g. protection from elements), psychological needs (e.g. adequate privacy), protection against contagion (e.g. safe water supply), and protection against accidents (e.g. fire prevention).
+
+Six decades after *Healthful Housing* was published, the manual found renewed relevance in 1999. Recognizing that "health, home construction, and home maintenance are inseparable because of their overlapping goals," HUD and CDC joined together to launch the Healthy Homes Initiative [@cdc2006 31, 34]. Most of the basic principles originally laid out in the 1938 manual were used to create the Healthy Home Rating System (HHRS).
+
+The below table lists all 29 hazards of the modern HHRS, along with a short description and list of populations are most vulnerable to the each hazard [@hud].
+
+```{r library}
+library(tidyverse)
+library(DT)
+HHRS <- read_csv("data/HH-hazards.csv")
+```
+
+```{r HHRS}
+datatable(
+  HHRS,
+  rownames = FALSE,
+  caption = "The 29 Healthy Home Hazards",
+  options = list(
+    pageLength = 5,
+    lengthMenu = c(5, 10, 15, 20, 25, 29)
+  )
+)
+```
+
+The HHRS established a standardized way for inspectors to identify and rate the risk of home health hazards. Once a hazard is identified, it is further assessed for severity and the effect it is having, or could have, on the occupants. The greater the risk or more serious the outcome, the higher the overall score. The system provides a way to compare risks associated with different types of hazards.
+
+According to @hud, this system lets local housing and health departments know which hazards are most serious to occupants, allowing them to prioritize funding. It also lets local policy makers identify which areas of the community are in greatest need and what health impacts those communities are facing.
+
+## Modern Research
+
+There is a plethora of literature from the field of public health related to the impact of housing quality on residents. The more time a person spends indoors, the more exposed they are to biological, chemical, and physical agents that can affect their health and safety [@cdc2006 63]. Research and findings in the field can lead to national legislation to protect the public health. For instance, the effects of lead-based paint were found to be so severe that all lead-based paint was banned for residential use in 1978 [@lead2020].
+
+Extensive research has been conducted on the relationship between asthma and housing quality. Asthma, a respiratory disease which causes episodes of wheezing, breathlessness, chest tightness, and coughing, has been linked to mold exposure and dampness [@mendell2011]. Additionally, the degree of household disrepair contributes to the amount of allergens carried by pests such as cockroaches [@rauh2002].
+
+In recent years, increased attention has been directed at the connection between housing and mental health, particularly related to housing instability. For nine months, @tsai2020 monitored the health and housing status of 121 tenants who had appeared in eviction court. Persistent housing and mental health issues were present: 42% of tenants had appeared in eviction court before; 44% had previously been homeless; 39% screened positive for generalized anxiety disorder; 37% for post-traumatic stress disorder; 33% for major depressive disorder; and 17% reported suicidal ideation.
+
+## Maintenance in the Private Rental Market
+
+Large structural damages can create major health risks, but repairs can be expensive and difficult to implement. Low-income renters can face added difficulty, as tenants have little or no power to repair such problems. A study of low-income parents of children with asthma found landlords were directly involved in keeping homes in poor condition, even when asked by the tenant to fix the property, and a cycle of fear, poverty, and lack of power compounded to make tenants hesitant to report problems [@grineski2010]. Relocating families can reduce health risks, but higher rents associated with safer housing can make it financially difficult or impossible for some families to move [@mclaine2006].
+
+Current regulation of private rental housing quality assumes that tenants will take action to report substandard housing, yet this is often not the case. To understand the disconnect between the law's expectations and reality, @chisholm2018 collected existing qualitative literature to explore power dynamics in the landlord-tenant relationship. The research showed that, for the most part, tenants who "reported housing quality problems found it a stressful experience, with repairs taking a long time to be carried out, or not at all." This experience often impacted future behavior, causing tenants to avoid reporting problems because they did not think it would be effective.
+
+In some cases, tenants would rather move out than work towards a resolution, leaving the issue open for future tenants. In other instances, tenants with low incomes were aware of the lack of alternative housing, causing them to remain silent. Fear of eviction prevented tenants from reporting problems, and this fear was not unfounded; in three of the 15 studies, tenants who reported housing problems were evicted or forced to move. Though laws against retaliatory action might exist, no-cause evictions allow landlords to still remove the tenant from the unit. The authors conclude that tenants do not report housing quality problems because the regulation that relies on their reporting fails to protect many tenants.
+
+# Memphis Rental Housing
+
+## Intro
+
+Memphis is located in the southwestern corner of Tennessee, on the bluffs of the Mississippi River. Memphis is within Shelby County, and the metro area includes seven other counties in Tennessee, Mississippi, and Arkansas.
+
+This section uses data from the 2015-2019 5-year American Community Survey to understand the Memphis rental housing market. First, I will compare the number of renters in the Memphis MSA to other metro areas in the US, and explore where in Shelby County renters are located. Next, I will look into the demographics of renters in Memphis, focusing on race and cost burden. Finally, I will look into the characteristics of renter-occupied housing in Memphis, concluding with the most common household problems renters face, using data from the 2019 American Housing Survey for the Memphis MSA.
+
+## Renter-Occupied Households
+
+There are two main ways to study the population of an area using Census data: individuals and households. In a place where all individuals live alone, the number of households and individuals would be identical. When multiple people live together in the same housing unit, they are counted as one household. Additionally, the Census counts individuals who live in group quarters, like nursing homes, adult correctional facilities, and military quarters, separate from renter- and owner-occupied households.
+
+Typically when we think of population, we are referring to the number of individuals in a place. However, this paper seeks to understand the characteristics of renters. For this topic, a wider range of Census data is available when we narrow our scope to households. There are certain limitations---demographic data is limited to the head of the household, and if multiple individuals under the same household have different characteristics, some data will be omitted. Still, the data allows a general understanding of an area's population. As such, any mentions of "renters" in the below sections refers to renter-occupied households, rather than individual renters.
+
+```{r lib2, include=FALSE}
+library(tidycensus)
+options(tigris_use_cache = TRUE)
+```
+
+```{r variables, eval=FALSE, include=FALSE}
+Vs <- load_variables(2019, "acs5")
+```
+
+### Renter Locations
+
+Where do renters live? The first half of this section compares the percentage of renters in the Memphis MSA with other large metro areas in the US. The second portion focuses on Shelby County, and breaks down which places and census tracts contain the highest percentage of renters.
+
+### US Metro Areas
+
+Before studying renters in Memphis, it's useful to know how the area compares to other metro areas in the US. A metro area (also called a metropolitan statistical area, or MSA) is a geographic boundary created by the US Census. It contains a county with an urban core, and surrounding counties with "a high degree of social and economic integration" (measured by commute to work) [@cbsa2021]. Any mention of "Memphis" in this section refers to the Memphis MSA, which includes eight counties spanning Tennessee, Mississippi, and Arkansas.
+
+```{r cbsa, include=FALSE}
+cbsa <- get_acs(
+  geography = "cbsa",
+  variables = c(
+    Owner = "B25003_002",
+    Renter = "B25003_003"
+  ),
+  summary_var = "B25003_001",
+  cache_table = TRUE
+) %>%
+  slice_max(summary_est, n = 100) %>% 
+  mutate(percent = 100 * (estimate / summary_est))
+```
+
+```{r cbsaRent}
+cbsaRent <- cbsa %>% 
+  filter(variable == "Renter") %>% 
+  select(NAME, summary_est, estimate, percent) %>% 
+  arrange(desc(percent)) %>% 
+  mutate(NAME = str_remove(NAME, "-.*$")) %>% 
+  mutate(NAME = str_remove(NAME, ",.*$")) 
+```
+
+The table below lists the top 50 metros in the US (by number of households), sorted by the percentage of renters.
+
+```{r cbsaDT}
+datatable(
+  cbsaRent,
+  rownames = FALSE,
+  colnames = c('Metro Area', 'Total Households', 'Renters', 'Rent (Pct)'),
+  caption = "Table 1: Percent of Renters in US Metro Areas"
+) %>%
+  formatPercentage(4, mark = ".", interval = 2) %>%
+  formatRound(2:3, digits = 0)
+```
+
+Memphis ranks 43rd in the US for the total number of households in a metro area. However, Memphis has the 10th highest percentage of renters in a metro, with 40% of all households renting. Comparatively, Nashville ranks 36th for total number of households, and 35th for the percentage of renters. Memphis has the largest difference between these ranks for the top 10 metros with the highest rent percentage. Thus we can conclude Memphis has an above average percentage of renters compared to other metros in the US.
+
+### Places in Shelby County
+
+While 40% of households in the Memphis MSA are renters, this percentage varies when we subdivide the metro area. In general, there are more rental units in a central city/county compared to neighboring areas. This section will focus on Shelby County, and any mention of "Memphis" refers exclusively to the city of Memphis.
+
+```{r vPlaces}
+places <- c("Memphis", "Lakeland", "Bartlett", "Germantown", "Collierville", "Millington", "Arlington") %>% 
+  str_c(collapse = "|")
+```
+
+```{r place, include=FALSE}
+place <- get_acs(
+  geography = "place",
+  state = "TN",
+  variables = c(
+    Owner = "B25003_002",
+    Renter = "B25003_003"
+  ),
+  summary_var = "B25003_001",
+  cache_table = TRUE
+) %>% 
+  filter(str_detect(NAME, places)) %>% 
+  mutate(percent = 100 * (estimate / summary_est))
+```
+
+The following table shows the percentage of renters for places in Shelby County.
+
+```{r uninc}
+#' manually adding data for unincorporated Shelby County
+#' Shelby County housing units = 351,194 total; 157,847 rent
+#' Housing Units in places = 315,835 total; 145,705 rent
+#' Housing units not in places = 35,359 total; 12,142 rent
+
+placeUninc <- c('Unincorporated county', 35359, 12142, 34.33921)
+```
+
+```{r placeTable}
+placeTable <- place %>% 
+  filter(variable == "Renter") %>% 
+  select(NAME, summary_est, estimate, percent) %>% 
+  rbind(placeUninc) %>% 
+  arrange(desc(percent)) %>%  
+  mutate(NAME = str_remove(NAME, ",.*$"),
+         NAME = str_remove(NAME, " town| city"))
+```
+
+```{r placeDT}
+datatable(
+  placeTable,
+  rownames = FALSE,
+  colnames = c('Place', 'Total Households', 'Renters', 'Rent (Pct)'),
+  caption = "Table 2: Percent of Renters in Places in Shelby County",
+  options = list(pageLength = 8),
+  autoHideNavigation = getOption("DT.autoHideNavigation", TRUE)
+) %>% formatPercentage(4, mark = ".", interval = 2) %>% 
+  formatRound(2:3, digits = 0)
+```
+
+Though the overall MSA is majority owner-occupied, the city of Memphis is mostly renters, with 53% of all households renting. While this paper does not include a time-series analysis, it's worth mentioning that only within the past decade has Memphis shifted from being majority owner- to majority renter-occupied. For reference, the 2007-2011 5-year ACS reported that Memphis households were 53% owner, 47% renter. This means there was a 6 percentage point increase in rentership over an 8 year period.
+
+The next highest percentage of renters is in Millington, which is home to a [Naval base](https://tennesseeencyclopedia.net/entries/memphis-naval-air-station-millington/), drawing in residents who are often only temporarily stationed (and thus more likely to rent). Just over a third of households in unincorporated Shelby County are renters. Of larger suburbs with more than 10,000 residents, Collierville has the most renters, and the town's rent percentage is more than 6 points higher than Bartlett or Germantown.
+
+Lakeland has the smallest percentage of renting households in the county. However, this percentage is likely to change in the coming years, with developments in Lakeland that will bring more than 800 multifamily units. In response to the massive influx, Lakeland passed an 18-month moratorium on standalone apartment buildings in October 2019 to give the city "a little bit of breathing room" and allow development of the city's schools and infrastructure [@waddell2019]. Under pressure from residents, the moratorium was extended in October 2020 for another two years and expanded to include all new apartment development, including mixed-use projects. In response to citizen concerns, the mayor stated, "There's just no taste in Lakeland for apartments right now" [@waddell2020].
+
+Germantown has also sought to limit new multifamily housing. The city first initiated an 18-month moratorium on all apartment development in January 2018, followed by a shorter moratorium on standalone, single-use multifamily complexes. In January 2020, the city's aldermen voted to ban these complexes altogether by amending zoning ordinances. Apartments and condos are still allowed in certain areas of the city if they are part of mixed-use developments [@warren2020].
+
+Meanwhile, Collierville has been home to Schilling Farms, "the premier mixed-use development in West Tennessee and the Mid-South region," since the early 1990s. The site contains 1,180 apartments and the town recently voted to expand and include another 259 rental units [@warren2021].
+
+The map below shows the percentage of renters in Shelby County census tracts. The map is interactive, and the layers button to the left can be used to change the map background (ESRI.WorldImagery offers a satellite view).
+
+#### Percent of Renters in Shelby County Census Tracts
+
+```{r tract, include=FALSE}
+tract <- get_acs(
+  geography = "tract",
+  state = "TN",
+  county = "Shelby",
+  variables = c(
+    Owner = "B25003_002",
+    Renter = "B25003_003"
+  ),
+  summary_var = "B25003_001",
+  cache_table = TRUE,
+  geometry = TRUE
+) %>% 
+  mutate(percent = 100 * (estimate / summary_est))
+```
+
+```{r map}
+library(mapview)
+mapview(tract, zcol = "percent")
+```
+
+Tracts with the highest percentage of renters are mostly located near the downtown core of Memphis. There are exceptions, notably in Millington and in the southeastern corner of Memphis, near Germantown. The areas with the lowest percentage of renters are in the northeastern portion of Shelby County and in parts of Germantown and Collierville.
+
+## Renter Demographics
+
+This section will explore characteristics of renting households in Memphis. First I look at the race/ethnicity of renters and where certain racial/ethnic groups are more likely to live. Included in this section is an analysis of mortgage discrimination in Memphis, to explain some of the large disparities in homeownership. Then I breakdown how much households spend on housing, and address the amount of government assistance available to renters.
+
+### Race/Ethnicity
+
+Are certain racial/ethnic groups more likely to be renters than others? The table below shows how much certain racial/ethnic groups are present in the total population, compared to how much they are present in the renter population. In a place with no disparity in tenure, we would expect these percentages to be equal (i.e., if Black households make up 60% of all households, they would also comprise 60% of all renters). The last column shows the percentage point difference for each group.
+
+```{r vRaceTotal}
+vRaceTotal <- c(
+  White = "B25003H_001",
+  Black = "B25003B_001",
+  Hispanic = "B25003I_001",
+  Asian = "B25003D_001"
+)
+```
+
+```{r raceTotal, include=FALSE}
+raceTotal <- get_acs(
+  geography = "place",
+  state = "TN",
+  variables = vRaceTotal,
+  summary_var = "B25003_001",
+  cache_table = TRUE
+) %>% 
+  filter(str_detect(NAME, places)) %>% 
+  mutate(percent = 100 * (estimate / summary_est),
+         total = "Total")
+```
+
+```{r vRaceRent}
+vRaceRent <- c(
+  White = "B25003H_003",
+  Black = "B25003B_003",
+  Hispanic = "B25003I_003",
+  Asian = "B25003D_003"
+)
+```
+
+```{r raceRent, include=FALSE}
+raceRent <- get_acs(
+  geography = "place",
+  state = "TN",
+  variables = vRaceRent,
+  summary_var = "B25003_003",
+  cache_table = TRUE
+) %>% 
+  filter(str_detect(NAME, places)) %>% 
+  mutate(percent = 100 * (estimate / summary_est),
+         total = "Rent")
+```
+
+```{r race}
+race <- rbind(raceRent, raceTotal) %>% 
+  filter(str_detect(NAME, "Memphis")) %>% 
+  select(variable, percent, total) %>% 
+  pivot_wider(names_from = total, values_from = percent) %>% 
+  mutate(difference = Total - Rent) %>% 
+  select(variable, Total, everything()) %>% 
+  arrange(desc(Rent))
+```
+
+```{r racePlaces, eval=FALSE, include=FALSE}
+racePlaces <- rbind(raceRent, raceTotal) %>% 
+  select(NAME, variable, percent, total) %>% 
+  pivot_wider(names_from = total, values_from = percent) %>% 
+  mutate(difference = Total - Rent) %>% 
+  select(NAME, variable, Total, everything())
+```
+
+```{r raceTable}
+datatable(
+  race,
+  rownames = FALSE, 
+  colnames = c('Race/Ethnicity', 'Total Households', 'Renters', 'Difference'),
+  caption = "Table 3: Race/Ethnicity of Renters in Memphis",
+  options = list(pageLength = 4),
+  autoHideNavigation = getOption("DT.autoHideNavigation", TRUE)
+) %>% 
+  formatPercentage(2:3, mark = ".", interval = 2) %>% 
+  formatRound(4)
+```
+
+According to the above table, Black households make up 62% of all households in Memphis, yet around 71% of renting households, a difference of 9 percentage points. Hispanic/Latino households are also slightly more likely to rent compared to their representation in the total number of households. Meanwhile, Asian households are slightly less likely to rent compared to their overall representation. The largest disparity is in White households; though they make up about 31% of all households in Memphis, they only account for 20% of all renters, a difference of 10 percentage points.
+
+In summary, there is a significant disparity in tenure of White and Black households compared to their total representation in households. White households are significantly less likely to rent, while black householders are significantly more likely to rent. Hispanic/Latino households are also more likely to rent, and Asian households less likely to rent, but the disparity is much smaller.
+
+The following map shows, for each census tract in Shelby County, what percentage of renters are represented by each racial/ethnic group.
+
+#### Race/Ethnicity of Renters in Shelby County Census Tracts
+
+```{r raceTract, include=FALSE}
+raceTract <- get_acs(
+  geography = "tract",
+  state = "TN",
+  county = "Shelby",
+  variables = vRaceRent,
+  summary_var = "B25003_003",
+  cache_table = TRUE,
+  geometry = TRUE
+) %>% 
+  mutate(percent = 100 * (estimate / summary_est))
+```
+
+```{r mapRace}
+ggplot(raceTract, aes(fill = percent)) +
+  geom_sf() +
+  facet_wrap(~variable) +
+  theme_void() +
+  labs(fill = "Percent",
+       caption = "Source: 2015-2019 5-Year ACS estimates")
+```
+
+The map shows distinct divisions of where certain racial/ethnic groups rent. White renters make up a majority along the Poplar corridor and in areas outside the city limits. Meanwhile, Black renters make up the majority of renting households in North and South Memphis, and in unincorporated parts of the county to the east and along the Mississippi River. Hispanic/Latino renters are most represented in and near the Berclair neighborhood (within the I-240 loop, north of Summer Avenue and west of Highland Street). Asian renters are predominantly outside the city of Memphis, in the suburbs of Germantown, Collierville, and Bartlett.
+
+#### Mortgage Discrimination
+
+There are many reasons why a household may rent instead of own, but mortgage discrimination is certainly a contributor to the large racial disparity in homeownership. Memphis has been subject to historical and recent mortgage discrimination.
+
+When the federal government began insuring home loans in the 1930s, they commissioned color-coded maps that rated the mortgage risk of neighborhoods in every major metro area in America. The manuals used by assessors prioritized newly built suburban neighborhoods and encouraged segregation, calling for lower ratings in neighborhoods with "inharmonious racial groups" [@FHA1938 § 935, 937, 951, 982].
+
+Black neighborhoods were also rated high-risk, even if the neighborhood was solidly middle class with single-family homes. High-risk neighborhoods were shaded red, leading to the term "redlining," and the federal government either denied these loans or charged higher rates to account for the "risk" [@rothstein2017 63-65]. The practice of redlining denied homeownership and intergenerational wealth building to non-White families [@nelson].
+
+![A color-coded map of Memphis created in the 1930s to rate mortgage risk. Original source: National Archives and Records Administration, accessed via [High Ground News](https://www.highgroundnews.com/features/SeeingRedlining.aspx).](img/memphis_redliningmap.jpg)
+
+Overall, 69% of the city was deemed "hazardous" (red) or "definitely declining" (yellow), notably including all of Downtown and the majority of North and South Memphis. Only 7% of the city received an A rating ("best", green), including the Central Gardens neighborhood, areas adjacent to Overton Park, Chickasaw Gardens, and East Memphis neighborhoods adjacent to golf courses. The remaining 24% of the city ("still desirable", blue) contains other Midtown neighborhoods and follows the Poplar Avenue corridor to the east [@nelson].
+
+Unfortunately, mortgage discrimination has continued into the 21st century. In recent years, at least three major lawsuits have been settled by banks accused of discriminatory lending in Memphis [@bradley2019; @uhlmann2020], and another case was recently opened.
+
+Excessive foreclosures following the Great Recession led Memphis and Shelby County to file suit against Wells Fargo for targeting Black neighborhoods for predatory lending practices, which the bank settled for \$425 million in 2012 [@rothacker2012]. After the mortgage crisis, banks became selective of whom they targeted and approved for mortgages, often at the expensive of non-white residents. In 2016, BancorpSouth and First Tennessee Bank settled separate suits for \$10.6 million and \$1.9 million, respectively, against accusations of disproportionately denying loan applications to non-white borrowers and failing to build branches in non-white neighborhoods [@lane2016; @lane2016a].
+
+In October 2021, the Consumer Financial Protection Bureau and Department of Justice filed suit against Trustmark Bank for allegedly discriminating "against Black and Hispanic neighborhoods by deliberately not marketing, offering, or originating home loans to consumers in majority-Black and Hispanic neighborhoods in the Memphis metropolitan area." They also allege the bank "discouraged consumers residing in or seeking credit for properties located in these neighborhoods from applying for credit." The allegations are all in regards to recent behavior, from 2014 to 2018 [@cfpb2021].
+
+### Cost Burden
+
+Do renters pay more of their income to housing than owners? The more a household pays towards housing, the less they will have for other needs, and the less they will be able to put towards savings. If renters want to own yet pay most of their income towards rent, they will have a harder time saving the money necessary for a down payment. Additionally, households that are already cost burdened will have difficulty finding new housing if housing costs are increasing.
+
+In this section I use "cost burden" as a general term to mean "housing costs as a percentage of household income in the past 12 months." The following graphs exclude households who have zero/negative income or who do not pay rent. For this reason, percentages mentioned may not total 100%.
+
+#### All Households
+
+The federal government determines affordable housing to be no more than 30% of a person's income. Someone paying over 30% is considered cost burdened; more than 50% is extremely cost burdened. These measures are not perfect---smaller income households may find 30% is still stressful, while larger income households can pay over 30% and still be well off.
+
+The graph below shows housing cost burden for households in Memphis, separated by tenure.
+
+```{r vGRAPHIown}
+vGRAPHIown <- c(
+  "<$35,000!!Affordable" = "B25106_003",
+  "<$35,000!!Affordable" = "B25106_004",
+  "<$35,000!!Burden" = "B25106_005",
+  "<$35,000!!Affordable" = "B25106_008",
+  "<$35,000!!Affordable" = "B25106_009",
+  "<$35,000!!Burden" = "B25106_010",
+  "$35,000 to $74,999!!Affordable" = "B25106_012",
+  "$35,000 to $74,999!!Affordable" = "B25106_013",
+  "$35,000 to $74,999!!Burden" = "B25106_014",
+  "$35,000 to $74,999!!Affordable" = "B25106_016",
+  "$35,000 to $74,999!!Affordable" = "B25106_017",
+  "$35,000 to $74,999!!Burden" = "B25106_018",
+  "$75,000+!!Affordable" = "B25106_020",
+  "$75,000+!!Affordable" = "B25106_021",
+  "$75,000+!!Burden" = "B25106_022"
+)
+```
+
+```{r GRAPHIown, include=FALSE}
+GRAPHIown <- get_acs(
+  geography = "place",
+  state = "TN",
+  variables = vGRAPHIown,
+  summary_var = "B25106_002",
+  cache_table = TRUE
+) %>% 
+  filter(str_detect(NAME, "Memphis")) %>% 
+  mutate(tenure = "Owner")
+```
+
+```{r vGRAPHIrent}
+vGRAPHIrent <- c(
+  "<$35,000!!Affordable" = "B25106_026",
+  "<$35,000!!Affordable" = "B25106_027",
+  "<$35,000!!Burden" = "B25106_028",
+  "<$35,000!!Affordable" = "B25106_030",
+  "<$35,000!!Affordable" = "B25106_031",
+  "<$35,000!!Burden" = "B25106_032",
+  "$35,000 to $74,999!!Affordable" = "B25106_034",
+  "$35,000 to $74,999!!Affordable" = "B25106_035",
+  "$35,000 to $74,999!!Burden" = "B25106_036",
+  "$35,000 to $74,999!!Affordable" = "B25106_038",
+  "$35,000 to $74,999!!Affordable" = "B25106_039",
+  "$35,000 to $74,999!!Burden" = "B25106_040",
+  "$75,000+!!Affordable" = "B25106_042",
+  "$75,000+!!Affordable" = "B25106_043",
+  "$75,000+!!Burden" = "B25106_044"
+)
+```
+
+```{r GRAPHIrent, include=FALSE}
+GRAPHIrent <- get_acs(
+  geography = "place",
+  state = "TN",
+  variables = vGRAPHIrent,
+  summary_var = "B25106_024",
+  cache_table = TRUE
+) %>% 
+  filter(str_detect(NAME, "Memphis")) %>% 
+  mutate(tenure = "Renter")
+```
+
+```{r GRAPHItotal}
+GRAPHItotal <- rbind(GRAPHIown, GRAPHIrent) %>% 
+  select(tenure, variable, estimate, summary_est) %>% 
+  separate(variable, into = c("income", "burden"), sep = "!!") %>% 
+  group_by(tenure, summary_est, income, burden) %>% 
+  summarise(estimate = sum(estimate)) %>% 
+  ungroup() %>% 
+  mutate(percentTen = 100 * (estimate / summary_est),
+         percentTot = 100 * (estimate / 251732))
+```
+
+```{r CB1, fig.cap="Cost burden by tenure", preview=TRUE}
+ggplot(GRAPHItotal, aes(x = burden, y = estimate, fill = tenure)) +
+  geom_col(position = "stack") +
+  theme_minimal() +
+  scale_fill_manual(values = c("mediumturquoise", "salmon")) +
+  labs(title = "Cost burden by tenure",
+       subtitle = "Memphis, TN",
+       caption = "2015-2019 5-year ACS estimates",
+       y = "",
+       x = "",
+       fill = "Tenure")
+```
+
+Overall, the majority of households in Memphis have affordable housing, with 62% paying less than 30% of their income towards housing, compared to 35% who are cost burdened. However, separating households by tenure reveals that the majority of households with affordable housing are owner-occupied units. In fact, more renters are cost burdened than have affordable housing. Comparatively, very few homeowners are cost burdened.
+
+As mentioned above, households with higher incomes can afford to pay more of their income towards housing; while they may be literally cost burdened, they can still easily meet their other needs. The figure below divides the above graph in three income brackets.
+
+```{r CB2, fig.cap="Cost burden by income by tenure"}
+ggplot(GRAPHItotal, aes(x = burden, y = estimate, fill = tenure)) +
+  geom_col(position = "stack") +
+  facet_grid(~income) +
+  theme_minimal() +
+  scale_fill_manual(values = c("mediumturquoise", "salmon")) +
+  labs(title = "Cost burden by income by tenure",
+       subtitle = "Memphis, TN",
+       caption = "2015-2019 5-year ACS estimates",
+       y = "",
+       x = "",
+       fill = "Tenure")
+```
+
+As shown above, households earning less than \$35,000 are mostly renters, and the vast majority of these renters are cost burdened. While there are also many owner-occupied households earning less than \$35,000, their housing costs are more often affordable.
+
+Households in the middle income range are much more likely to have affordable housing. There are nearly an identical number of owners and renters with affordable units. Slightly more renters are cost burdened, but the difference is very small compared to low-income earners.
+
+Nearly all housing is affordable for households earning more than \$75,000, no matter the tenure. For the few households who are cost burdened, they are likely still financially secure. At this income range, households are much more likely to own than to rent.
+
+#### Renters
+
+Next, let's take a deeper look into housing costs paid by renters. Recall that households who pay more than 50% of their income in rent are considered extremely cost burdened. These households are shown in the graph below.
+
+```{r vGRAPHIdet}
+vGRAPHIdet <- c(
+  "Affordable" = "B25070_002",
+  "Affordable" = "B25070_003",
+  "Affordable" = "B25070_004",
+  "Affordable" = "B25070_005",
+  "Affordable" = "B25070_006",
+  "Burden" = "B25070_007",
+  "Burden" = "B25070_008",
+  "Burden" = "B25070_009",
+  "Extreme burden" = "B25070_010"
+)
+```
+
+```{r GRAPHIdet, include=FALSE}
+GRAPHIdet <- get_acs(
+  geography = "place",
+  state = "TN",
+  variables = vGRAPHIdet,
+  summary_var = "B25070_001",
+  cache_table = TRUE
+) %>% 
+  filter(str_detect(NAME, "Memphis"))
+```
+
+```{r GRAPHIdetMem}
+GRAPHIdetMem <- GRAPHIdet %>% 
+  select(variable, estimate) %>% 
+  group_by(variable) %>% 
+  summarise(estimate = sum(estimate)) %>% 
+  ungroup() %>% 
+  mutate(percent = 100*(estimate/134371))
+```
+
+```{r ggGRAPHIdetMem, fig.cap="Cost burden for renters"}
+ggplot(GRAPHIdetMem, aes(x = variable, y = percent, fill = variable)) +
+  geom_col(show.legend = FALSE) +
+  theme_minimal() +
+  scale_y_continuous(labels = function(y) paste0(y, "%")) +
+  scale_fill_manual(values = c("mediumseagreen", "goldenrod", "tomato")) +
+  labs(title = "Cost burden for renters",
+       subtitle = "Memphis, TN",
+       caption = "2015-2019 5-year ACS estimates",
+       y = "",
+       x = "",
+       fill = "")
+```
+
+Just over 40% of renting households in Memphis have affordable housing, while the majority, 51%, are cost burdened in some way. When we break down cost burden, we see there are more renters who are extremely cost burdened than those who face a moderate burden.
+
+As before, let's separate our graph by income. This time I will take a more detailed look at income groups.
+
+```{r vGRAPHIdet2}
+vGRAPHIdet2 <- c(
+  "<$10,000!!Affordable" = "B25074_003",
+  "<$10,000!!Affordable" = "B25074_004",
+  "<$10,000!!Affordable" = "B25074_005",
+  "<$10,000!!Burden" = "B25074_006",
+  "<$10,000!!Burden" = "B25074_007",
+  "<$10,000!!Burden" = "B25074_008",
+  "<$10,000!!Extreme burden" = "B25074_009",
+  "$10,000-$19,999!!Affordable" = "B25074_012",
+  "$10,000-$19,999!!Affordable" = "B25074_013",
+  "$10,000-$19,999!!Affordable" = "B25074_014",
+  "$10,000-$19,999!!Burden" = "B25074_015",
+  "$10,000-$19,999!!Burden" = "B25074_016",
+  "$10,000-$19,999!!Burden" = "B25074_017",
+  "$10,000-$19,999!!Extreme burden" = "B25074_018",
+  "$20,000-$34,999!!Affordable" = "B25074_021",
+  "$20,000-$34,999!!Affordable" = "B25074_022",
+  "$20,000-$34,999!!Affordable" = "B25074_023",
+  "$20,000-$34,999!!Burden" = "B25074_024",
+  "$20,000-$34,999!!Burden" = "B25074_025",
+  "$20,000-$34,999!!Burden" = "B25074_026",
+  "$20,000-$34,999!!Extreme burden" = "B25074_027",
+  "$35,000-$49,999!!Affordable" = "B25074_030",
+  "$35,000-$49,999!!Affordable" = "B25074_031",
+  "$35,000-$49,999!!Affordable" = "B25074_032",
+  "$35,000-$49,999!!Burden" = "B25074_033",
+  "$35,000-$49,999!!Burden" = "B25074_034",
+  "$35,000-$49,999!!Burden" = "B25074_035",
+  "$35,000-$49,999!!Extreme burden" = "B25074_036",
+  "$50,000-$74,999!!Affordable" = "B25074_039",
+  "$50,000-$74,999!!Affordable" = "B25074_040",
+  "$50,000-$74,999!!Affordable" = "B25074_041",
+  "$50,000-$74,999!!Burden" = "B25074_042",
+  "$50,000-$74,999!!Burden" = "B25074_043",
+  "$50,000-$74,999!!Burden" = "B25074_044",
+  "$50,000-$74,999!!Extreme burden" = "B25074_045",
+  "$75,000-$99,999!!Affordable" = "B25074_048",
+  "$75,000-$99,999!!Affordable" = "B25074_049",
+  "$75,000-$99,999!!Affordable" = "B25074_050",
+  "$75,000-$99,999!!Burden" = "B25074_051",
+  "$75,000-$99,999!!Burden" = "B25074_052",
+  "$75,000-$99,999!!Burden" = "B25074_053",
+  "$75,000-$99,999!!Extreme burden" = "B25074_054",
+  "$100,000+!!Affordable" = "B25074_057",
+  "$100,000+!!Affordable" = "B25074_058",
+  "$100,000+!!Affordable" = "B25074_059",
+  "$100,000+!!Burden" = "B25074_060",
+  "$100,000+!!Burden" = "B25074_061",
+  "$100,000+!!Burden" = "B25074_062",
+  "$100,000+!!Extreme burden" = "B25074_063"
+)
+```
+
+```{r GRAPHIdet2, include=FALSE}
+GRAPHIdet2 <- get_acs(
+  geography = "place",
+  state = "TN",
+  variables = vGRAPHIdet2,
+  summary_var = "B25074_001",
+  cache_table = TRUE
+) %>% 
+  filter(str_detect(NAME, "Memphis"))
+```
+
+```{r GRAPHIdetMem2}
+GRAPHIdetMem2 <- GRAPHIdet2 %>% 
+  select(variable, estimate) %>% 
+  group_by(variable) %>% 
+  summarise(estimate = sum(estimate)) %>% 
+  ungroup() %>% 
+  separate(variable, into = c("income", "burden"), sep = "!!")
+```
+
+```{r factorIncome}
+GRAPHIdetMem2$income <- factor(
+  GRAPHIdetMem2$income,
+  levels = c(
+    "$100,000+",
+    "$75,000-$99,999",
+    "$50,000-$74,999",
+    "$35,000-$49,999",
+    "$20,000-$34,999",
+    "$10,000-$19,999",
+    "<$10,000"
+  )
+)
+```
+
+```{r ggGRAPHIdetMem2, fig.cap="Cost burden by income for renters"}
+ggplot(GRAPHIdetMem2, aes(x = income, y = estimate, fill = burden)) +
+  geom_col(position = "stack") +
+  coord_flip() +
+  theme_minimal() +
+  scale_fill_manual(values = c("mediumseagreen", "goldenrod", "tomato")) +
+  labs(title = "Cost burden by income for renters",
+       subtitle = "Memphis, TN",
+       caption = "2015-2019 5-year ACS estimates",
+       y = "",
+       x = "",
+       fill = "Housing Costs") 
+```
+
+Below \$20,000, the vast majority of renters face extreme cost burden and there are very few with affordable housing. The largest percentage of renters in Memphis earn between \$20,000 to \$34,999, and nearly all of these renters are still cost burdened, though most no longer face extreme burden. Only above \$35,000 are a majority of renters affordably housed, with a very small rate of extreme burden. Above \$50,000, the vast majority of renters have affordable housing and cost burden is infrequent, and it is practically nonexistent above \$75,000. However, there are few renters at this income range compared to lower income ranges.
+
+In order to be affordably housed, a household earning \$35,000 should pay no more than \$875 per month. Half, 50%, of renting households in Memphis earn below \$35,000. This graph suggests there is a large shortage of rental homes below this price.
+
+#### Race
+
+A recent Zillow research report discussed where rent burden is most unequal in major metro areas across the US [@zillowresearch2021]. The data used combines ACS rent and income data, migration data, and Zillow rent data to estimate cost burden for renters by race. The research is useful because it offers a more up-to-date analysis of cost burden than is currently available from the Census.
+
+Note that while my analysis in this section has focused on the city of Memphis, this graph is for the Memphis metro area.
+
+![Figure from [Zillow Research](https://www.zillow.com/research/rent-affordability-by-race-2021-30207/)](img/aff.png)
+
+The above graph shows consistent disparities in rent affordability between Black and White households in the Memphis MSA. The latest data from August 2021 shows the average Black renter is cost burdened, paying 32.1% of their income towards rent, while the average White renter is affordably housed, paying 24.2% towards rent. Affordability for White renters has remained constant since around January 2019, hovering around 24%. Over the same period, cost burden for Black renters has worsened from 30.3% to 32.1%.
+
+#### Government Assistance
+
+In the face of such high rates of rent burden, some may wonder how much the government is assisting with housing costs. The Memphis Housing Authority (MHA) is the local agency that manages public housing and housing vouchers. According to the agency's annual plan, the MHA manages 2,565 public housing units and provides 8,031 vouchers, for a total of 10,596 government-supported units. Due to funding limits, the MHA is not able to fully meet the housing needs of residents in the city. MHA's public housing and HCV programs each have waiting lists, yet even the waiting lists are closed. The HCV waiting list was last opened in 2017 and currently has over 15,000 people on the list [@MHA2020].
+
+## Housing Characteristics
+
+This final section looks into certain qualities of rental housing in Memphis. First I will look into the type of housing renters live in and the year the structures were built. Then I will use data from the American Housing survey to identify common housing quality problems that renters experience.
+
+### Units in Structure
+
+Typically apartment complexes are associated with renter-occupied housing, but how true is this for Memphis? The graph below divides housing structures into four categories: single-family; duplex, triplex, and quadplexes, which often resemble single-family homes; larger multifamily structures with five or more units; and alternative housing like mobile homes, boats, vans, etc.
+
+```{r vUnits}
+vUnits <- c(
+  "Single-family" = "B25032_014",
+  "Single-family" = "B25032_015",
+  "Duplex-Quadplex" = "B25032_016",
+  "Duplex-Quadplex" = "B25032_017",
+  "Larger Multifamily" = "B25032_018",
+  "Larger Multifamily" = "B25032_019",
+  "Larger Multifamily" = "B25032_020",
+  "Larger Multifamily" = "B25032_021",
+  "Mobile home, boat, etc." = "B25032_022",
+  "Mobile home, boat, etc." = "B25032_023"
+)
+```
+
+```{r unitsMem, include=FALSE}
+unitsMem <- get_acs(
+  geography = "place",
+  state = "TN",
+  variables = vUnits,
+  summary_var = "B25032_013",
+  cache_table = TRUE
+) %>% 
+  filter(str_detect(NAME, "Memphis"))
+```
+
+```{r units}
+units <- unitsMem %>% 
+  group_by(summary_est, variable) %>% 
+  summarise(estimate = sum(estimate)) %>% 
+  ungroup() %>% 
+  mutate(percent = 100*(estimate/summary_est))
+```
+
+```{r factorUnits}
+units$variable <- factor(
+  units$variable,
+  levels = c(
+    "Mobile home, boat, etc.",
+    "Larger Multifamily",
+    "Duplex-Quadplex",
+    "Single-family"
+  )
+)
+```
+
+```{r ggUnits, fig.cap="Units in structure"}
+ggplot(units, aes(x = variable, y = estimate)) +
+  geom_col(fill = "darkcyan") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Units in structure for renter-occupied housing",
+       subtitle = "Memphis, TN",
+       caption = "2015-2019 5-year ACS estimates",
+       y = "",
+       x = "")
+```
+
+The largest proportion of renters, 43%, live in single-family homes. While the majority of renters live in multifamily units, 16% are in duplexes-quadplexes, and 40% are in larger multifamily structures with five or more units. Less than 1% of renters live in a mobile home, RV, boat, van, or some other form of housing.
+
+### Year Structure Built
+
+How old are the units in which renters live? Older structures are more likely to need maintenance, and they can be susceptible to health risks that are not in newer homes. For instance, the ban on lead based paint was not passed until 1979, and homes built before the ban are likely to have lead paint unless they have been remediated.
+
+```{r}
+vBuilt <- c(
+  "2010 or later" = "B25036_014",
+  "2010 or later" = "B25036_015",
+  "2000-2009" = "B25036_016",
+  "1990-1999" = "B25036_017",
+  "1980-1989" = "B25036_018",
+  "1970-1979" = "B25036_019",
+  "1960-1969" = "B25036_020",
+  "1950-1959" = "B25036_021",
+  "1940-1949" = "B25036_022",
+  "1939 or earlier" = "B25036_023"
+)
+```
+
+```{r}
+built <- get_acs(
+  geography = "place",
+  state = "TN",
+  variables = vBuilt,
+  summary_var = "B25036_013",
+  cache_table = TRUE
+) %>% 
+  filter(str_detect(NAME, "Memphis"))
+```
+
+```{r}
+built2 <- built %>% 
+  group_by(summary_est, variable) %>% 
+  summarise(estimate = sum(estimate)) %>% 
+  ungroup() %>% 
+  mutate(percent = 100 * (estimate / summary_est))
+```
+
+```{r fig.cap="Year structure built"}
+ggplot(built2, aes(x = estimate, y = variable)) +
+  geom_col(fill = "peru") +
+  theme_minimal() +
+  labs(title = "Year structure built of renter-occupied housing",
+       subtitle = "Memphis, TN",
+       caption = "2015-2019 5-year ACS estimates",
+       y = "",
+       x = "")
+```
+
+Most renters live in older housing structures. Overall, 62% of renter-occupied housing was built before 1980 (and thus are at risk for lead paint problems). Only 3% of renter-occupied housing was built within the past decade, indicative of the construction shortage after the Great Recession. Overall, the median year built for occupied rental units is 1974, 47 years ago, and unless these homes have been properly maintained they are at risk of housing quality problems.
+
+### Housing Quality Problems
+
+Every five years, the American Housing Survey (AHS) provides data on housing quality problems in the Memphis MSA. The most recent survey was completed in 2019. Note that while most of the analysis on this page is specifically for Memphis, the AHS surveys the entire metro region.
+
+```{r AHSimport, include=FALSE}
+AHSimport <- read_csv("data/AHS-mem-hsgqual-all.csv")
+```
+
+```{r AHSall}
+AHSall <- AHSimport %>% 
+  filter(tenure == "Renter") %>% 
+  select(char:estimate, total) %>% 
+  mutate(percent = 100 * (estimate/total))
+```
+
+According to the AHS, 93.53% of renters in the Memphis MSA had adequate housing, while 6.47% had moderately or severely inadequate housing. The table below shows the most common problems renters experience. Rows marked with an asterisk (\*) are related to exterior problems; the AHS only collects this data for single-family structures.
+
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Characteristic                                                                                        | Estimate | Percentage |
++=======================================================================================================+==========+============+
+| Signs of cockroaches in last 12 months                                                                | 50,900   | 22.72%     |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Signs of mice or rats inside home in last 12 months                                                   | 24,400   | 10.89%     |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Water leakage from inside structure in last 12 months                                                 | 19,500   | 8.71%      |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Water leakage from outside structure in last 12 months                                                | 18,900   | 8.44%      |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Uncomfortably cold for 24 hours or more last winter (occupying the same home, with heating equipment) | 12,300   | 6.61%      |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Broken windows\*                                                                                      | 7,600\*  | 6.46%\*    |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Open cracks or holes (interior)                                                                       | 14,400   | 6.43%      |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| With fuse or breaker blown in last 3 months                                                           | 14,100   | 6.30%      |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Missing roofing material\*                                                                            | 7,000\*  | 5.95%\*    |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Mold in last 12 months                                                                                | 11,800   | 5.27%      |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Hole in roof\*                                                                                        | 4,200\*  | 3.57%\*    |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Missing bricks, siding, or other outside wall material\*                                              | 3,900\*  | 3.32%\*    |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| With no toilet working some time in last 3 months                                                     | 7,000    | 3.13%      |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Rooms without electric outlets                                                                        | 6,600    | 2.95%      |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| With water stoppage in last 3 months                                                                  | 6,400    | 2.86%      |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Broken plaster or peeling paint (interior)                                                            | 5,300    | 2.37%      |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Sewage breakdown in last 3 months                                                                     | 5,100    | 2.34%      |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+| Exposed wiring                                                                                        | 3,900    | 1.74%      |
++-------------------------------------------------------------------------------------------------------+----------+------------+
+
+: Table 4: Housing Quality Problems in Memphis MSA
+
+The AHS reports that pests are the most common problem renters experience: 23% reported recently spotting signs of cockroaches, and 11% for mice or rats. Water leakage problems affected 8-9% of renters, likely contributing to the 5% who reported mold. Many homes are not properly sealed, with 6% of renters reporting broken windows and open cracks or holes. This can contribute to pest problems and residents being uncomfortably cold in their homes.
+
+If the percentage of renters experiencing a problem seems small compared to the overall number of renters, it's useful to look at the estimates. For instance, the number of renter-occupied units who have seen signs of mice or rats within the past year is larger than the total number of households in any one of Memphis's incorporated suburbs in Shelby County. The number of renters who have recently experienced mold is roughly equal to the total number of households in Millington, Arlington, and Lakeland, combined.
+
+# Housing Quality Regulations
+
+## Uniform Residential Landlord and Tenant Act (URLTA)
+
+The Uniform Residential Landlord and Tenant Act (URLTA) was created in 1972 by the Uniform Law Commission to modernize laws governing rental units. Prior to URLTA, landlords and tenants were bound by common law developed in an agricultural society, based on a theory that a rental lease gave the tenant land, and any buildings or improvements were incidental. Landlords had no obligation to maintain structures; for example, a Tennessee Supreme Court case from 1854 found a tenant responsible for paying all rent due on his lease, despite his home having been flooded and made uninhabitable [@scott2003].
+
+URLTA changed many of the agrarian common law principles, notably creating a warranty of habitability for tenants. Under the warranty of habitability, landlords are required to provide and maintain habitable conditions for the premises. If conditions become uninhabitable, URLTA provides remedies to the tenant, including termination of the lease [@scott2003].
+
+Tennessee was one of the first ten states to enact a version of URLTA, adopting it in 1975. However, Tennessee is unique in that it is the only state that limits URLTA's application based on population; the law only applies to counties with more than 75,000 people based on the 2010 census. [@uniform1975a] While renters in Shelby County qualify for protection under URLTA, residents of neighboring Tennessee counties are excluded.[^1]
+
+[^1]: The Memphis MSA covers three states: Tennessee, Mississippi, and Arkansas. Residents in Mississippi counties are protected under URLTA with no population exemptions. However, Arkansas is the only state in the U.S. with no warranty of habitability for renters, and thus landlords are not legally required to maintain habitable conditions.
+
+Under Tennessee's URLTA, landlords are required to comply with building and housing codes, make repairs, and keep the premises clean and safe [@uniform1975a §304]. They must provide "essential services," which include utilities and obligations which "materially affect the health and safety of the tenant" [@uniform1975a §502(3)]. If a landlord fails to supply essential services, tenants "shall give written notice to the landlord specifying the breach" and do one of the following: obtain essential services and deduct their cost from the rent; recover damages based on the decrease in the fair rental value; or procure reasonable substitute housing, during which the tenant is excused from paying rent during the period of noncompliance [@uniform1975a §502(1)].
+
+Tenants who give their landlord written notice and follow the remedies laid out in the code are supposed to be protected from retaliation, including rent increases, decreased services, or eviction [@uniform1975a §514]. This may adequately protect tenants under a long-term lease; however, protections are more vague for tenants on short-term leases. Landlords are allowed to evict week-to-week or month-to-month tenants for no cause, as long as adequate notice is given (10 or 30 days, respectively) [@uniform1975a §512].
+
+### Limits of Legislation
+
+If the landlord fails to comply with building and housing codes that materially affect health and safety, tenants may: 1. acquire essential services and deduct their cost from rent; 2. recover damages for the loss in the fair rental value, provided the tenant stays; or 3. move to "reasonable substitute housing" and stop paying rent.
+
+As shown in the [previous section](https://sarahjohnson.io/capstone/2021-11-12-memphis-quant/#cost-burden), most renters in Memphis are cost burdened, usually extremely so, and one would expect "reasonable substitute housing" would be housing in habitable standards. But what if there is no "reasonable substitute housing" for tenants to move to? How strong are the protections for tenants who wish to stay?
+
+#### Retaliation
+
+After notifying landlords of the problem, tenants who choose to stay are left with two options. The first option is for tenants to pay for repairs themselves and deduct their cost from rent. This places them in default of rent, and they must prove receipts for the essential services they procure. The second option is to "recover damages," meaning bringing legal action. Both of these options are likely to upset a landlord, placing the tenant at risk of retaliation.
+
+URLTA has conflicting clauses regarding rent, eviction, and neglected maintenance. Tenants have a right to deduct from rent repairs for essential services (§66-28-502) and tenants are guaranteed protection against retaliation (§66-28-501), but if the tenant is in default in rent they can still be evicted (§66-28-514-(b)(1)(B)). And landlords do not need a reason to evict month-to-month tenants in the first place, provided they give proper notice (§66-28-512).
+
+How are tenants meant to be protected from retaliation if landlords need no cause to evict in the first place? How long do retaliation protections last? These questions have lead some states, like California and Washington, to enact "just cause" eviction ordinances, requiring landlords to provide a specific, valid reason to evict tenants (such as non-payment of rent) [@apstaff2021].
+
+With the absence of such protections in Tennessee, lawyers at local renter rights meetings recommend tenants continue paying rent and keep a record of any photos, receipts, and conversations with their landlord to improve their chances in court.
+
+#### Building Codes vs. Health Codes
+
+The state law is also vague about a landlord's obligation to comply with "applicable building and housing codes materially affecting health and safety." Building and housing codes are created and enforced at the city level.
+
+What happens when the building codes do not adequately protect tenant health? In 2018, Memphis replaced local housing codes by adopting the International Property Maintenance Code (IPMC) [@harrison2018]. The IPMC, developed by the International Code Council (ICC), sets minimum housing standards for existing residential buildings and related environmental conditions.
+
+The IPMC is focused on the structure, not the tenant. The building code is extensive and technical. While it is meant to provide for minimum housing standards, it is inadequate at protecting or prioritizing tenant health and safety. Rather, the Healthy Homes Rating System (HHRS) was made for this purpose.
+
+To give an example of the ICC's limitations the [ICC's pamphlet on Mold says](https://www.iccsafe.org/wp-content/uploads/BSM_Mold_Brocure_lores.pdf): 1. There must be proper ventilation of all interior habitable and occupiable areas along with specific concealed spaces. (IBC §1202, IRC R303) 2. The exterior envelope of all buildings must be provided with vapor retarders, water-resistive barriers, and the necessary flashing. (IBC §R701, 703) 3. The maintenance of existing buildings and structures is of the utmost importance. This includes not only the exterior of the structure but also its plumbing and mechanical systems. (IPMC §304, 403, 504)
+
+Nowhere does the code actually say landlords have a responsibility to remediate mold, even though it's in the obvious health and safety interest for tenants. If health violations are meant to be enforced by the health department, the Tennessee Department of Health's website on mold explicitly states: "Give a written request to your landlord for repairs that are needed and keep a copy for your records. It is not recommended that you stop paying rent. The Tennessee Department of Health does not have authority to inspect and require landlords to address mold issues in rental property. Laws to address mold directly are not common." [@tnhealthdpmt] This statement and the lack of attention given to mold by modern governmental agencies is alarming, considering that mold is an ancient issue human have faced. Even the biblical book of Leviticus offers home mold remediation guidance for priests.[^2] If the Health Department and the IPMC do not protect renter health, who does?
+
+[^2]: See Leviticus 14:33-57 "Cleansing From Defiling Molds." Homes should be emptied before the priest inspection. If molds on the walls are green or reddish depressions that appear to be deeper than the surface of the wall, the priest should leave and close the house for seven days. If the mold spread, the contaminated stones should be torn out and all inside walls should be scraped and dumped outside of town. Then replace with clean stones and apply new plaster and clay. If the mold returns, the priest should confirm and the house should be completely taken apart and dumped. Anyone who has been in the house needs to be cleaned. If the mold does not return, the priest can declare the house clean and purify it. Warning that purification requires bird sacrifice. Also 13:47-59 "Regulations About Defiling Molds" for fabrics.
+
+The Shelby County Department of Housing's LEAD based paint program remediated lead paint hazards for low-income homeowners. For homes that qualified, HUD allowed any additional grant funding available to be used to repair home health hazards. Inspectors take before and after photos of home health hazards. When I was a graduate assistant at the SCDH from 2018-2019, it was my job to tag photos with a number, from 1-29, for which HHRS violation was identified and corrected. [Recall](https://sarahjohnson.io/capstone/2021-11-02-health/#healthy-homes) that Healthy Homes Hazard #1 is "Damp and mold growth."
+
+If inspectors from one department are allowed to use the HHRS to guide home inspections and repair need for housing within Shelby County, can not inspectors from all departments? Particularly in the absence of adequate protections in existing building code.
+
+## Code Enforcement
+
+While state and local laws vary, the use of code enforcement to enforce local housing codes is standard across American cities. The City of Memphis' states that the Department of Code Enforcement's purpose is to protect the public health, safety, and welfare related to existing structures [@codeenf]. The website says the department administers and enforces the IPMC to enforce conditions "which may contribute to deterioration and devaluation of properties in the community," though there is no mention of resident health.
+
+In Memphis, like in many other American cities, residents are told to call '311' to report any problems to a city. This method of self-reporting, while convenient for residents, can create biases in the data and the types of issues code enforcement pursues. A recent study of Kansas City 311 data found that, despite greater need, low-income and minority neighborhoods are less likely to report street condition or "nuisance" issues, while prioritizing more serious problems [@kontokosta2021]. Two extensive reports of Memphis code enforcement found that reliance on self-reporting led inspectors to spend a disproportionate amount of time on minor cases, rather than more serious violations [@betts2001; @stacy2018].
+
+The Memphis reports, though released nearly two decades apart, contained similar findings and recommendations. Each saw the vast majority of violations were related to nonstructural issues like weeds, junk, and vehicles: the 2001 paper found three out of four properties were cited for these problems, and the 2018 paper stated 81% of all requests were nonstructural [@betts2001 93; @stacy2018 48]. Apartment complexes tend to be underreported compared to single-family homes or duplexes [@stacy2018 58]. The @betts2001 paper conducted a visual survey of properties in the Binghampton neighborhood, and while at least half of multi-family properties had violations in multiple units, code enforcement recorded only eight violations out of 1200 apartment units. Both reports recommended fundamentally changing code enforcement from a reactive process built on citizen reporting to a proactive, strategic system [@betts2001 9; @stacy2018 13].
+
+Memphis has already taken this to heart by founding the [Strategic Code Enforcement Management Academy](http://strategiccodeenforcement.com/) (SCEMA) in 2017, which invites individuals from cities around the country to learn and share best practices for code enforcement.
+
+### Code Enforcement Process
+
+Despite an emphasis on strategic enforcement, code enforcement cases according to the city's website still begin with a citizen report, either by calling 311 or using the app [SeeClickFix](https://seeclickfix.com/). Once a complaint is received, an investigation is conducted to assess the violation, determine property ownership, and research past violations at the property. If a violation is found, a code inspector will issue a "Notice to Correct Violation" to the property owner.
+
+After a notice is issued, follow-up inspections are conducted to determine compliance. Depending on the circumstances and severity, the department can then: give an extension; cite the owner to court; issue an order to vacate; issue an order to not occupy until repairs are made; or refer the property to the Condemnation Department. Cases where court action is initiated are resolved in the General Sessions Environmental Court [@codeenf].
+
+# Memphis Code Enforcement Data
+
+## Original Capstone work
+
+Memphis code enforcement data is publicly available through the city's open data portal. [The dataset](https://data.memphistn.gov/dataset/Service-Requests-since-2016/hmd4-ddta) includes all 311 service requests since 2016; it is updated daily, and contains over 1.3 million rows as of January 2022. For the submitted version of my capstone, I original intention was to analyze this dataset to answer a few questions related to renter-occupied housing:
+
+-   How often do renters report problems to code enforcement?
+
+-   What are the most common problems renters report?
+
+-   How are these requests resolved?
+
+-   How long does the process take?
+
+Unfortunately, I could not find a way to answer these questions before the due date of my paper. The dataset's size was overwhelming, and organized in a way that obscured the answers. Instead, I critiqued how the dataset's structure made it difficult to find basic information about rental repairs, which limited the city's capacity to have a strategic code enforcement department. This was not the paper I wanted to write, but it was the path I felt I had to take due to time constraints.
+
+I have since come to appreciate how far Memphis has come in modernizing the code enforcement process and the limitations of the current system, particularly after watching the documentary [In The Absence](https://www.highgroundnews.com/features/NPIHousingFilmPremier.aspx). I feel my original critiques were too harsh, which is why I've taken the time to rewrite this and other sections of the original paper.
+
+However, the importance of being able to answer these questions cannot be understated. A home's quality directly effects the day-to-day health and safety of its inhabitants. Renters, through the nature of their lease, largely rely on their landlord to maintain a home's quality. If a landlord neglects this duty and the tenant cannot afford to move, they are supposed to be able to turn to the state for protection.
+
+But what is the efficacy of this protection? How well does the City of Memphis and the State of Tennessee protect a renter's right to a safe and healthy home? Open datasets are meant to allow citizens to hold their government accountable. But from this dataset, I could not even determine how many renters had made requests to code enforcement.
+
+It is possible that the majority of renters who report problems see their requests resolved and are protected from retaliation. If we had this data, it could be used to soothe the concerns of tenants who do not report because they worry that enforcing their rights means destabilizing their housing.
+
+It is also possible that renters are not adequately protected; problems might not be resolved timely, the resolutions may not adequately decrease health risk, and renters who do report may commonly face retaliation. If this were the case, this data could be used to challenge the status quo and push for stronger renters rights.
+
+Yet the data, as is, cannot be used to answer these questions. The extent of the problem is a black box, and judgments cannot be made one way or the other. Originally I proposed some small changes in data entry methods that would allow researchers to find the answers to my original questions. For instance, while citizens can categorize a service request as being related to a "junky yard" or a "vehicle violation", there is not a clear cut category for rental repair requests. Instead, these are often filed under "miscellaneous." Adding a "rental request" option could be a simple way to address this problem.
+
+Still, I was not satisfied with this conclusion. There *is* useful information in the dataset, I just had to find a way to extract it. This has been my primary project post-graduation, and I have documented my progress under the "Research" tab of this website, with posts tagged "[code enforcement](https://sarahjohnson.io/research.html#category:code_enforcement)".
+
+## Post-graduation progress
+
+In the [first post](https://sarahjohnson.io/posts/2021-12-03-311-data/) I introduced the dataset and gave a brief description of all 53 columns, to determine which were the most relevant to my work. The [second post](https://sarahjohnson.io/posts/2021-12-04-311-data-2/) introduced how I manipulate the dataset using R, and looked at the most common service requests categories. There was some basic filtering to find housing-related requests and filter out duplicates, but this process was largely superseded by the [third post](https://sarahjohnson.io/posts/2022-01-10-311-data-3/). Here, I took a step back to explain the concept of **tidy data**, a standardized way of organizing data that makes it easy for analysts to quickly find information.
+
+After outlining the largest hurdles to achieving a tidy dataset, I detailed my plan and created specific steps and goals. The second half of the post begins chipping away at the first step, and this work is continued in the [fourth post](https://sarahjohnson.io/posts/2022-01-11-311-data-4/).
+
+Each post walks through all the code I've written so far. My ultimate goal has always been to create something reproducible, and to be able to produce monthly or weekly reports on renter requests to code enforcement. When I am closer to a final product, I plan to update this post to share my results and findings. If you are interested in specific hurdles of the dataset and how I have addressed them, please refer to the posts linked above.
