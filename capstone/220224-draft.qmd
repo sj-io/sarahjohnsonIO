@@ -855,3 +855,70 @@ The AHS reports that pests are the most common problem renters experience: 23% r
 
 If the percentage of renters experiencing a problem seems small compared to the overall number of renters, it's useful to look at the estimates. For instance, the number of renter-occupied units who have seen signs of mice or rats within the past year is larger than the total number of households in any one of Memphis's incorporated suburbs in Shelby County. The number of renters who have recently experienced mold is roughly equal to the total number of households in Millington, Arlington, and Lakeland, combined.
 
+# Housing Quality Regulations
+
+## Uniform Residential Landlord and Tenant Act (URLTA)
+
+The Uniform Residential Landlord and Tenant Act (URLTA) was created in 1972 by the Uniform Law Commission to modernize laws governing rental units. Prior to URLTA, landlords and tenants were bound by common law developed in an agricultural society, based on a theory that a rental lease gave the tenant land, and any buildings or improvements were incidental. Landlords had no obligation to maintain structures; for example, a Tennessee Supreme Court case from 1854 found a tenant responsible for paying all rent due on his lease, despite his home having been flooded and made uninhabitable [@scott2003].
+
+URLTA changed many of the agrarian common law principles, notably creating a warranty of habitability for tenants. Under the warranty of habitability, landlords are required to provide and maintain habitable conditions for the premises. If conditions become uninhabitable, URLTA provides remedies to the tenant, including termination of the lease [@scott2003].
+
+Tennessee was one of the first ten states to enact a version of URLTA, adopting it in 1975. However, Tennessee is unique in that it is the only state that limits URLTA's application based on population; the law only applies to counties with more than 75,000 people based on the 2010 census. [@uniform1975a] While renters in Shelby County qualify for protection under URLTA, residents of neighboring Tennessee counties are excluded.[^1]
+
+[^1]: The Memphis MSA covers three states: Tennessee, Mississippi, and Arkansas. Residents in Mississippi counties are protected under URLTA with no population exemptions. However, Arkansas is the only state in the U.S. with no warranty of habitability for renters, and thus landlords are not legally required to maintain habitable conditions.
+
+Under Tennessee's URLTA, landlords are required to comply with building and housing codes, make repairs, and keep the premises clean and safe [@uniform1975a §304]. They must provide "essential services," which include utilities and obligations which "materially affect the health and safety of the tenant" [@uniform1975a §502(3)]. If a landlord fails to supply essential services, tenants "shall give written notice to the landlord specifying the breach" and do one of the following: obtain essential services and deduct their cost from the rent; recover damages based on the decrease in the fair rental value; or procure reasonable substitute housing, during which the tenant is excused from paying rent during the period of noncompliance [@uniform1975a §502(1)].
+
+Tenants who give their landlord written notice and follow the remedies laid out in the code are supposed to be protected from retaliation, including rent increases, decreased services, or eviction [@uniform1975a §514]. This may adequately protect tenants under a long-term lease; however, protections are more vague for tenants on short-term leases. Landlords are allowed to evict week-to-week or month-to-month tenants for no cause, as long as adequate notice is given (10 or 30 days, respectively) [@uniform1975a §512].
+
+### Limits of Legislation
+
+If the landlord fails to comply with building and housing codes that materially affect health and safety, tenants may: 1. acquire essential services and deduct their cost from rent; 2. recover damages for the loss in the fair rental value, provided the tenant stays; or 3. move to "reasonable substitute housing" and stop paying rent.
+
+As shown in the [previous section](https://sarahjohnson.io/capstone/2021-11-12-memphis-quant/#cost-burden), most renters in Memphis are cost burdened, usually extremely so, and one would expect "reasonable substitute housing" would be housing in habitable standards. But what if there is no "reasonable substitute housing" for tenants to move to? How strong are the protections for tenants who wish to stay?
+
+#### Retaliation
+
+After notifying landlords of the problem, tenants who choose to stay are left with two options. The first option is for tenants to pay for repairs themselves and deduct their cost from rent. This places them in default of rent, and they must prove receipts for the essential services they procure. The second option is to "recover damages," meaning bringing legal action. Both of these options are likely to upset a landlord, placing the tenant at risk of retaliation.
+
+URLTA has conflicting clauses regarding rent, eviction, and neglected maintenance. Tenants have a right to deduct from rent repairs for essential services (§66-28-502) and tenants are guaranteed protection against retaliation (§66-28-501), but if the tenant is in default in rent they can still be evicted (§66-28-514-(b)(1)(B)). And landlords do not need a reason to evict month-to-month tenants in the first place, provided they give proper notice (§66-28-512).
+
+How are tenants meant to be protected from retaliation if landlords need no cause to evict in the first place? How long do retaliation protections last? These questions have lead some states, like California and Washington, to enact "just cause" eviction ordinances, requiring landlords to provide a specific, valid reason to evict tenants (such as non-payment of rent) [@apstaff2021].
+
+With the absence of such protections in Tennessee, lawyers at local renter rights meetings recommend tenants continue paying rent and keep a record of any photos, receipts, and conversations with their landlord to improve their chances in court.
+
+#### Building Codes vs. Health Codes
+
+The state law is also vague about a landlord's obligation to comply with "applicable building and housing codes materially affecting health and safety." Building and housing codes are created and enforced at the city level.
+
+What happens when the building codes do not adequately protect tenant health? In 2018, Memphis replaced local housing codes by adopting the International Property Maintenance Code (IPMC) [@harrison2018]. The IPMC, developed by the International Code Council (ICC), sets minimum housing standards for existing residential buildings and related environmental conditions.
+
+The IPMC is focused on the structure, not the tenant. The building code is extensive and technical. While it is meant to provide for minimum housing standards, it is inadequate at protecting or prioritizing tenant health and safety. Rather, the Healthy Homes Rating System (HHRS) was made for this purpose.
+
+To give an example of the ICC's limitations the [ICC's pamphlet on Mold says](https://www.iccsafe.org/wp-content/uploads/BSM_Mold_Brocure_lores.pdf): 1. There must be proper ventilation of all interior habitable and occupiable areas along with specific concealed spaces. (IBC §1202, IRC R303) 2. The exterior envelope of all buildings must be provided with vapor retarders, water-resistive barriers, and the necessary flashing. (IBC §R701, 703) 3. The maintenance of existing buildings and structures is of the utmost importance. This includes not only the exterior of the structure but also its plumbing and mechanical systems. (IPMC §304, 403, 504)
+
+Nowhere does the code actually say landlords have a responsibility to remediate mold, even though it's in the obvious health and safety interest for tenants. If health violations are meant to be enforced by the health department, the Tennessee Department of Health's website on mold explicitly states: "Give a written request to your landlord for repairs that are needed and keep a copy for your records. It is not recommended that you stop paying rent. The Tennessee Department of Health does not have authority to inspect and require landlords to address mold issues in rental property. Laws to address mold directly are not common." [@tnhealthdpmt] This statement and the lack of attention given to mold by modern governmental agencies is alarming, considering that mold is an ancient issue human have faced. Even the biblical book of Leviticus offers home mold remediation guidance for priests.[^2] If the Health Department and the IPMC do not protect renter health, who does?
+
+[^2]: See Leviticus 14:33-57 "Cleansing From Defiling Molds." Homes should be emptied before the priest inspection. If molds on the walls are green or reddish depressions that appear to be deeper than the surface of the wall, the priest should leave and close the house for seven days. If the mold spread, the contaminated stones should be torn out and all inside walls should be scraped and dumped outside of town. Then replace with clean stones and apply new plaster and clay. If the mold returns, the priest should confirm and the house should be completely taken apart and dumped. Anyone who has been in the house needs to be cleaned. If the mold does not return, the priest can declare the house clean and purify it. Warning that purification requires bird sacrifice. Also 13:47-59 "Regulations About Defiling Molds" for fabrics.
+
+The Shelby County Department of Housing's LEAD based paint program remediated lead paint hazards for low-income homeowners. For homes that qualified, HUD allowed any additional grant funding available to be used to repair home health hazards. Inspectors take before and after photos of home health hazards. When I was a graduate assistant at the SCDH from 2018-2019, it was my job to tag photos with a number, from 1-29, for which HHRS violation was identified and corrected. [Recall](https://sarahjohnson.io/capstone/2021-11-02-health/#healthy-homes) that Healthy Homes Hazard #1 is "Damp and mold growth."
+
+If inspectors from one department are allowed to use the HHRS to guide home inspections and repair need for housing within Shelby County, can not inspectors from all departments? Particularly in the absence of adequate protections in existing building code.
+
+## Code Enforcement
+
+While state and local laws vary, the use of code enforcement to enforce local housing codes is standard across American cities. The City of Memphis' states that the Department of Code Enforcement's purpose is to protect the public health, safety, and welfare related to existing structures [@codeenf]. The website says the department administers and enforces the IPMC to enforce conditions "which may contribute to deterioration and devaluation of properties in the community," though there is no mention of resident health.
+
+In Memphis, like in many other American cities, residents are told to call '311' to report any problems to a city. This method of self-reporting, while convenient for residents, can create biases in the data and the types of issues code enforcement pursues. A recent study of Kansas City 311 data found that, despite greater need, low-income and minority neighborhoods are less likely to report street condition or "nuisance" issues, while prioritizing more serious problems [@kontokosta2021]. Two extensive reports of Memphis code enforcement found that reliance on self-reporting led inspectors to spend a disproportionate amount of time on minor cases, rather than more serious violations [@betts2001; @stacy2018].
+
+The Memphis reports, though released nearly two decades apart, contained similar findings and recommendations. Each saw the vast majority of violations were related to nonstructural issues like weeds, junk, and vehicles: the 2001 paper found three out of four properties were cited for these problems, and the 2018 paper stated 81% of all requests were nonstructural [@betts2001 93; @stacy2018 48]. Apartment complexes tend to be underreported compared to single-family homes or duplexes [@stacy2018 58]. The @betts2001 paper conducted a visual survey of properties in the Binghampton neighborhood, and while at least half of multi-family properties had violations in multiple units, code enforcement recorded only eight violations out of 1200 apartment units. Both reports recommended fundamentally changing code enforcement from a reactive process built on citizen reporting to a proactive, strategic system [@betts2001 9; @stacy2018 13].
+
+Memphis has already taken this to heart by founding the [Strategic Code Enforcement Management Academy](http://strategiccodeenforcement.com/) (SCEMA) in 2017, which invites individuals from cities around the country to learn and share best practices for code enforcement.
+
+### Code Enforcement Process
+
+Despite an emphasis on strategic enforcement, code enforcement cases according to the city's website still begin with a citizen report, either by calling 311 or using the app [SeeClickFix](https://seeclickfix.com/). Once a complaint is received, an investigation is conducted to assess the violation, determine property ownership, and research past violations at the property. If a violation is found, a code inspector will issue a "Notice to Correct Violation" to the property owner.
+
+After a notice is issued, follow-up inspections are conducted to determine compliance. Depending on the circumstances and severity, the department can then: give an extension; cite the owner to court; issue an order to vacate; issue an order to not occupy until repairs are made; or refer the property to the Condemnation Department. Cases where court action is initiated are resolved in the General Sessions Environmental Court [@codeenf].
+
+
