@@ -921,4 +921,40 @@ Despite an emphasis on strategic enforcement, code enforcement cases according t
 
 After a notice is issued, follow-up inspections are conducted to determine compliance. Depending on the circumstances and severity, the department can then: give an extension; cite the owner to court; issue an order to vacate; issue an order to not occupy until repairs are made; or refer the property to the Condemnation Department. Cases where court action is initiated are resolved in the General Sessions Environmental Court [@codeenf].
 
+# Memphis Code Enforcement Data
 
+## Original Capstone work
+
+Memphis code enforcement data is publicly available through the city's open data portal. [The dataset](https://data.memphistn.gov/dataset/Service-Requests-since-2016/hmd4-ddta) includes all 311 service requests since 2016; it is updated daily, and contains over 1.3 million rows as of January 2022. For the submitted version of my capstone, I original intention was to analyze this dataset to answer a few questions related to renter-occupied housing:
+
+-   How often do renters report problems to code enforcement?
+
+-   What are the most common problems renters report?
+
+-   How are these requests resolved?
+
+-   How long does the process take?
+
+Unfortunately, I could not find a way to answer these questions before the due date of my paper. The dataset's size was overwhelming, and organized in a way that obscured the answers. Instead, I critiqued how the dataset's structure made it difficult to find basic information about rental repairs, which limited the city's capacity to have a strategic code enforcement department. This was not the paper I wanted to write, but it was the path I felt I had to take due to time constraints.
+
+I have since come to appreciate how far Memphis has come in modernizing the code enforcement process and the limitations of the current system, particularly after watching the documentary [In The Absence](https://www.highgroundnews.com/features/NPIHousingFilmPremier.aspx). I feel my original critiques were too harsh, which is why I've taken the time to rewrite this and other sections of the original paper.
+
+However, the importance of being able to answer these questions cannot be understated. A home's quality directly effects the day-to-day health and safety of its inhabitants. Renters, through the nature of their lease, largely rely on their landlord to maintain a home's quality. If a landlord neglects this duty and the tenant cannot afford to move, they are supposed to be able to turn to the state for protection.
+
+But what is the efficacy of this protection? How well does the City of Memphis and the State of Tennessee protect a renter's right to a safe and healthy home? Open datasets are meant to allow citizens to hold their government accountable. But from this dataset, I could not even determine how many renters had made requests to code enforcement.
+
+It is possible that the majority of renters who report problems see their requests resolved and are protected from retaliation. If we had this data, it could be used to soothe the concerns of tenants who do not report because they worry that enforcing their rights means destabilizing their housing.
+
+It is also possible that renters are not adequately protected; problems might not be resolved timely, the resolutions may not adequately decrease health risk, and renters who do report may commonly face retaliation. If this were the case, this data could be used to challenge the status quo and push for stronger renters rights.
+
+Yet the data, as is, cannot be used to answer these questions. The extent of the problem is a black box, and judgments cannot be made one way or the other. Originally I proposed some small changes in data entry methods that would allow researchers to find the answers to my original questions. For instance, while citizens can categorize a service request as being related to a "junky yard" or a "vehicle violation", there is not a clear cut category for rental repair requests. Instead, these are often filed under "miscellaneous." Adding a "rental request" option could be a simple way to address this problem.
+
+Still, I was not satisfied with this conclusion. There *is* useful information in the dataset, I just had to find a way to extract it. This has been my primary project post-graduation, and I have documented my progress under the "Research" tab of this website, with posts tagged "[code enforcement](https://sarahjohnson.io/research.html#category:code_enforcement)".
+
+## Post-graduation progress
+
+In the [first post](https://sarahjohnson.io/posts/2021-12-03-311-data/) I introduced the dataset and gave a brief description of all 53 columns, to determine which were the most relevant to my work. The [second post](https://sarahjohnson.io/posts/2021-12-04-311-data-2/) introduced how I manipulate the dataset using R, and looked at the most common service requests categories. There was some basic filtering to find housing-related requests and filter out duplicates, but this process was largely superseded by the [third post](https://sarahjohnson.io/posts/2022-01-10-311-data-3/). Here, I took a step back to explain the concept of **tidy data**, a standardized way of organizing data that makes it easy for analysts to quickly find information.
+
+After outlining the largest hurdles to achieving a tidy dataset, I detailed my plan and created specific steps and goals. The second half of the post begins chipping away at the first step, and this work is continued in the [fourth post](https://sarahjohnson.io/posts/2022-01-11-311-data-4/).
+
+Each post walks through all the code I've written so far. My ultimate goal has always been to create something reproducible, and to be able to produce monthly or weekly reports on renter requests to code enforcement. When I am closer to a final product, I plan to update this post to share my results and findings. If you are interested in specific hurdles of the dataset and how I have addressed them, please refer to the posts linked above.
