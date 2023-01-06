@@ -33,6 +33,7 @@ vignettes/*.pdf
 
 # large csv files
 data/geo/parcel
+data/table/adb/2022
 
 # Temporary files created by R markdown
 *.utf8.md
