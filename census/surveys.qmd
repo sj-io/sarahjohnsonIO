@@ -5,7 +5,7 @@ description: |
 categories:
   - census
   - memphis
-image: "img/survey.png"
+image: "census/img/survey.png"
 bibliography: references.bib
 ---
 
@@ -78,13 +78,13 @@ write_csv(ACS5, "data/ACS5.csv")
 ```
 
 ```{r}
-ACS1 <- read_csv("data/ACS1.csv") %>%
+ACS1 <- read_csv("data/table/census/acs/acs1/B25-hsg.csv") %>%
   mutate(dataset = "ACS1") %>%
-  filter(variable == "B25001_001")
-ACS5 <- read_csv("data/ACS5.csv") %>%
+  filter(variable == "B25001_001" & GEOID == 47157)
+ACS5 <- read_csv("data/table/census/acs/acs5/B25-hsg.csv") %>%
   mutate(dataset = "ACS5") %>%
   filter(variable == "B25001_001")
-PEP <- read_csv("data/PEP.csv") %>%
+PEP <- read_csv("data/table/census/pep-2010-2019-HUEST.csv") %>%
   mutate(dataset = "PEP") %>%
   filter(variable == "HUEST")
 ```

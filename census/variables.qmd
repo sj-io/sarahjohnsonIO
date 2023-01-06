@@ -25,7 +25,7 @@ Variables for the ACS Detailed Tables all begin with the same pattern: a letter 
 library(tidyverse)
 library(DT)
 
-v_acs <- read_csv("data/v_acs_categories.csv") %>% 
+v_acs <- read_csv("data/table/census/acs/var/top-level-categories.csv") %>% 
   mutate(category = str_remove_all(category, " \\(Condensed\\)")) %>% 
   separate(v_start, into = c("let", "num"), sep = 1) %>% 
   pivot_wider(names_from = "let", values_from = "num") %>% 
@@ -359,7 +359,7 @@ library(tidycensus)
 
 Use the `load_variables()` function to get Census variables.
 
-```{r}
+```{r eval=FALSE}
 # Get variables for one year
 v20 <- load_variables(2020, "acs1")
 
@@ -377,7 +377,7 @@ vACS1 <- map_dfr(yrs, ~ {
 
 Narrow for housing variables and clean up.
 
-```{r}
+```{r eval=FALSE}
 hsg <- vACS1 %>% 
   filter(str_detect(name, "^[BC]25"))
 
@@ -396,7 +396,7 @@ hsg_top <- hsg %>%
 
 Find the first and last year the variable appeared. Note that the "concept" column is currently broken for 2010 & 2011 ACS1, and a couple variables changed over the years, so group by name AND concept.
 
-```{r}
+```{r eval=FALSE}
 min_yr <- hsg_top %>% 
   filter(!is.na(concept)) %>% 
   group_by(name, concept) %>% 
@@ -426,7 +426,7 @@ hsg_yrs <- rbind(min_yr, max_yr) %>%
 
 Format for the command line.
 
-```{r}
+```{r eval=FALSE}
 hsg_vs <- hsg_yrs %>% 
   mutate(concept = str_replace_all(concept, "-(?=[:alpha:])", " "),
          concept = str_remove_all(concept, "[:punct:]"),

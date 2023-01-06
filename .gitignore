@@ -34,6 +34,7 @@ vignettes/*.pdf
 # large csv files
 data/geo/parcel
 data/table/adb/2022
+data/table/census/acs/var/acs1-all-years.csv
 
 # Temporary files created by R markdown
 *.utf8.md
