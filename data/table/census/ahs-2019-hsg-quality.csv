@@ -1,0 +1,313 @@
+id,survey,year,area,table,tenure,geo_filter,char,subchar,subchar2,subchar3,subchar4,subchar5,estimate,moe,total
+5,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Housing Adequacy,Severely inadequate,,,,,3.9,1.8,513.7
+6,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Housing Adequacy,Severely inadequate,Plumbing,,,,,,3.9
+7,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Housing Adequacy,Severely inadequate,Heating,,,,,,3.9
+8,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Housing Adequacy,Severely inadequate,Electric,,,,,,3.9
+9,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Housing Adequacy,Severely inadequate,Wiring,,,,,,3.9
+10,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Housing Adequacy,Severely inadequate,Upkeep,,,,,,3.9
+11,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Housing Adequacy,Moderately inadequate,,,,,20.6,4.1,513.7
+12,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Housing Adequacy,Moderately inadequate,Upkeep,,,,10.6,2.8,20.6
+13,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Housing Adequacy,Moderately inadequate,Other,,,,10.6,2.9,20.6
+14,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Housing Adequacy,Adequate,,,,,489.2,6.5,513.7
+18,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Selected Deficiencies,Signs of mice or rats inside home in last 12 months,,,,,56.9,7.1,513.7
+19,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Selected Deficiencies,Signs of cockroaches in last 12 months,,,,,95.3,8.0,513.7
+20,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Selected Deficiencies,Holes in floors,,,,,4.2,1.8,513.7
+21,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Selected Deficiencies,Open cracks or holes (interior),,,,,26.6,4.8,513.7
+22,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Selected Deficiencies,Broken plaster or peeling paint (interior),,,,,11.1,2.9,513.7
+23,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Selected Deficiencies,No electrical wiring,,,,,,,513.7
+24,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Selected Deficiencies,Exposed wiring,,,,,8.4,2.4,513.7
+25,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Selected Deficiencies,Rooms without electric outlets,,,,,11.6,3.1,513.7
+29,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Flush Toilet Breakdowns,With one or more flush toilets,,,,,513.7,4.4,513.7
+30,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Flush Toilet Breakdowns,With one or more flush toilets,With at least one toilet working at all times in last 3 months,,,,504.2,5.2,513.7
+31,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,,,,9.6,2.8,513.7
+32,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,No breakdowns lasting 6 hours or more,,,,,9.6
+34,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,Number of breakdowns that lasted 6 hours or more,1,,,,9.6
+35,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,Number of breakdowns that lasted 6 hours or more,2,,,,9.6
+36,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,Number of breakdowns that lasted 6 hours or more,3,,,,9.6
+37,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,Number of breakdowns that lasted 6 hours or more,4 or more,,,,9.6
+41,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,,,,,465.0,7.7,513.7
+42,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Not uncomfortably cold for 24 hours or more,,,,441.8,8.3,465.0
+43,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,,,,23.1,4.1,465.0
+44,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,,,12.0,2.9,23.1
+45,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,No breakdowns lasting 6 hours or more,,,,23.1
+47,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,Number of breakdowns that lasted 6 hours or more,1,5.7,2.0,23.1
+48,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,Number of breakdowns that lasted 6 hours or more,2,,,23.1
+49,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,Number of breakdowns that lasted 6 hours or more,3,,,23.1
+50,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,Number of breakdowns that lasted 6 hours or more,4 or more,,,23.1
+51,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,,,11.1,3.1,465.0
+52,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Utility interruption,,4.0,1.8,11.1
+53,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Inadequate heating capacity,,,,11.1
+54,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Inadequate insulation,,,,11.1
+55,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Cost of heating,,,,11.1
+56,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Other,,,,11.1
+57,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Not reported,,,,11.1
+61,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,,,,,513.5,4.5,513.7
+62,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,No fuses or breakers blown in last 3 months,,,,480.1,6.6,513.5
+63,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,,,,33.4,4.7,513.5
+64,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,1 time,,,18.5,3.6,33.4
+65,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,2 times,,,5.2,2.0,33.4
+66,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,3 times,,,3.3,1.6,33.4
+67,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,4 times or more,,,6.4,2.5,33.4
+71,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Supply Stoppage,With hot and cold piped water,,,,,513.3,4.5,513.7
+72,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Supply Stoppage,With hot and cold piped water,No stoppage in last 3 months,,,,502.4,4.9,513.3
+73,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,,,,9.6,2.9,513.3
+74,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,No stoppage lasting 6 hours or more,,,,,9.6
+76,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages that lasted 6 hours or more,1,,3.8,1.7,9.6
+77,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages that lasted 6 hours or more,2,,,,9.6
+78,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages that lasted 6 hours or more,3,,,,9.6
+79,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages that lasted 6 hours or more,4 or more,,,,9.6
+80,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages not reported,,,,,9.6
+81,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Supply Stoppage,With hot and cold piped water,Stoppage not reported,,,,,,9.6
+85,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Leakage During Last 12 Months,No leakage from inside structure,,,,,473.6,7.8,513.7
+86,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,,,,,40.1,5.6,513.7
+87,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,Fixtures backed up or overflowed,,,,9.2,2.6,40.1
+88,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,Pipes leaked,,,,15.6,3.7,40.1
+89,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,Broken water heater,,,,7.3,2.4,40.1
+90,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,Other or unknown (includes not reported),,,,10.6,2.8,40.1
+92,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Leakage During Last 12 Months,No leakage from outside structure,,,,,469.3,7.4,513.7
+93,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,,,,,44.4,5.9,513.7
+94,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,Roof,,,,32.5,5.0,44.4
+95,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,Basement,,,,,,44.4
+96,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,"Walls, closed windows, or doors",,,,8.6,2.8,44.4
+97,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,Other or unknown (includes not reported),,,,5.9,2.1,44.4
+101,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,External Building Conditions,Sagging roof,,,,,7.4,2.6,404.5
+102,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,External Building Conditions,Missing roofing material,,,,,22.5,4.5,404.5
+103,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,External Building Conditions,Hole in roof,,,,,10.5,2.9,404.5
+104,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,External Building Conditions,"Missing bricks, siding, or other outside wall material",,,,,13.3,3.2,404.5
+105,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,External Building Conditions,Sloping outside walls,,,,,6.1,2.1,404.5
+106,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,External Building Conditions,Boarded up windows,,,,,,,404.5
+107,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,External Building Conditions,Broken windows,,,,,15.4,3.4,404.5
+108,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,External Building Conditions,Bars on windows,,,,,38.1,5.2,404.5
+109,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,External Building Conditions,Foundation crumbling or has open crack or hole,,,,,18.1,4.2,404.5
+113,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Mold,Housing units with mold in last 12 months,,,,,17.6,3.7,513.7
+114,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Mold,Housing units with mold in last 12 months,Kitchen,,,,4.6,1.8,17.6
+115,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Mold,Housing units with mold in last 12 months,Bathroom(s),,,,7.8,2.6,17.6
+116,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Mold,Housing units with mold in last 12 months,Bedroom(s),,,,5.4,2.0,17.6
+117,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Mold,Housing units with mold in last 12 months,Living room,,,,,,17.6
+118,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Mold,Housing units with mold in last 12 months,Basement,,,,,,17.6
+119,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Mold,Housing units with mold in last 12 months,Other room,,,,3.6,1.6,17.6
+120,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Mold,Housing units with mold in last 12 months,Not reported,,,,,,17.6
+124,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With public sewer,,,,,470.2,5.1,513.7
+125,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With public sewer,No breakdowns in last 3 months,,,,462.8,5.2,470.2
+126,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,,,,7.4,2.5,470.2
+127,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,No breakdowns lasting 6 hours or more,,,,,7.4
+129,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,1,,,,7.4
+130,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,2,,,,7.4
+131,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,3,,,,7.4
+132,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,4 or more,,,,7.4
+134,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,,,,,43.4,4.3,513.7
+135,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,No breakdowns in last 3 months,,,,42.9,4.2,43.4
+136,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,,,,,,43.4
+137,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,No breakdowns lasting 6 hours or more,,,,,43.4
+139,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,1,,,,43.4
+140,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,2,,,,43.4
+141,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,3,,,,43.4
+142,AHS,2019,Memphis,Housing Quality - All Occupied Units,All,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,4 or more,,,,43.4
+5,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Housing Adequacy,Severely inadequate,,,,,,,289.7
+6,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Housing Adequacy,Severely inadequate,Plumbing,,,,,,289.7
+7,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Housing Adequacy,Severely inadequate,Heating,,,,,,289.7
+8,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Housing Adequacy,Severely inadequate,Electric,,,,,,289.7
+9,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Housing Adequacy,Severely inadequate,Wiring,,,,,,289.7
+10,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Housing Adequacy,Severely inadequate,Upkeep,,,,,,289.7
+11,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Housing Adequacy,Moderately inadequate,,,,,9.2,2.5,289.7
+12,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Housing Adequacy,Moderately inadequate,Upkeep,,,,6.2,2.2,9.2
+13,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Housing Adequacy,Moderately inadequate,Other,,,,3.3,1.6,9.2
+14,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Housing Adequacy,Adequate,,,,,279.7,8.1,289.7
+18,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Selected Deficiencies,Signs of mice or rats inside home in last 12 months,,,,,32.6,5.1,289.7
+19,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Selected Deficiencies,Signs of cockroaches in last 12 months,,,,,44.4,5.9,289.7
+20,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Selected Deficiencies,Holes in floors,,,,,,,289.7
+21,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Selected Deficiencies,Open cracks or holes (interior),,,,,12.1,3.1,289.7
+22,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Selected Deficiencies,Broken plaster or peeling paint (interior),,,,,5.8,2.2,289.7
+23,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Selected Deficiencies,No electrical wiring,,,,,,,289.7
+24,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Selected Deficiencies,Exposed wiring,,,,,4.5,1.8,289.7
+25,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Selected Deficiencies,Rooms without electric outlets,,,,,5.0,1.9,289.7
+29,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Flush Toilet Breakdowns,With one or more flush toilets,,,,,289.7,8.3,289.7
+30,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Flush Toilet Breakdowns,With one or more flush toilets,With at least one toilet working at all times in last 3 months,,,,287.1,8.4,289.7
+31,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,,,,,,289.7
+32,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,No breakdowns lasting 6 hours or more,,,,,289.7
+34,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,Number of breakdowns that lasted 6 hours or more,1,,,,289.7
+35,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,Number of breakdowns that lasted 6 hours or more,2,,,,289.7
+36,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,Number of breakdowns that lasted 6 hours or more,3,,,,289.7
+37,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,Number of breakdowns that lasted 6 hours or more,4 or more,,,,289.7
+41,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,,,,,278.8,8.4,289.7
+42,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Not uncomfortably cold for 24 hours or more,,,,268.0,8.3,278.8
+43,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,,,,10.8,2.5,278.8
+44,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,,,5.5,2.0,10.8
+45,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,No breakdowns lasting 6 hours or more,,,,5.5
+47,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,Number of breakdowns that lasted 6 hours or more,1,4.2,1.7,5.5
+48,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,Number of breakdowns that lasted 6 hours or more,2,,,5.5
+49,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,Number of breakdowns that lasted 6 hours or more,3,,,5.5
+50,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,Number of breakdowns that lasted 6 hours or more,4 or more,,,5.5
+51,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,,,5.3,1.9,10.8
+52,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Utility interruption,,,,5.3
+53,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Inadequate heating capacity,,,,5.3
+54,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Inadequate insulation,,,,5.3
+55,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Cost of heating,,,,5.3
+56,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Other,,,,5.3
+57,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Not reported,,,,5.3
+61,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,,,,,289.7,8.3,289.7
+62,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,No fuses or breakers blown in last 3 months,,,,270.4,8.1,289.7
+63,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,,,,19.3,3.9,289.7
+64,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,1 time,,,11.9,3.0,19.3
+65,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,2 times,,,,,19.3
+66,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,3 times,,,,,19.3
+67,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,4 times or more,,,,,19.3
+71,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Supply Stoppage,With hot and cold piped water,,,,,289.5,8.3,289.7
+72,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Supply Stoppage,With hot and cold piped water,No stoppage in last 3 months,,,,285.5,8.1,289.5
+73,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,,,,3.2,1.5,289.5
+74,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,No stoppage lasting 6 hours or more,,,,,3.2
+76,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages that lasted 6 hours or more,1,,,,3.2
+77,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages that lasted 6 hours or more,2,,,,3.2
+78,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages that lasted 6 hours or more,3,,,,3.2
+79,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages that lasted 6 hours or more,4 or more,,,,3.2
+80,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages not reported,,,,,3.2
+81,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Supply Stoppage,With hot and cold piped water,Stoppage not reported,,,,,,3.2
+85,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Leakage During Last 12 Months,No leakage from inside structure,,,,,269.0,8.2,289.7
+86,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,,,,,20.7,3.7,289.7
+87,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,Fixtures backed up or overflowed,,,,6.0,2.1,20.7
+88,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,Pipes leaked,,,,7.4,2.2,20.7
+89,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,Broken water heater,,,,3.9,1.7,20.7
+90,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,Other or unknown (includes not reported),,,,4.9,1.8,20.7
+92,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Leakage During Last 12 Months,No leakage from outside structure,,,,,264.2,8.7,289.7
+93,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,,,,,25.5,4.5,289.7
+94,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,Roof,,,,18.7,4.0,25.5
+95,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,Basement,,,,,,25.5
+96,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,"Walls, closed windows, or doors",,,,3.9,1.8,25.5
+97,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,Other or unknown (includes not reported),,,,3.1,1.5,25.5
+101,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,External Building Conditions,Sagging roof,,,,,,,286.9
+102,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,External Building Conditions,Missing roofing material,,,,,15.5,3.8,286.9
+103,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,External Building Conditions,Hole in roof,,,,,6.2,2.4,286.9
+104,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,External Building Conditions,"Missing bricks, siding, or other outside wall material",,,,,9.4,2.7,286.9
+105,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,External Building Conditions,Sloping outside walls,,,,,4.5,1.9,286.9
+106,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,External Building Conditions,Boarded up windows,,,,,,,286.9
+107,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,External Building Conditions,Broken windows,,,,,7.8,2.7,286.9
+108,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,External Building Conditions,Bars on windows,,,,,22.0,4.2,286.9
+109,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,External Building Conditions,Foundation crumbling or has open crack or hole,,,,,14.5,3.5,286.9
+113,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Mold,Housing units with mold in last 12 months,,,,,5.8,2.3,289.7
+114,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Mold,Housing units with mold in last 12 months,Kitchen,,,,,,5.8
+115,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Mold,Housing units with mold in last 12 months,Bathroom(s),,,,,,5.8
+116,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Mold,Housing units with mold in last 12 months,Bedroom(s),,,,,,5.8
+117,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Mold,Housing units with mold in last 12 months,Living room,,,,,,5.8
+118,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Mold,Housing units with mold in last 12 months,Basement,,,,,,5.8
+119,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Mold,Housing units with mold in last 12 months,Other room,,,,,,5.8
+120,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Mold,Housing units with mold in last 12 months,Not reported,,,,,,5.8
+124,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With public sewer,,,,,252.3,8.4,289.7
+125,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With public sewer,No breakdowns in last 3 months,,,,250.0,8.3,252.3
+126,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,,,,,,252.3
+127,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,No breakdowns lasting 6 hours or more,,,,,252.3
+129,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,1,,,,252.3
+130,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,2,,,,252.3
+131,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,3,,,,252.3
+132,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,4 or more,,,,252.3
+134,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,,,,,37.5,3.9,289.7
+135,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,No breakdowns in last 3 months,,,,37.0,3.9,37.5
+136,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,,,,,,37.5
+137,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,No breakdowns lasting 6 hours or more,,,,,37.5
+139,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,1,,,,37.5
+140,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,2,,,,37.5
+141,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,3,,,,37.5
+142,AHS,2019,Memphis,Housing Quality - All Occupied Units,Owner,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,4 or more,,,,37.5
+5,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Housing Adequacy,Severely inadequate,,,,,,,224.0
+6,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Housing Adequacy,Severely inadequate,Plumbing,,,,,,224.0
+7,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Housing Adequacy,Severely inadequate,Heating,,,,,,224.0
+8,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Housing Adequacy,Severely inadequate,Electric,,,,,,224.0
+9,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Housing Adequacy,Severely inadequate,Wiring,,,,,,224.0
+10,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Housing Adequacy,Severely inadequate,Upkeep,,,,,,224.0
+11,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Housing Adequacy,Moderately inadequate,,,,,11.3,3.7,224.0
+12,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Housing Adequacy,Moderately inadequate,Upkeep,,,,4.4,2.2,11.3
+13,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Housing Adequacy,Moderately inadequate,Other,,,,7.2,2.6,11.3
+14,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Housing Adequacy,Adequate,,,,,209.5,8.6,224.0
+18,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Selected Deficiencies,Signs of mice or rats inside home in last 12 months,,,,,24.4,5.0,224.0
+19,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Selected Deficiencies,Signs of cockroaches in last 12 months,,,,,50.9,5.9,224.0
+20,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Selected Deficiencies,Holes in floors,,,,,,,224.0
+21,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Selected Deficiencies,Open cracks or holes (interior),,,,,14.4,3.8,224.0
+22,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Selected Deficiencies,Broken plaster or peeling paint (interior),,,,,5.3,2.2,224.0
+23,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Selected Deficiencies,No electrical wiring,,,,,,,224.0
+24,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Selected Deficiencies,Exposed wiring,,,,,3.9,1.7,224.0
+25,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Selected Deficiencies,Rooms without electric outlets,,,,,6.6,2.3,224.0
+29,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Flush Toilet Breakdowns,With one or more flush toilets,,,,,224.0,8.6,224.0
+30,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Flush Toilet Breakdowns,With one or more flush toilets,With at least one toilet working at all times in last 3 months,,,,217.1,8.6,224.0
+31,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,,,,7.0,2.3,224.0
+32,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,No breakdowns lasting 6 hours or more,,,,,7.0
+34,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,Number of breakdowns that lasted 6 hours or more,1,,,,7.0
+35,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,Number of breakdowns that lasted 6 hours or more,2,,,,7.0
+36,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,Number of breakdowns that lasted 6 hours or more,3,,,,7.0
+37,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Flush Toilet Breakdowns,With one or more flush toilets,None working some time in last 3 months,Number of breakdowns that lasted 6 hours or more,4 or more,,,,7.0
+41,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,,,,,186.2,9.0,224.0
+42,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Not uncomfortably cold for 24 hours or more,,,,173.8,9.3,186.2
+43,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,,,,12.3,3.2,186.2
+44,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,,,6.6,2.4,12.3
+45,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,No breakdowns lasting 6 hours or more,,,,6.6
+47,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,Number of breakdowns that lasted 6 hours or more,1,,,6.6
+48,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,Number of breakdowns that lasted 6 hours or more,2,,,6.6
+49,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,Number of breakdowns that lasted 6 hours or more,3,,,6.6
+50,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Equipment breakdowns,Number of breakdowns that lasted 6 hours or more,4 or more,,,6.6
+51,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,,,5.7,2.5,12.3
+52,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Utility interruption,,,,5.7
+53,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Inadequate heating capacity,,,,5.7
+54,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Inadequate insulation,,,,5.7
+55,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Cost of heating,,,,5.7
+56,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Other,,,,5.7
+57,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Heating Problems,With heating equipment and occupied last winter,Uncomfortably cold for 24 hours or more,Other causes,Not reported,,,,5.7
+61,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,,,,,223.8,8.6,224.0
+62,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,No fuses or breakers blown in last 3 months,,,,209.7,8.8,223.8
+63,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,,,,14.1,3.2,223.8
+64,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,1 time,,,6.5,2.3,14.1
+65,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,2 times,,,,,14.1
+66,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,3 times,,,,,14.1
+67,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Electric Fuses and Circuit Breakers,With electrical wiring,With fuses or breakers blown in last 3 months,4 times or more,,,4.2,2.0,14.1
+71,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Supply Stoppage,With hot and cold piped water,,,,,223.8,8.6,224.0
+72,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Supply Stoppage,With hot and cold piped water,No stoppage in last 3 months,,,,216.9,9.2,223.8
+73,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,,,,6.4,2.5,223.8
+74,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,No stoppage lasting 6 hours or more,,,,,6.4
+76,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages that lasted 6 hours or more,1,,,,6.4
+77,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages that lasted 6 hours or more,2,,,,6.4
+78,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages that lasted 6 hours or more,3,,,,6.4
+79,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages that lasted 6 hours or more,4 or more,,,,6.4
+80,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Supply Stoppage,With hot and cold piped water,With stoppage in last 3 months,Number of stoppages not reported,,,,,6.4
+81,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Supply Stoppage,With hot and cold piped water,Stoppage not reported,,,,,,6.4
+85,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Leakage During Last 12 Months,No leakage from inside structure,,,,,204.6,8.7,224.0
+86,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,,,,,19.5,4.2,224.0
+87,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,Fixtures backed up or overflowed,,,,,,19.5
+88,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,Pipes leaked,,,,8.2,2.8,19.5
+89,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,Broken water heater,,,,,,19.5
+90,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Leakage During Last 12 Months,With leakage from inside structure,Other or unknown (includes not reported),,,,5.7,2.3,19.5
+92,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Leakage During Last 12 Months,No leakage from outside structure,,,,,205.1,9.1,224.0
+93,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,,,,,18.9,4.1,224.0
+94,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,Roof,,,,13.8,3.8,18.9
+95,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,Basement,,,,,,18.9
+96,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,"Walls, closed windows, or doors",,,,4.7,2.0,18.9
+97,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Water Leakage During Last 12 Months,With leakage from outside structure,Other or unknown (includes not reported),,,,,,18.9
+101,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,External Building Conditions,Sagging roof,,,,,,,117.6
+102,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,External Building Conditions,Missing roofing material,,,,,7.0,2.8,117.6
+103,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,External Building Conditions,Hole in roof,,,,,4.2,2.0,117.6
+104,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,External Building Conditions,"Missing bricks, siding, or other outside wall material",,,,,3.9,1.8,117.6
+105,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,External Building Conditions,Sloping outside walls,,,,,,,117.6
+106,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,External Building Conditions,Boarded up windows,,,,,,,117.6
+107,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,External Building Conditions,Broken windows,,,,,7.6,2.3,117.6
+108,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,External Building Conditions,Bars on windows,,,,,16.1,3.7,117.6
+109,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,External Building Conditions,Foundation crumbling or has open crack or hole,,,,,,,117.6
+113,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Mold,Housing units with mold in last 12 months,,,,,11.8,3.3,224.0
+114,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Mold,Housing units with mold in last 12 months,Kitchen,,,,3.7,1.7,11.8
+115,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Mold,Housing units with mold in last 12 months,Bathroom(s),,,,5.2,2.1,11.8
+116,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Mold,Housing units with mold in last 12 months,Bedroom(s),,,,3.9,1.8,11.8
+117,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Mold,Housing units with mold in last 12 months,Living room,,,,,,11.8
+118,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Mold,Housing units with mold in last 12 months,Basement,,,,,,11.8
+119,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Mold,Housing units with mold in last 12 months,Other room,,,,,,11.8
+120,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Mold,Housing units with mold in last 12 months,Not reported,,,,,,11.8
+124,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With public sewer,,,,,217.9,8.5,224.0
+125,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With public sewer,No breakdowns in last 3 months,,,,212.8,8.5,217.9
+126,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,,,,5.1,2.2,217.9
+127,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,No breakdowns lasting 6 hours or more,,,,,5.1
+129,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,1,,,,5.1
+130,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,2,,,,5.1
+131,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,3,,,,5.1
+132,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With public sewer,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,4 or more,,,,5.1
+134,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,,,,,5.9,2.3,224.0
+135,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,No breakdowns in last 3 months,,,,5.9,2.3,5.9
+136,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,,,,,,5.9
+137,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,No breakdowns lasting 6 hours or more,,,,,5.9
+139,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,1,,,,5.9
+140,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,2,,,,5.9
+141,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,3,,,,5.9
+142,AHS,2019,Memphis,Housing Quality - All Occupied Units,Renter,NONE,Sewage Disposal Breakdowns,With septic tank or cesspool,With breakdown(s) in last 3 months,Number of breakdowns that lasted 6 hours or more,4 or more,,,,5.9
