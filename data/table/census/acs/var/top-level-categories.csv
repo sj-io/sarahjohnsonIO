@@ -1,0 +1,53 @@
+v_start,category
+B01,Population Overview
+B02,Race
+B03,Race and Ethnicity
+B04,Ancestry
+B05,Nativity
+B06,Place of Birth
+B07,Geographic Mobility
+B08,Workers
+B09,Children Under 18
+B10,Grandparents
+B11,Household Type
+B12,Marriage
+B13,Women with Recent Birth
+B14,School Enrollment
+B15,Educational Attainment
+B16,Language Spoken at Home
+B17,Poverty Status
+B18,Disability
+B19,Household Income
+B20,Income for Working Population
+B21,Veterans
+B22,Food Stamps/SNAP
+B23,Employment Status and Workers
+B24,Occupation and Industry
+B25,Housing
+B26,Group Quarters
+B27,Health Insurance
+B28,Computers and Internet
+B29,"Citizen, Voting-Age Population"
+B98,"Unweighted Sample and Coverage, Response, and Allocation Rates"
+B99,Allocation
+C02,Race (Condensed)
+C03,Race and Ethnicity (Condensed)
+C04,Ancestry (Condensed)
+C05,Nativity (Condensed)
+C06,Place of Birth (Condensed)
+C07,Geographic Mobility (Condensed)
+C08,Workers (Condensed)
+C09,Children Under 18 (Condensed)
+C11,Household Type (Condensed)
+C14,School Enrollment (Condensed)
+C15,Educational Attainment (Condensed)
+C16,Language Spoken at Home (Condensed)
+C17,Poverty Status (Condensed)
+C18,Disability (Condensed)
+C19,Household Income (Condensed)
+C21,Veterans (Condensed)
+C22,Food Stamps/SNAP (Condensed)
+C23,Employment Status and Workers (Condensed)
+C24,Occupation and Industry (Condensed)
+C25,Housing (Condensed)
+C27,Health Insurance (Condensed)

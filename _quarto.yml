@@ -1,6 +1,6 @@
 project:
   type: website
-  execute-dir: file
+  execute-dir: project
 
 website:
   title: "SJ"

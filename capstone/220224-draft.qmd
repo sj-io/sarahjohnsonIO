@@ -41,7 +41,7 @@ The below table lists all 29 hazards of the modern HHRS, along with a short desc
 ```{r library}
 library(tidyverse)
 library(DT)
-HHRS <- read_csv("data/HH-hazards.csv")
+HHRS <- read_csv("data/table/hud/HHRS-hazards.csv")
 ```
 
 ```{r HHRS}
@@ -797,7 +797,7 @@ Most renters live in older housing structures. Overall, 62% of renter-occupied h
 Every five years, the American Housing Survey (AHS) provides data on housing quality problems in the Memphis MSA. The most recent survey was completed in 2019. Note that while most of the analysis on this page is specifically for Memphis, the AHS surveys the entire metro region.
 
 ```{r AHSimport, include=FALSE}
-AHSimport <- read_csv("data/AHS-mem-hsgqual-all.csv")
+AHSimport <- read_csv("data/table/census/ahs-2019-hsg-quality.csv")
 ```
 
 ```{r AHSall}
