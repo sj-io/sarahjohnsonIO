@@ -1,0 +1,120 @@
+---
+title: "Capstone Skeleton"
+format: 
+  docx:
+    toc: false
+---
+
+possible title: Proposed Tool to Help Renters Track Maintenance Issues
+
+Purpose of capstone:
+
+Propose a tool which will allow renters to keep track of their housing maintenance issues and share this information with others, including housing researchers.
+
+Why?
+
+-   Housing quality affects the health of the person living in the home
+
+-   Rental housing is susceptible to maintenance issues because of an economic incentive: Landlords can maintain/increase profits by decreasing expenses. Requires:
+
+    -   Lack of competition: Not enough affordable housing in better quality
+
+    -   Weak enforcement of housing quality regulations
+
+    -   Power dynamic: Strong eviction courts make tenants nervous to report maintenance issues for fear of retaliation (risks housing stability)
+
+-   Lack of available data regarding extent of housing quality issues.
+
+Question proposed tool hopes to address: Extent of maintenance issues & neglect in rental homes, affect on tenant health.
+
+\-\--
+
+What information do we have?
+
+```{r libs}
+library(tidyverse)
+library(gt)
+library(sf)
+library(leaflet)
+```
+
+```{r hhrs}
+hhrs <- read_csv("data/table/hud/HHRS-hazards.csv")
+hhrs %>% 
+  gt() %>% 
+  tab_header(title = "Healthy Home Hazards") %>% 
+  tab_source_note(
+    source_note = "Source: H.U.D."
+  )
+```
+
+```{r census, eval=FALSE}
+v_acs1 <- read_csv("data/table/census/acs/var/acs1-2021.csv")
+v_hsg <- v_acs1 %>% 
+  filter(str_starts(name, "[BC]25"))
+acs1_b25 <- read_csv("data/table/census/acs/acs1/B25-hsg.csv")
+```
+
+```{r redlining}
+redlining <- read_sf("data/geo/redlining/redlining.geojson") %>% 
+  st_transform(crs = 4269) %>% 
+  filter(!is.na(fill)) %>% 
+  mutate(label = paste(Legend, Rating))
+memphis <- read_sf("data/geo/place/memphis.shp") %>% 
+  st_transform(crs = 4269)
+shelby <- read_sf("data/geo/county/shelby.shp") %>% 
+  st_transform(crs = 4269)
+```
+
+```{r interactiveMap}
+map <- leaflet() %>% 
+  addTiles(group = "OSM") %>%
+  addProviderTiles(providers$Esri.WorldImagery, group = "ESRI World Imagery") %>%
+  addPolygons(
+    data = memphis,
+    group = "Current Boundaries",
+    label = memphis$NAME,
+    fillOpacity = 0.2,
+    color = "cornflowerblue",
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addPolygons(
+    data = redlining,
+    group = "Redlining Boundaries",
+    label = redlining$label,
+    fillOpacity = 0.35,
+    color = ~redlining$fill,
+    opacity = 1,
+    weight = 1,
+    highlightOptions = highlightOptions(fillOpacity = 0.5)
+  ) %>%
+  addLayersControl(
+    baseGroups = c("OSM", "ESRI World Imagery"),
+    overlayGroups = c(
+      "Current Boundaries",
+      "Redlining Boundaries"
+    ),
+    options = layersControlOptions(collapsed = FALSE)
+  ) %>%
+  addScaleBar(position = "bottomleft")
+
+
+map
+```
+
+```{r staticMap}
+pal_redline <- c("best" = "#008e00",
+                 "still desirable" = "#0432ff",
+                 "definitely declining" = "#fefb00",
+                 "hazardous" = "#ff2600")
+
+ggplot() +
+  geom_sf(data = memphis) +
+  geom_sf(data = redlining, aes(fill = Rating, color = Rating)) +
+  scale_fill_manual(values = pal_redline) +
+  scale_color_manual(values = pal_redline) +
+  theme_void() +
+  labs(title = "Memphis Redlining Map")
+```
