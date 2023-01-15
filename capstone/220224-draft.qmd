@@ -41,14 +41,16 @@ The below table lists all 29 hazards of the modern HHRS, along with a short desc
 ```{r library}
 library(tidyverse)
 library(DT)
-HHRS <- read_csv("data/table/hud/HHRS-hazards.csv")
 ```
 
 ```{r HHRS}
+HHRS <- read_csv("data/table/hud/HHRS-hazards.csv")
+
 datatable(
   HHRS,
   rownames = FALSE,
   caption = "The 29 Healthy Home Hazards",
+  style = "bootstrap",
   options = list(
     pageLength = 5,
     lengthMenu = c(5, 10, 15, 20, 25, 29)
@@ -95,8 +97,8 @@ library(tidycensus)
 options(tigris_use_cache = TRUE)
 ```
 
-```{r variables, eval=FALSE, include=FALSE}
-Vs <- load_variables(2019, "acs5")
+```{r variables, include=FALSE}
+v_acs5 <- read_csv("data/census/var/acs5-2021.csv")
 ```
 
 ### Renter Locations
@@ -108,38 +110,29 @@ Where do renters live? The first half of this section compares the percentage of
 Before studying renters in Memphis, it's useful to know how the area compares to other metro areas in the US. A metro area (also called a metropolitan statistical area, or MSA) is a geographic boundary created by the US Census. It contains a county with an urban core, and surrounding counties with "a high degree of social and economic integration" (measured by commute to work) [@cbsa2021]. Any mention of "Memphis" in this section refers to the Memphis MSA, which includes eight counties spanning Tennessee, Mississippi, and Arkansas.
 
 ```{r cbsa, include=FALSE}
-cbsa <- get_acs(
-  geography = "cbsa",
-  variables = c(
-    Owner = "B25003_002",
-    Renter = "B25003_003"
-  ),
-  summary_var = "B25003_001",
-  cache_table = TRUE
-) %>%
-  slice_max(summary_est, n = 100) %>% 
-  mutate(percent = 100 * (estimate / summary_est))
-```
+hsg <- read_csv("data/census/acs5/B25-hsg.csv")
 
-```{r cbsaRent}
-cbsaRent <- cbsa %>% 
-  filter(variable == "Renter") %>% 
-  select(NAME, summary_est, estimate, percent) %>% 
-  arrange(desc(percent)) %>% 
-  mutate(NAME = str_remove(NAME, "-.*$")) %>% 
-  mutate(NAME = str_remove(NAME, ",.*$")) 
+rent_cbsa <- hsg %>%
+  filter(variable == "B25003_003" &
+           str_detect(NAME, "Metro Area") &
+           year == 2021) %>%
+  mutate(pct = estimate / summary_est,
+         NAME = str_remove_all(NAME, "(-|,).*$")) %>% 
+  select(NAME, summary_est, estimate, pct) %>% 
+  arrange(desc(pct))
 ```
 
 The table below lists the top 50 metros in the US (by number of households), sorted by the percentage of renters.
 
 ```{r cbsaDT}
 datatable(
-  cbsaRent,
+  rent_cbsa,
+  caption = "Table 1: Percent of Renters in US Metro Areas",
+  colnames = c('Metro Area', 'Total Households', 'Renters', '%'),
   rownames = FALSE,
-  colnames = c('Metro Area', 'Total Households', 'Renters', 'Rent (Pct)'),
-  caption = "Table 1: Percent of Renters in US Metro Areas"
-) %>%
-  formatPercentage(4, mark = ".", interval = 2) %>%
+  style = "bootstrap"
+  ) %>%
+  formatPercentage(4, mark = ".", digits = 1) %>%
   formatRound(2:3, digits = 0)
 ```
 
@@ -150,55 +143,34 @@ Memphis ranks 43rd in the US for the total number of households in a metro area.
 While 40% of households in the Memphis MSA are renters, this percentage varies when we subdivide the metro area. In general, there are more rental units in a central city/county compared to neighboring areas. This section will focus on Shelby County, and any mention of "Memphis" refers exclusively to the city of Memphis.
 
 ```{r vPlaces}
-places <- c("Memphis", "Lakeland", "Bartlett", "Germantown", "Collierville", "Millington", "Arlington") %>% 
+places <- c("Memphis", "Lakeland", "Bartlett", 
+            "Germantown", "Collierville", "Millington", "Arlington") %>% 
   str_c(collapse = "|")
 ```
 
 ```{r place, include=FALSE}
-place <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = c(
-    Owner = "B25003_002",
-    Renter = "B25003_003"
-  ),
-  summary_var = "B25003_001",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, places)) %>% 
-  mutate(percent = 100 * (estimate / summary_est))
+rent_place <- hsg %>% 
+  filter(variable == "B25003_003" &
+           str_length(GEOID) == 7) %>%
+  mutate(pct = estimate / summary_est,
+         NAME = str_remove_all(NAME, " (city|town).*$")) %>% 
+  select(NAME, summary_est, estimate, pct) %>% 
+  arrange(desc(pct))
 ```
 
 The following table shows the percentage of renters for places in Shelby County.
 
-```{r uninc}
-#' manually adding data for unincorporated Shelby County
-#' Shelby County housing units = 351,194 total; 157,847 rent
-#' Housing Units in places = 315,835 total; 145,705 rent
-#' Housing units not in places = 35,359 total; 12,142 rent
-
-placeUninc <- c('Unincorporated county', 35359, 12142, 34.33921)
-```
-
-```{r placeTable}
-placeTable <- place %>% 
-  filter(variable == "Renter") %>% 
-  select(NAME, summary_est, estimate, percent) %>% 
-  rbind(placeUninc) %>% 
-  arrange(desc(percent)) %>%  
-  mutate(NAME = str_remove(NAME, ",.*$"),
-         NAME = str_remove(NAME, " town| city"))
-```
-
 ```{r placeDT}
 datatable(
-  placeTable,
+  rent_place,
   rownames = FALSE,
-  colnames = c('Place', 'Total Households', 'Renters', 'Rent (Pct)'),
+  colnames = c('Place', 'Total Households', 'Renters', '%'),
   caption = "Table 2: Percent of Renters in Places in Shelby County",
+  style = "bootstrap",
   options = list(pageLength = 8),
   autoHideNavigation = getOption("DT.autoHideNavigation", TRUE)
-) %>% formatPercentage(4, mark = ".", interval = 2) %>% 
+  ) %>% 
+  formatPercentage(4, mark = ".", digits = 1) %>% 
   formatRound(2:3, digits = 0)
 ```
 
@@ -217,24 +189,26 @@ The map below shows the percentage of renters in Shelby County census tracts. Th
 #### Percent of Renters in Shelby County Census Tracts
 
 ```{r tract, include=FALSE}
-tract <- get_acs(
-  geography = "tract",
-  state = "TN",
-  county = "Shelby",
-  variables = c(
-    Owner = "B25003_002",
-    Renter = "B25003_003"
-  ),
-  summary_var = "B25003_001",
-  cache_table = TRUE,
-  geometry = TRUE
-) %>% 
-  mutate(percent = 100 * (estimate / summary_est))
+rent_tract <- hsg %>% 
+  filter(variable == "B25003_003" &
+           str_length(GEOID) == 11) %>%
+  mutate(pct = estimate / summary_est,
+         NAME = str_remove_all(NAME, ",.*$"),
+         GEOID = as.character(GEOID))
+
+library(sf)
+tract <- read_sf("data/geo/tract/tracts_21.shp") 
+
+rent_tract <- tract %>% 
+  left_join(rent_tract, by = "GEOID")
 ```
 
 ```{r map}
 library(mapview)
-mapview(tract, zcol = "percent")
+mapview(rent_tract, zcol = "pct", 
+        label = paste0(rent_tract$NAME, ": ", 
+                       round(rent_tract$pct * 100, 1), "% (", 
+                       rent_tract$estimate, " renters)"))
 ```
 
 Tracts with the highest percentage of renters are mostly located near the downtown core of Memphis. There are exceptions, notably in Millington and in the southeastern corner of Memphis, near Germantown. The areas with the lowest percentage of renters are in the northeastern portion of Shelby County and in parts of Germantown and Collierville.
@@ -248,77 +222,41 @@ This section will explore characteristics of renting households in Memphis. Firs
 Are certain racial/ethnic groups more likely to be renters than others? The table below shows how much certain racial/ethnic groups are present in the total population, compared to how much they are present in the renter population. In a place with no disparity in tenure, we would expect these percentages to be equal (i.e., if Black households make up 60% of all households, they would also comprise 60% of all renters). The last column shows the percentage point difference for each group.
 
 ```{r vRaceTotal}
-vRaceTotal <- c(
-  White = "B25003H_001",
-  Black = "B25003B_001",
-  Hispanic = "B25003I_001",
-  Asian = "B25003D_001"
+v_race <- c(
+  "B25003H_003" = "White",
+  "B25003B_003" = "Black",
+  "B25003I_003" = "Hispanic",
+  "B25003D_003" = "Asian"
 )
-```
 
-```{r raceTotal, include=FALSE}
-raceTotal <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vRaceTotal,
-  summary_var = "B25003_001",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, places)) %>% 
-  mutate(percent = 100 * (estimate / summary_est),
-         total = "Total")
-```
+rent_mem <- rent_place %>% 
+  filter(NAME == "Memphis")
 
-```{r vRaceRent}
-vRaceRent <- c(
-  White = "B25003H_003",
-  Black = "B25003B_003",
-  Hispanic = "B25003I_003",
-  Asian = "B25003D_003"
-)
-```
+rent_race <- hsg %>% 
+  filter(str_detect(NAME, "Memphis") &
+           str_starts(variable, "B25003[:alpha:]_003")) %>% 
+  mutate(estimate_mem = rent_mem$estimate,
+         summary_mem = rent_mem$summary_est,
+         variable = recode(variable, !!!v_race),
+         rent_pct = estimate / estimate_mem,
+         hh_pct = summary_est / summary_mem,
+         diff = round((rent_pct - hh_pct) * 100, 1)) %>% 
+  arrange(desc(diff)) %>% 
+  select(variable, rent_pct:diff)
 
-```{r raceRent, include=FALSE}
-raceRent <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vRaceRent,
-  summary_var = "B25003_003",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, places)) %>% 
-  mutate(percent = 100 * (estimate / summary_est),
-         total = "Rent")
-```
-
-```{r race}
-race <- rbind(raceRent, raceTotal) %>% 
-  filter(str_detect(NAME, "Memphis")) %>% 
-  select(variable, percent, total) %>% 
-  pivot_wider(names_from = total, values_from = percent) %>% 
-  mutate(difference = Total - Rent) %>% 
-  select(variable, Total, everything()) %>% 
-  arrange(desc(Rent))
-```
-
-```{r racePlaces, eval=FALSE, include=FALSE}
-racePlaces <- rbind(raceRent, raceTotal) %>% 
-  select(NAME, variable, percent, total) %>% 
-  pivot_wider(names_from = total, values_from = percent) %>% 
-  mutate(difference = Total - Rent) %>% 
-  select(NAME, variable, Total, everything())
 ```
 
 ```{r raceTable}
 datatable(
-  race,
+  rent_race,
   rownames = FALSE, 
-  colnames = c('Race/Ethnicity', 'Total Households', 'Renters', 'Difference'),
+  colnames = c('Race/Ethnicity', 'Renters', 'Households', 'Difference'),
   caption = "Table 3: Race/Ethnicity of Renters in Memphis",
+  style = "bootstrap",
   options = list(pageLength = 4),
   autoHideNavigation = getOption("DT.autoHideNavigation", TRUE)
-) %>% 
-  formatPercentage(2:3, mark = ".", interval = 2) %>% 
+  ) %>% 
+  formatPercentage(2:3, mark = ".", digits = 1) %>% 
   formatRound(4)
 ```
 
@@ -331,25 +269,31 @@ The following map shows, for each census tract in Shelby County, what percentage
 #### Race/Ethnicity of Renters in Shelby County Census Tracts
 
 ```{r raceTract, include=FALSE}
-raceTract <- get_acs(
-  geography = "tract",
-  state = "TN",
-  county = "Shelby",
-  variables = vRaceRent,
-  summary_var = "B25003_003",
-  cache_table = TRUE,
-  geometry = TRUE
-) %>% 
-  mutate(percent = 100 * (estimate / summary_est))
-```
+race_tract <- hsg %>% 
+  filter(str_starts(variable, "B25003[:alpha:]_003") &
+           str_length(GEOID) == 11) %>%
+  mutate(pct = (estimate / summary_est) * 100,
+         GEOID = as.character(GEOID),
+         variable = recode_factor(variable, !!!v_race))
 
-```{r mapRace}
-ggplot(raceTract, aes(fill = percent)) +
-  geom_sf() +
-  facet_wrap(~variable) +
-  theme_void() +
-  labs(fill = "Percent",
-       caption = "Source: 2015-2019 5-Year ACS estimates")
+race_tract_geo <- tract %>% 
+  left_join(race_tract, by = "GEOID") %>% 
+  as_dot_density(value = "estimate",
+                 values_per_dot = 50,
+                 group = "variable")
+
+library(tmap)
+
+tm_shape(tract) +
+  tm_polygons(col = "white",
+              border.col = "grey") +
+  tm_shape(race_tract_geo) +
+  tm_dots(col = "variable",
+          palette = "Set1",
+          size = 0.07,
+          title = "1 dot = 50 households") +
+  tm_layout(legend.outside = TRUE,
+            title = "Race/ethnicity of renters,\n2017-2021 US Census")
 ```
 
 The map shows distinct divisions of where certain racial/ethnic groups rent. White renters make up a majority along the Poplar corridor and in areas outside the city limits. Meanwhile, Black renters make up the majority of renting households in North and South Memphis, and in unincorporated parts of the county to the east and along the Mississippi River. Hispanic/Latino renters are most represented in and near the Berclair neighborhood (within the I-240 loop, north of Summer Avenue and west of Highland Street). Asian renters are predominantly outside the city of Memphis, in the suburbs of Germantown, Collierville, and Bartlett.
@@ -385,6 +329,21 @@ The federal government determines affordable housing to be no more than 30% of a
 The graph below shows housing cost burden for households in Memphis, separated by tenure.
 
 ```{r vGRAPHIown}
+cost_burden <- hsg %>% 
+  filter(str_detect(variable, "B25106") &
+           str_detect(NAME, "Memphis"))
+
+v_cost_burden <- v_acs5 %>% 
+  filter(str_detect(name, "B25106_")) %>% 
+  mutate(tenure = str_extract(label, "Owner|Renter"), 
+         income = str_extract(label, "(?<=units:!!).*(?=:)"), 
+         burden = str_remove(label, ".*:(!!)?"),
+         across(c(income, burden), ~ str_replace(.x, "Less than ", "<")),
+         across(c(income, burden), ~ str_replace(.x, " to ", "-")),
+         across(c(income, burden), ~ str_replace(.x, " or more", "+")),
+         burden = str_replace(burden, " percent", "%"),
+         .after = name) 
+
 vGRAPHIown <- c(
   "<$35,000!!Affordable" = "B25106_003",
   "<$35,000!!Affordable" = "B25106_004",
@@ -797,7 +756,7 @@ Most renters live in older housing structures. Overall, 62% of renter-occupied h
 Every five years, the American Housing Survey (AHS) provides data on housing quality problems in the Memphis MSA. The most recent survey was completed in 2019. Note that while most of the analysis on this page is specifically for Memphis, the AHS surveys the entire metro region.
 
 ```{r AHSimport, include=FALSE}
-AHSimport <- read_csv("data/table/census/ahs-2019-hsg-quality.csv")
+AHSimport <- read_csv("data/census/ahs-2019-hsg-quality.csv")
 ```
 
 ```{r AHSall}
