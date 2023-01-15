@@ -4,6 +4,7 @@
 
 # Session Data files
 .RData
+*.DS_Store
 
 # User-specific files
 .Ruserdata
@@ -33,8 +34,8 @@ vignettes/*.pdf
 
 # large csv files
 data/geo/parcel
-data/table/adb/2022
-data/table/census/acs/var/acs1-all-years.csv
+data/adb/2022
+data/census/var/acs1-all-years.csv
 
 # Temporary files created by R markdown
 *.utf8.md
