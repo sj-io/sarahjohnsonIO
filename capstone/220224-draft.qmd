@@ -99,6 +99,7 @@ options(tigris_use_cache = TRUE)
 
 ```{r variables, include=FALSE}
 v_acs5 <- read_csv("data/census/var/acs5-2021.csv")
+geoid <- read_csv("data/census/var/geoid.csv")
 ```
 
 ### Renter Locations
@@ -110,7 +111,8 @@ Where do renters live? The first half of this section compares the percentage of
 Before studying renters in Memphis, it's useful to know how the area compares to other metro areas in the US. A metro area (also called a metropolitan statistical area, or MSA) is a geographic boundary created by the US Census. It contains a county with an urban core, and surrounding counties with "a high degree of social and economic integration" (measured by commute to work) [@cbsa2021]. Any mention of "Memphis" in this section refers to the Memphis MSA, which includes eight counties spanning Tennessee, Mississippi, and Arkansas.
 
 ```{r cbsa, include=FALSE}
-hsg <- read_csv("data/census/acs5/B25-hsg.csv")
+hsg <- read_csv("data/census/acs5/B25-hsg.csv") %>% 
+  left_join(geoid, by = "GEOID")
 
 rent_cbsa <- hsg %>%
   filter(variable == "B25003_003" &
@@ -143,8 +145,10 @@ Memphis ranks 43rd in the US for the total number of households in a metro area.
 While 40% of households in the Memphis MSA are renters, this percentage varies when we subdivide the metro area. In general, there are more rental units in a central city/county compared to neighboring areas. This section will focus on Shelby County, and any mention of "Memphis" refers exclusively to the city of Memphis.
 
 ```{r vPlaces}
-places <- c("Memphis", "Lakeland", "Bartlett", 
-            "Germantown", "Collierville", "Millington", "Arlington") %>% 
+v_places <- c("Memphis", "Lakeland", "Bartlett", 
+            "Germantown", "Collierville", "Millington", "Arlington") 
+
+places <- v_places %>% 
   str_c(collapse = "|")
 ```
 
@@ -197,7 +201,7 @@ rent_tract <- hsg %>%
          GEOID = as.character(GEOID))
 
 library(sf)
-tract <- read_sf("data/geo/tract/tracts_21.shp") 
+tract <- read_sf("data/geo/tract/tract-21.shp") 
 
 rent_tract <- tract %>% 
   left_join(rent_tract, by = "GEOID")
@@ -206,7 +210,7 @@ rent_tract <- tract %>%
 ```{r map}
 library(mapview)
 mapview(rent_tract, zcol = "pct", 
-        label = paste0(rent_tract$NAME, ": ", 
+        label = paste0(rent_tract$NAMELSAD, ": ", 
                        round(rent_tract$pct * 100, 1), "% (", 
                        rent_tract$estimate, " renters)"))
 ```
@@ -342,94 +346,73 @@ v_cost_burden <- v_acs5 %>%
          across(c(income, burden), ~ str_replace(.x, " to ", "-")),
          across(c(income, burden), ~ str_replace(.x, " or more", "+")),
          burden = str_replace(burden, " percent", "%"),
-         .after = name) 
+         burden = na_if(burden, ""),
+         cb_sum = case_when(
+           str_detect(burden, "20|No cash rent") ~ "Affordable",
+           str_detect(burden, "30|negative income") ~ "Burdened"
+         ),
+         .after = name) %>% 
+  select(-c(label:geography))
 
-vGRAPHIown <- c(
-  "<$35,000!!Affordable" = "B25106_003",
-  "<$35,000!!Affordable" = "B25106_004",
-  "<$35,000!!Burden" = "B25106_005",
-  "<$35,000!!Affordable" = "B25106_008",
-  "<$35,000!!Affordable" = "B25106_009",
-  "<$35,000!!Burden" = "B25106_010",
-  "$35,000 to $74,999!!Affordable" = "B25106_012",
-  "$35,000 to $74,999!!Affordable" = "B25106_013",
-  "$35,000 to $74,999!!Burden" = "B25106_014",
-  "$35,000 to $74,999!!Affordable" = "B25106_016",
-  "$35,000 to $74,999!!Affordable" = "B25106_017",
-  "$35,000 to $74,999!!Burden" = "B25106_018",
-  "$75,000+!!Affordable" = "B25106_020",
-  "$75,000+!!Affordable" = "B25106_021",
-  "$75,000+!!Burden" = "B25106_022"
-)
-```
-
-```{r GRAPHIown, include=FALSE}
-GRAPHIown <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vGRAPHIown,
-  summary_var = "B25106_002",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, "Memphis")) %>% 
-  mutate(tenure = "Owner")
-```
-
-```{r vGRAPHIrent}
-vGRAPHIrent <- c(
-  "<$35,000!!Affordable" = "B25106_026",
-  "<$35,000!!Affordable" = "B25106_027",
-  "<$35,000!!Burden" = "B25106_028",
-  "<$35,000!!Affordable" = "B25106_030",
-  "<$35,000!!Affordable" = "B25106_031",
-  "<$35,000!!Burden" = "B25106_032",
-  "$35,000 to $74,999!!Affordable" = "B25106_034",
-  "$35,000 to $74,999!!Affordable" = "B25106_035",
-  "$35,000 to $74,999!!Burden" = "B25106_036",
-  "$35,000 to $74,999!!Affordable" = "B25106_038",
-  "$35,000 to $74,999!!Affordable" = "B25106_039",
-  "$35,000 to $74,999!!Burden" = "B25106_040",
-  "$75,000+!!Affordable" = "B25106_042",
-  "$75,000+!!Affordable" = "B25106_043",
-  "$75,000+!!Burden" = "B25106_044"
-)
-```
-
-```{r GRAPHIrent, include=FALSE}
-GRAPHIrent <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vGRAPHIrent,
-  summary_var = "B25106_024",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, "Memphis")) %>% 
-  mutate(tenure = "Renter")
+graphi <- hsg %>% 
+  filter(str_starts(variable, "B25106")) %>% 
+  left_join(v_cost_burden, by = c("variable" = "name")) %>% 
+  group_by(GEOID, tenure) %>% 
+  mutate(ten_sum = max(estimate)) %>% 
+  ungroup()
 ```
 
 ```{r GRAPHItotal}
-GRAPHItotal <- rbind(GRAPHIown, GRAPHIrent) %>% 
-  select(tenure, variable, estimate, summary_est) %>% 
-  separate(variable, into = c("income", "burden"), sep = "!!") %>% 
-  group_by(tenure, summary_est, income, burden) %>% 
-  summarise(estimate = sum(estimate)) %>% 
+graphi_pl_sum <- graphi %>% 
+  filter(!is.na(cb_sum)) %>% 
+  group_by(GEOID, NAME, tenure, cb_sum) %>% 
+  summarise(estimate = sum(estimate), ten_sum = ten_sum) %>% 
+  arrange(desc(ten_sum)) %>% 
   ungroup() %>% 
-  mutate(percentTen = 100 * (estimate / summary_est),
-         percentTot = 100 * (estimate / 251732))
+  distinct() %>% 
+  mutate(pct = estimate / ten_sum,
+         NAME = str_remove_all(NAME, " (city|town).*$"),
+         NAME = fct_inorder(NAME))
 ```
 
-```{r CB1, fig.cap="Cost burden by tenure", preview=TRUE}
-ggplot(GRAPHItotal, aes(x = burden, y = estimate, fill = tenure)) +
+::: {.panel-tabset}
+## Estimate
+
+```{r}
+graphi_pl_sum %>% 
+  ggplot(aes(x = tenure, y = estimate, fill = cb_sum)) +
   geom_col(position = "stack") +
+  scale_y_continuous(labels = scales::label_comma()) +
+  scale_fill_discrete(direction = -1) +
+  facet_wrap(~NAME, scales = "free") +
   theme_minimal() +
-  scale_fill_manual(values = c("mediumturquoise", "salmon")) +
-  labs(title = "Cost burden by tenure",
-       subtitle = "Memphis, TN",
-       caption = "2015-2019 5-year ACS estimates",
+  labs(title = "Cost Burden by Tenure",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 5-Year ACS Estimates",
        y = "",
        x = "",
-       fill = "Tenure")
+       fill = "Housing Costs")
 ```
+
+## Proportion
+
+```{r}
+graphi_pl_sum %>% 
+  ggplot(aes(x = tenure, y = estimate, fill = cb_sum)) +
+  geom_col(position = "fill") +
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_discrete(direction = -1) +
+  facet_wrap(~NAME, scales = "free") +
+  theme_minimal() +
+  labs(title = "Cost Burden by Tenure",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 5-Year ACS Estimates",
+       y = "",
+       x = "",
+       fill = "Housing Costs")
+```
+
+:::
 
 Overall, the majority of households in Memphis have affordable housing, with 62% paying less than 30% of their income towards housing, compared to 35% who are cost burdened. However, separating households by tenure reveals that the majority of households with affordable housing are owner-occupied units. In fact, more renters are cost burdened than have affordable housing. Comparatively, very few homeowners are cost burdened.
 
