@@ -1,22 +1,23 @@
+places <- c("Memphis", "Lakeland", "Bartlett", 
+            "Germantown", "Collierville", "Millington", "Arlington") %>% 
+  str_c(collapse = "|")
+
 new_data <- get_acs(
   geography = "place",
   state = "TN",
   # county = "Shelby",
-  table = "B25106",
-  summary_var = "B25106_001",
+  table = "B25074",
+  summary_var = "B25074_001",
   cache_table = TRUE
 ) %>%
   # filter(str_detect(NAME, "Shelby")) %>%
   filter(str_detect(NAME, places)) %>%
-  mutate(year = 2021, .before = 1)
+  mutate(year = 2021, .before = 1) %>% 
+  select(-NAME)
 
 existing <- read_csv("data/census/acs5/B25-hsg.csv") 
 joined <- rbind(existing, new_data)
 write_csv(joined, "data/census/acs5/B25-hsg.csv")
-
-places <- c("Memphis", "Lakeland", "Bartlett", 
-            "Germantown", "Collierville", "Millington", "Arlington") %>% 
-  str_c(collapse = "|")
 
 # Get unincorporated data
 incorporated <- shelby_places %>% 

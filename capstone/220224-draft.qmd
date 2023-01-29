@@ -44,7 +44,7 @@ library(DT)
 ```
 
 ```{r HHRS}
-HHRS <- read_csv("data/table/hud/HHRS-hazards.csv")
+HHRS <- read_csv("data/hud/HHRS-hazards.csv")
 
 datatable(
   HHRS,
@@ -97,9 +97,11 @@ library(tidycensus)
 options(tigris_use_cache = TRUE)
 ```
 
-```{r variables, include=FALSE}
+```{r getData, include=FALSE}
 v_acs5 <- read_csv("data/census/var/acs5-2021.csv")
 geoid <- read_csv("data/census/var/geoid.csv")
+hsg <- read_csv("data/census/acs5/B25-hsg.csv") %>% 
+  left_join(geoid, by = "GEOID")
 ```
 
 ### Renter Locations
@@ -111,9 +113,6 @@ Where do renters live? The first half of this section compares the percentage of
 Before studying renters in Memphis, it's useful to know how the area compares to other metro areas in the US. A metro area (also called a metropolitan statistical area, or MSA) is a geographic boundary created by the US Census. It contains a county with an urban core, and surrounding counties with "a high degree of social and economic integration" (measured by commute to work) [@cbsa2021]. Any mention of "Memphis" in this section refers to the Memphis MSA, which includes eight counties spanning Tennessee, Mississippi, and Arkansas.
 
 ```{r cbsa, include=FALSE}
-hsg <- read_csv("data/census/acs5/B25-hsg.csv") %>% 
-  left_join(geoid, by = "GEOID")
-
 rent_cbsa <- hsg %>%
   filter(variable == "B25003_003" &
            str_detect(NAME, "Metro Area") &
@@ -272,7 +271,7 @@ The following map shows, for each census tract in Shelby County, what percentage
 
 #### Race/Ethnicity of Renters in Shelby County Census Tracts
 
-```{r raceTract, include=FALSE}
+```{r raceTract}
 race_tract <- hsg %>% 
   filter(str_starts(variable, "B25003[:alpha:]_003") &
            str_length(GEOID) == 11) %>%
@@ -337,19 +336,23 @@ cost_burden <- hsg %>%
   filter(str_detect(variable, "B25106") &
            str_detect(NAME, "Memphis"))
 
+v_cb_reformat <- c(
+  "Less than " = "<",
+  " to " = "-",
+  " or more" = "+",
+  " percent" = "%"
+)
+
 v_cost_burden <- v_acs5 %>% 
   filter(str_detect(name, "B25106_")) %>% 
   mutate(tenure = str_extract(label, "Owner|Renter"), 
          income = str_extract(label, "(?<=units:!!).*(?=:)"), 
          burden = str_remove(label, ".*:(!!)?"),
-         across(c(income, burden), ~ str_replace(.x, "Less than ", "<")),
-         across(c(income, burden), ~ str_replace(.x, " to ", "-")),
-         across(c(income, burden), ~ str_replace(.x, " or more", "+")),
-         burden = str_replace(burden, " percent", "%"),
+         across(c(income, burden), ~ str_replace_all(.x, v_cb_reformat)),
          burden = na_if(burden, ""),
          cb_sum = case_when(
            str_detect(burden, "20|No cash rent") ~ "Affordable",
-           str_detect(burden, "30|negative income") ~ "Burdened"
+           str_detect(burden, "30|negative income") ~ "Burden"
          ),
          .after = name) %>% 
   select(-c(label:geography))
@@ -359,6 +362,8 @@ graphi <- hsg %>%
   left_join(v_cost_burden, by = c("variable" = "name")) %>% 
   group_by(GEOID, tenure) %>% 
   mutate(ten_sum = max(estimate)) %>% 
+  group_by(income, .add = TRUE) %>% 
+  mutate(inc_sum = max(estimate)) %>% 
   ungroup()
 ```
 
@@ -373,6 +378,17 @@ graphi_pl_sum <- graphi %>%
   mutate(pct = estimate / ten_sum,
          NAME = str_remove_all(NAME, " (city|town).*$"),
          NAME = fct_inorder(NAME))
+
+graphi_inc_pl <- graphi %>% 
+  filter(!is.na(income) & !is.na(cb_sum)) %>% 
+  group_by(GEOID, NAME, tenure, income, cb_sum) %>% 
+  summarise(estimate = sum(estimate), inc_sum = inc_sum) %>% 
+  ungroup() %>% 
+  distinct() %>% 
+  mutate(pct = estimate / inc_sum,
+         NAME = str_remove_all(NAME, " (city|town).*$"),
+         NAME = fct_inorder(NAME),
+         income = fct_inorder(income))
 ```
 
 ::: {.panel-tabset}
@@ -418,19 +434,46 @@ Overall, the majority of households in Memphis have affordable housing, with 62%
 
 As mentioned above, households with higher incomes can afford to pay more of their income towards housing; while they may be literally cost burdened, they can still easily meet their other needs. The figure below divides the above graph in three income brackets.
 
-```{r CB2, fig.cap="Cost burden by income by tenure"}
-ggplot(GRAPHItotal, aes(x = burden, y = estimate, fill = tenure)) +
+::: {.panel-tabset}
+## Estimate
+
+```{r}
+graphi_inc_pl %>% 
+  filter(NAME == "Memphis") %>% 
+  ggplot(aes(x = tenure, y = estimate, fill = cb_sum)) +
   geom_col(position = "stack") +
-  facet_grid(~income) +
+  scale_y_continuous(labels = scales::label_comma()) +
+  scale_fill_discrete(direction = -1) +
+  facet_wrap(~income, scales = "free") +
   theme_minimal() +
-  scale_fill_manual(values = c("mediumturquoise", "salmon")) +
-  labs(title = "Cost burden by income by tenure",
+  labs(title = "Cost Burden by Tenure by Income",
        subtitle = "Memphis, TN",
-       caption = "2015-2019 5-year ACS estimates",
+       caption = "2017-2021 5-Year ACS Estimates",
        y = "",
        x = "",
-       fill = "Tenure")
+       fill = "Housing Costs")
 ```
+
+## Proportion
+
+```{r}
+graphi_inc_pl %>% 
+  filter(NAME == "Memphis") %>% 
+  ggplot(aes(x = tenure, y = estimate, fill = cb_sum)) +
+  geom_col(position = "fill") +
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_discrete(direction = -1) +
+  facet_wrap(~income, scales = "free") +
+  theme_minimal() +
+  labs(title = "Cost Burden by Tenure by Income",
+       subtitle = "Memphis, TN",
+       caption = "2017-2021 5-Year ACS Estimates",
+       y = "",
+       x = "",
+       fill = "Housing Costs")
+```
+
+:::
 
 As shown above, households earning less than \$35,000 are mostly renters, and the vast majority of these renters are cost burdened. While there are also many owner-occupied households earning less than \$35,000, their housing costs are more often affordable.
 
@@ -443,51 +486,46 @@ Nearly all housing is affordable for households earning more than \$75,000, no m
 Next, let's take a deeper look into housing costs paid by renters. Recall that households who pay more than 50% of their income in rent are considered extremely cost burdened. These households are shown in the graph below.
 
 ```{r vGRAPHIdet}
-vGRAPHIdet <- c(
-  "Affordable" = "B25070_002",
-  "Affordable" = "B25070_003",
-  "Affordable" = "B25070_004",
-  "Affordable" = "B25070_005",
-  "Affordable" = "B25070_006",
-  "Burden" = "B25070_007",
-  "Burden" = "B25070_008",
-  "Burden" = "B25070_009",
-  "Extreme burden" = "B25070_010"
-)
-```
+v_renter_cb <- v_acs5 %>% 
+  filter(str_starts(name, "B25070")) %>% 
+  mutate(burden = str_remove(label, ".*:(!!)?"),
+         burden = str_replace_all(burden, v_cb_reformat),
+         burden = na_if(burden, ""),
+         cb_sum = case_when(
+           str_detect(burden, "[12][05]") ~ "Affordable",
+           str_detect(burden, "[34][05]") ~ "Burden",
+           str_detect(burden, "50") ~ "Extreme burden",
+           TRUE ~ burden
+           ),
+         .after = name) %>%
+  select(-c(label:geography))
 
-```{r GRAPHIdet, include=FALSE}
-GRAPHIdet <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vGRAPHIdet,
-  summary_var = "B25070_001",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, "Memphis"))
-```
+renter_cb <- hsg %>% 
+  filter(str_starts(variable, "B25070")) %>% 
+  left_join(v_renter_cb, by = c("variable" = "name"))
 
-```{r GRAPHIdetMem}
-GRAPHIdetMem <- GRAPHIdet %>% 
-  select(variable, estimate) %>% 
-  group_by(variable) %>% 
-  summarise(estimate = sum(estimate)) %>% 
+renter_cb_sum <- renter_cb %>% 
+  filter(!is.na(cb_sum)) %>% 
+  group_by(GEOID, NAME, cb_sum) %>% 
+  summarise(estimate = sum(estimate), summary_est = summary_est) %>% 
   ungroup() %>% 
-  mutate(percent = 100*(estimate/134371))
+  distinct() %>% 
+  mutate(pct = estimate / summary_est,
+         NAME = str_remove_all(NAME, " (city|town).*$"),
+         NAME = fct_reorder(NAME, summary_est, max, .desc = TRUE))
 ```
 
 ```{r ggGRAPHIdetMem, fig.cap="Cost burden for renters"}
-ggplot(GRAPHIdetMem, aes(x = variable, y = percent, fill = variable)) +
-  geom_col(show.legend = FALSE) +
+renter_cb_sum %>% 
+  ggplot(aes(x = NAME, y = pct, fill = cb_sum)) +
+  geom_col(position = position_stack(reverse = TRUE)) +
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_manual(values = c("mediumseagreen", "goldenrod", "tomato", "gray")) +
   theme_minimal() +
-  scale_y_continuous(labels = function(y) paste0(y, "%")) +
-  scale_fill_manual(values = c("mediumseagreen", "goldenrod", "tomato")) +
-  labs(title = "Cost burden for renters",
-       subtitle = "Memphis, TN",
-       caption = "2015-2019 5-year ACS estimates",
-       y = "",
-       x = "",
-       fill = "")
+  labs(title = "Housing Costs for Renters",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 ACS 5-Year Estimates",
+       x = "", y = "", fill = "Housing Costs")
 ```
 
 Just over 40% of renting households in Memphis have affordable housing, while the majority, 51%, are cost burdened in some way. When we break down cost burden, we see there are more renters who are extremely cost burdened than those who face a moderate burden.
@@ -495,107 +533,85 @@ Just over 40% of renting households in Memphis have affordable housing, while th
 As before, let's separate our graph by income. This time I will take a more detailed look at income groups.
 
 ```{r vGRAPHIdet2}
-vGRAPHIdet2 <- c(
-  "<$10,000!!Affordable" = "B25074_003",
-  "<$10,000!!Affordable" = "B25074_004",
-  "<$10,000!!Affordable" = "B25074_005",
-  "<$10,000!!Burden" = "B25074_006",
-  "<$10,000!!Burden" = "B25074_007",
-  "<$10,000!!Burden" = "B25074_008",
-  "<$10,000!!Extreme burden" = "B25074_009",
-  "$10,000-$19,999!!Affordable" = "B25074_012",
-  "$10,000-$19,999!!Affordable" = "B25074_013",
-  "$10,000-$19,999!!Affordable" = "B25074_014",
-  "$10,000-$19,999!!Burden" = "B25074_015",
-  "$10,000-$19,999!!Burden" = "B25074_016",
-  "$10,000-$19,999!!Burden" = "B25074_017",
-  "$10,000-$19,999!!Extreme burden" = "B25074_018",
-  "$20,000-$34,999!!Affordable" = "B25074_021",
-  "$20,000-$34,999!!Affordable" = "B25074_022",
-  "$20,000-$34,999!!Affordable" = "B25074_023",
-  "$20,000-$34,999!!Burden" = "B25074_024",
-  "$20,000-$34,999!!Burden" = "B25074_025",
-  "$20,000-$34,999!!Burden" = "B25074_026",
-  "$20,000-$34,999!!Extreme burden" = "B25074_027",
-  "$35,000-$49,999!!Affordable" = "B25074_030",
-  "$35,000-$49,999!!Affordable" = "B25074_031",
-  "$35,000-$49,999!!Affordable" = "B25074_032",
-  "$35,000-$49,999!!Burden" = "B25074_033",
-  "$35,000-$49,999!!Burden" = "B25074_034",
-  "$35,000-$49,999!!Burden" = "B25074_035",
-  "$35,000-$49,999!!Extreme burden" = "B25074_036",
-  "$50,000-$74,999!!Affordable" = "B25074_039",
-  "$50,000-$74,999!!Affordable" = "B25074_040",
-  "$50,000-$74,999!!Affordable" = "B25074_041",
-  "$50,000-$74,999!!Burden" = "B25074_042",
-  "$50,000-$74,999!!Burden" = "B25074_043",
-  "$50,000-$74,999!!Burden" = "B25074_044",
-  "$50,000-$74,999!!Extreme burden" = "B25074_045",
-  "$75,000-$99,999!!Affordable" = "B25074_048",
-  "$75,000-$99,999!!Affordable" = "B25074_049",
-  "$75,000-$99,999!!Affordable" = "B25074_050",
-  "$75,000-$99,999!!Burden" = "B25074_051",
-  "$75,000-$99,999!!Burden" = "B25074_052",
-  "$75,000-$99,999!!Burden" = "B25074_053",
-  "$75,000-$99,999!!Extreme burden" = "B25074_054",
-  "$100,000+!!Affordable" = "B25074_057",
-  "$100,000+!!Affordable" = "B25074_058",
-  "$100,000+!!Affordable" = "B25074_059",
-  "$100,000+!!Burden" = "B25074_060",
-  "$100,000+!!Burden" = "B25074_061",
-  "$100,000+!!Burden" = "B25074_062",
-  "$100,000+!!Extreme burden" = "B25074_063"
-)
-```
+v_renter_cb_detail <- v_acs5 %>% 
+  filter(str_starts(name, "B25074")) %>% 
+  mutate(income = str_extract(label, "(?<=Total:!!).*(?=:)"), 
+         burden = str_remove(label, ".*:(!!)?"),
+         across(c(income, burden), ~ str_replace_all(.x, v_cb_reformat)),
+         burden = na_if(burden, ""),
+         cb_sum = case_when(
+           str_detect(burden, "[12][05]") ~ "Affordable",
+           str_detect(burden, "[34][05]") ~ "Burden",
+           str_detect(burden, "50") ~ "Extreme burden",
+           TRUE ~ burden
+           ),
+         .after = name) %>% 
+  select(-c(label:geography))
 
-```{r GRAPHIdet2, include=FALSE}
-GRAPHIdet2 <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vGRAPHIdet2,
-  summary_var = "B25074_001",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, "Memphis"))
-```
+renter_cb_detail <- hsg %>% 
+  filter(str_starts(variable, "B25074")) %>% 
+  left_join(v_renter_cb_detail, by = c("variable" = "name")) %>% 
+  group_by(GEOID, income) %>% 
+  mutate(inc_sum = max(estimate)) %>% 
+  ungroup()
 
-```{r GRAPHIdetMem2}
-GRAPHIdetMem2 <- GRAPHIdet2 %>% 
-  select(variable, estimate) %>% 
-  group_by(variable) %>% 
-  summarise(estimate = sum(estimate)) %>% 
+renter_cb_detail_sum <- renter_cb_detail %>% 
+  filter(!is.na(burden)) %>% 
+  mutate(income = fct_inorder(income)) %>% 
+  group_by(GEOID, NAME, income, cb_sum) %>% 
+  summarise(estimate = sum(estimate), inc_sum = inc_sum) %>% 
   ungroup() %>% 
-  separate(variable, into = c("income", "burden"), sep = "!!")
+  distinct() %>% 
+  mutate(pct = estimate / inc_sum,
+         NAME = str_remove_all(NAME, " (city|town).*$"),
+         NAME = fct_reorder(NAME, inc_sum, max, .desc = TRUE),
+         income = fct_rev(income))
 ```
 
-```{r factorIncome}
-GRAPHIdetMem2$income <- factor(
-  GRAPHIdetMem2$income,
-  levels = c(
-    "$100,000+",
-    "$75,000-$99,999",
-    "$50,000-$74,999",
-    "$35,000-$49,999",
-    "$20,000-$34,999",
-    "$10,000-$19,999",
-    "<$10,000"
-  )
-)
-```
+::: {.panel-tabset}
+## Estimate
 
-```{r ggGRAPHIdetMem2, fig.cap="Cost burden by income for renters"}
-ggplot(GRAPHIdetMem2, aes(x = income, y = estimate, fill = burden)) +
+```{r}
+#| fig-height: 6
+library(scales)
+
+renter_cb_detail_sum %>% 
+  ggplot(aes(x = income, y = estimate, fill = cb_sum)) + 
   geom_col(position = "stack") +
   coord_flip() +
+  scale_fill_manual(values = c("mediumseagreen", "goldenrod", "tomato", "gray")) +
+  scale_y_continuous(labels = scales::label_comma(scale_cut = cut_short_scale())) +
+  facet_wrap(~NAME, scales = "free_x") +
   theme_minimal() +
-  scale_fill_manual(values = c("mediumseagreen", "goldenrod", "tomato")) +
-  labs(title = "Cost burden by income for renters",
-       subtitle = "Memphis, TN",
-       caption = "2015-2019 5-year ACS estimates",
+  labs(title = "Cost burden by Income for Renters",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 5-year ACS estimates",
        y = "",
        x = "",
-       fill = "Housing Costs") 
+       fill = "") +
+  theme(legend.position = "bottom")
 ```
+
+## Proportion
+
+```{r}
+renter_cb_detail_sum %>% 
+  ggplot(aes(x = income, y = pct, fill = cb_sum)) + 
+  geom_col(position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("mediumseagreen", "goldenrod", "tomato", "gray")) +
+  scale_y_continuous(labels = scales::label_percent()) +
+  facet_wrap(~NAME) +
+  theme_minimal() +
+  labs(title = "Cost burden by Income for Renters",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 5-year ACS estimates",
+       y = "",
+       x = "",
+       fill = "")
+```
+
+:::
 
 Below \$20,000, the vast majority of renters face extreme cost burden and there are very few with affordable housing. The largest percentage of renters in Memphis earn between \$20,000 to \$34,999, and nearly all of these renters are still cost burdened, though most no longer face extreme burden. Only above \$35,000 are a majority of renters affordably housed, with a very small rate of extreme burden. Above \$50,000, the vast majority of renters have affordable housing and cost burden is infrequent, and it is practically nonexistent above \$75,000. However, there are few renters at this income range compared to lower income ranges.
 
@@ -623,7 +639,7 @@ This final section looks into certain qualities of rental housing in Memphis. Fi
 
 Typically apartment complexes are associated with renter-occupied housing, but how true is this for Memphis? The graph below divides housing structures into four categories: single-family; duplex, triplex, and quadplexes, which often resemble single-family homes; larger multifamily structures with five or more units; and alternative housing like mobile homes, boats, vans, etc.
 
-```{r vUnits}
+```{r vUnits, eval=FALSE}
 vUnits <- c(
   "Single-family" = "B25032_014",
   "Single-family" = "B25032_015",
@@ -636,9 +652,7 @@ vUnits <- c(
   "Mobile home, boat, etc." = "B25032_022",
   "Mobile home, boat, etc." = "B25032_023"
 )
-```
 
-```{r unitsMem, include=FALSE}
 unitsMem <- get_acs(
   geography = "place",
   state = "TN",
@@ -647,17 +661,13 @@ unitsMem <- get_acs(
   cache_table = TRUE
 ) %>% 
   filter(str_detect(NAME, "Memphis"))
-```
 
-```{r units}
 units <- unitsMem %>% 
   group_by(summary_est, variable) %>% 
   summarise(estimate = sum(estimate)) %>% 
   ungroup() %>% 
   mutate(percent = 100*(estimate/summary_est))
-```
 
-```{r factorUnits}
 units$variable <- factor(
   units$variable,
   levels = c(
@@ -669,7 +679,7 @@ units$variable <- factor(
 )
 ```
 
-```{r ggUnits, fig.cap="Units in structure"}
+```{r ggUnits, fig.cap="Units in structure", eval=FALSE}
 ggplot(units, aes(x = variable, y = estimate)) +
   geom_col(fill = "darkcyan") +
   coord_flip() +
@@ -687,7 +697,7 @@ The largest proportion of renters, 43%, live in single-family homes. While the m
 
 How old are the units in which renters live? Older structures are more likely to need maintenance, and they can be susceptible to health risks that are not in newer homes. For instance, the ban on lead based paint was not passed until 1979, and homes built before the ban are likely to have lead paint unless they have been remediated.
 
-```{r}
+```{r eval=FALSE}
 vBuilt <- c(
   "2010 or later" = "B25036_014",
   "2010 or later" = "B25036_015",
@@ -700,9 +710,7 @@ vBuilt <- c(
   "1940-1949" = "B25036_022",
   "1939 or earlier" = "B25036_023"
 )
-```
 
-```{r}
 built <- get_acs(
   geography = "place",
   state = "TN",
@@ -711,9 +719,7 @@ built <- get_acs(
   cache_table = TRUE
 ) %>% 
   filter(str_detect(NAME, "Memphis"))
-```
 
-```{r}
 built2 <- built %>% 
   group_by(summary_est, variable) %>% 
   summarise(estimate = sum(estimate)) %>% 
@@ -721,7 +727,7 @@ built2 <- built %>%
   mutate(percent = 100 * (estimate / summary_est))
 ```
 
-```{r fig.cap="Year structure built"}
+```{r fig.cap="Year structure built", eval=FALSE}
 ggplot(built2, aes(x = estimate, y = variable)) +
   geom_col(fill = "peru") +
   theme_minimal() +
