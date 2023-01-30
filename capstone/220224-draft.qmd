@@ -41,14 +41,16 @@ The below table lists all 29 hazards of the modern HHRS, along with a short desc
 ```{r library}
 library(tidyverse)
 library(DT)
-HHRS <- read_csv("data/table/hud/HHRS-hazards.csv")
 ```
 
 ```{r HHRS}
+HHRS <- read_csv("data/hud/HHRS-hazards.csv")
+
 datatable(
   HHRS,
   rownames = FALSE,
   caption = "The 29 Healthy Home Hazards",
+  style = "bootstrap",
   options = list(
     pageLength = 5,
     lengthMenu = c(5, 10, 15, 20, 25, 29)
@@ -95,8 +97,11 @@ library(tidycensus)
 options(tigris_use_cache = TRUE)
 ```
 
-```{r variables, eval=FALSE, include=FALSE}
-Vs <- load_variables(2019, "acs5")
+```{r getData, include=FALSE}
+v_acs5 <- read_csv("data/census/var/acs5-2021.csv")
+geoid <- read_csv("data/census/var/geoid.csv")
+hsg <- read_csv("data/census/acs5/B25-hsg.csv") %>% 
+  left_join(geoid, by = "GEOID")
 ```
 
 ### Renter Locations
@@ -108,38 +113,27 @@ Where do renters live? The first half of this section compares the percentage of
 Before studying renters in Memphis, it's useful to know how the area compares to other metro areas in the US. A metro area (also called a metropolitan statistical area, or MSA) is a geographic boundary created by the US Census. It contains a county with an urban core, and surrounding counties with "a high degree of social and economic integration" (measured by commute to work) [@cbsa2021]. Any mention of "Memphis" in this section refers to the Memphis MSA, which includes eight counties spanning Tennessee, Mississippi, and Arkansas.
 
 ```{r cbsa, include=FALSE}
-cbsa <- get_acs(
-  geography = "cbsa",
-  variables = c(
-    Owner = "B25003_002",
-    Renter = "B25003_003"
-  ),
-  summary_var = "B25003_001",
-  cache_table = TRUE
-) %>%
-  slice_max(summary_est, n = 100) %>% 
-  mutate(percent = 100 * (estimate / summary_est))
-```
-
-```{r cbsaRent}
-cbsaRent <- cbsa %>% 
-  filter(variable == "Renter") %>% 
-  select(NAME, summary_est, estimate, percent) %>% 
-  arrange(desc(percent)) %>% 
-  mutate(NAME = str_remove(NAME, "-.*$")) %>% 
-  mutate(NAME = str_remove(NAME, ",.*$")) 
+rent_cbsa <- hsg %>%
+  filter(variable == "B25003_003" &
+           str_detect(NAME, "Metro Area") &
+           year == 2021) %>%
+  mutate(pct = estimate / summary_est,
+         NAME = str_remove_all(NAME, "(-|,).*$")) %>% 
+  select(NAME, summary_est, estimate, pct) %>% 
+  arrange(desc(pct))
 ```
 
 The table below lists the top 50 metros in the US (by number of households), sorted by the percentage of renters.
 
 ```{r cbsaDT}
 datatable(
-  cbsaRent,
+  rent_cbsa,
+  caption = "Table 1: Percent of Renters in US Metro Areas",
+  colnames = c('Metro Area', 'Total Households', 'Renters', '%'),
   rownames = FALSE,
-  colnames = c('Metro Area', 'Total Households', 'Renters', 'Rent (Pct)'),
-  caption = "Table 1: Percent of Renters in US Metro Areas"
-) %>%
-  formatPercentage(4, mark = ".", interval = 2) %>%
+  style = "bootstrap"
+  ) %>%
+  formatPercentage(4, mark = ".", digits = 1) %>%
   formatRound(2:3, digits = 0)
 ```
 
@@ -150,55 +144,36 @@ Memphis ranks 43rd in the US for the total number of households in a metro area.
 While 40% of households in the Memphis MSA are renters, this percentage varies when we subdivide the metro area. In general, there are more rental units in a central city/county compared to neighboring areas. This section will focus on Shelby County, and any mention of "Memphis" refers exclusively to the city of Memphis.
 
 ```{r vPlaces}
-places <- c("Memphis", "Lakeland", "Bartlett", "Germantown", "Collierville", "Millington", "Arlington") %>% 
+v_places <- c("Memphis", "Lakeland", "Bartlett", 
+            "Germantown", "Collierville", "Millington", "Arlington") 
+
+places <- v_places %>% 
   str_c(collapse = "|")
 ```
 
 ```{r place, include=FALSE}
-place <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = c(
-    Owner = "B25003_002",
-    Renter = "B25003_003"
-  ),
-  summary_var = "B25003_001",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, places)) %>% 
-  mutate(percent = 100 * (estimate / summary_est))
+rent_place <- hsg %>% 
+  filter(variable == "B25003_003" &
+           str_length(GEOID) == 7) %>%
+  mutate(pct = estimate / summary_est,
+         NAME = str_remove_all(NAME, " (city|town).*$")) %>% 
+  select(NAME, summary_est, estimate, pct) %>% 
+  arrange(desc(pct))
 ```
 
 The following table shows the percentage of renters for places in Shelby County.
 
-```{r uninc}
-#' manually adding data for unincorporated Shelby County
-#' Shelby County housing units = 351,194 total; 157,847 rent
-#' Housing Units in places = 315,835 total; 145,705 rent
-#' Housing units not in places = 35,359 total; 12,142 rent
-
-placeUninc <- c('Unincorporated county', 35359, 12142, 34.33921)
-```
-
-```{r placeTable}
-placeTable <- place %>% 
-  filter(variable == "Renter") %>% 
-  select(NAME, summary_est, estimate, percent) %>% 
-  rbind(placeUninc) %>% 
-  arrange(desc(percent)) %>%  
-  mutate(NAME = str_remove(NAME, ",.*$"),
-         NAME = str_remove(NAME, " town| city"))
-```
-
 ```{r placeDT}
 datatable(
-  placeTable,
+  rent_place,
   rownames = FALSE,
-  colnames = c('Place', 'Total Households', 'Renters', 'Rent (Pct)'),
+  colnames = c('Place', 'Total Households', 'Renters', '%'),
   caption = "Table 2: Percent of Renters in Places in Shelby County",
+  style = "bootstrap",
   options = list(pageLength = 8),
   autoHideNavigation = getOption("DT.autoHideNavigation", TRUE)
-) %>% formatPercentage(4, mark = ".", interval = 2) %>% 
+  ) %>% 
+  formatPercentage(4, mark = ".", digits = 1) %>% 
   formatRound(2:3, digits = 0)
 ```
 
@@ -217,24 +192,26 @@ The map below shows the percentage of renters in Shelby County census tracts. Th
 #### Percent of Renters in Shelby County Census Tracts
 
 ```{r tract, include=FALSE}
-tract <- get_acs(
-  geography = "tract",
-  state = "TN",
-  county = "Shelby",
-  variables = c(
-    Owner = "B25003_002",
-    Renter = "B25003_003"
-  ),
-  summary_var = "B25003_001",
-  cache_table = TRUE,
-  geometry = TRUE
-) %>% 
-  mutate(percent = 100 * (estimate / summary_est))
+rent_tract <- hsg %>% 
+  filter(variable == "B25003_003" &
+           str_length(GEOID) == 11) %>%
+  mutate(pct = estimate / summary_est,
+         NAME = str_remove_all(NAME, ",.*$"),
+         GEOID = as.character(GEOID))
+
+library(sf)
+tract <- read_sf("data/geo/tract/tract-21.shp") 
+
+rent_tract <- tract %>% 
+  left_join(rent_tract, by = "GEOID")
 ```
 
 ```{r map}
 library(mapview)
-mapview(tract, zcol = "percent")
+mapview(rent_tract, zcol = "pct", 
+        label = paste0(rent_tract$NAMELSAD, ": ", 
+                       round(rent_tract$pct * 100, 1), "% (", 
+                       rent_tract$estimate, " renters)"))
 ```
 
 Tracts with the highest percentage of renters are mostly located near the downtown core of Memphis. There are exceptions, notably in Millington and in the southeastern corner of Memphis, near Germantown. The areas with the lowest percentage of renters are in the northeastern portion of Shelby County and in parts of Germantown and Collierville.
@@ -248,77 +225,41 @@ This section will explore characteristics of renting households in Memphis. Firs
 Are certain racial/ethnic groups more likely to be renters than others? The table below shows how much certain racial/ethnic groups are present in the total population, compared to how much they are present in the renter population. In a place with no disparity in tenure, we would expect these percentages to be equal (i.e., if Black households make up 60% of all households, they would also comprise 60% of all renters). The last column shows the percentage point difference for each group.
 
 ```{r vRaceTotal}
-vRaceTotal <- c(
-  White = "B25003H_001",
-  Black = "B25003B_001",
-  Hispanic = "B25003I_001",
-  Asian = "B25003D_001"
+v_race <- c(
+  "B25003H_003" = "White",
+  "B25003B_003" = "Black",
+  "B25003I_003" = "Hispanic",
+  "B25003D_003" = "Asian"
 )
-```
 
-```{r raceTotal, include=FALSE}
-raceTotal <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vRaceTotal,
-  summary_var = "B25003_001",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, places)) %>% 
-  mutate(percent = 100 * (estimate / summary_est),
-         total = "Total")
-```
+rent_mem <- rent_place %>% 
+  filter(NAME == "Memphis")
 
-```{r vRaceRent}
-vRaceRent <- c(
-  White = "B25003H_003",
-  Black = "B25003B_003",
-  Hispanic = "B25003I_003",
-  Asian = "B25003D_003"
-)
-```
+rent_race <- hsg %>% 
+  filter(str_detect(NAME, "Memphis") &
+           str_starts(variable, "B25003[:alpha:]_003")) %>% 
+  mutate(estimate_mem = rent_mem$estimate,
+         summary_mem = rent_mem$summary_est,
+         variable = recode(variable, !!!v_race),
+         rent_pct = estimate / estimate_mem,
+         hh_pct = summary_est / summary_mem,
+         diff = round((rent_pct - hh_pct) * 100, 1)) %>% 
+  arrange(desc(diff)) %>% 
+  select(variable, rent_pct:diff)
 
-```{r raceRent, include=FALSE}
-raceRent <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vRaceRent,
-  summary_var = "B25003_003",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, places)) %>% 
-  mutate(percent = 100 * (estimate / summary_est),
-         total = "Rent")
-```
-
-```{r race}
-race <- rbind(raceRent, raceTotal) %>% 
-  filter(str_detect(NAME, "Memphis")) %>% 
-  select(variable, percent, total) %>% 
-  pivot_wider(names_from = total, values_from = percent) %>% 
-  mutate(difference = Total - Rent) %>% 
-  select(variable, Total, everything()) %>% 
-  arrange(desc(Rent))
-```
-
-```{r racePlaces, eval=FALSE, include=FALSE}
-racePlaces <- rbind(raceRent, raceTotal) %>% 
-  select(NAME, variable, percent, total) %>% 
-  pivot_wider(names_from = total, values_from = percent) %>% 
-  mutate(difference = Total - Rent) %>% 
-  select(NAME, variable, Total, everything())
 ```
 
 ```{r raceTable}
 datatable(
-  race,
+  rent_race,
   rownames = FALSE, 
-  colnames = c('Race/Ethnicity', 'Total Households', 'Renters', 'Difference'),
+  colnames = c('Race/Ethnicity', 'Renters', 'Households', 'Difference'),
   caption = "Table 3: Race/Ethnicity of Renters in Memphis",
+  style = "bootstrap",
   options = list(pageLength = 4),
   autoHideNavigation = getOption("DT.autoHideNavigation", TRUE)
-) %>% 
-  formatPercentage(2:3, mark = ".", interval = 2) %>% 
+  ) %>% 
+  formatPercentage(2:3, mark = ".", digits = 1) %>% 
   formatRound(4)
 ```
 
@@ -330,26 +271,32 @@ The following map shows, for each census tract in Shelby County, what percentage
 
 #### Race/Ethnicity of Renters in Shelby County Census Tracts
 
-```{r raceTract, include=FALSE}
-raceTract <- get_acs(
-  geography = "tract",
-  state = "TN",
-  county = "Shelby",
-  variables = vRaceRent,
-  summary_var = "B25003_003",
-  cache_table = TRUE,
-  geometry = TRUE
-) %>% 
-  mutate(percent = 100 * (estimate / summary_est))
-```
+```{r raceTract}
+race_tract <- hsg %>% 
+  filter(str_starts(variable, "B25003[:alpha:]_003") &
+           str_length(GEOID) == 11) %>%
+  mutate(pct = (estimate / summary_est) * 100,
+         GEOID = as.character(GEOID),
+         variable = recode_factor(variable, !!!v_race))
 
-```{r mapRace}
-ggplot(raceTract, aes(fill = percent)) +
-  geom_sf() +
-  facet_wrap(~variable) +
-  theme_void() +
-  labs(fill = "Percent",
-       caption = "Source: 2015-2019 5-Year ACS estimates")
+race_tract_geo <- tract %>% 
+  left_join(race_tract, by = "GEOID") %>% 
+  as_dot_density(value = "estimate",
+                 values_per_dot = 50,
+                 group = "variable")
+
+library(tmap)
+
+tm_shape(tract) +
+  tm_polygons(col = "white",
+              border.col = "grey") +
+  tm_shape(race_tract_geo) +
+  tm_dots(col = "variable",
+          palette = "Set1",
+          size = 0.07,
+          title = "1 dot = 50 households") +
+  tm_layout(legend.outside = TRUE,
+            title = "Race/ethnicity of renters,\n2017-2021 US Census")
 ```
 
 The map shows distinct divisions of where certain racial/ethnic groups rent. White renters make up a majority along the Poplar corridor and in areas outside the city limits. Meanwhile, Black renters make up the majority of renting households in North and South Memphis, and in unincorporated parts of the county to the east and along the Mississippi River. Hispanic/Latino renters are most represented in and near the Berclair neighborhood (within the I-240 loop, north of Summer Avenue and west of Highland Street). Asian renters are predominantly outside the city of Memphis, in the suburbs of Germantown, Collierville, and Bartlett.
@@ -385,110 +332,148 @@ The federal government determines affordable housing to be no more than 30% of a
 The graph below shows housing cost burden for households in Memphis, separated by tenure.
 
 ```{r vGRAPHIown}
-vGRAPHIown <- c(
-  "<$35,000!!Affordable" = "B25106_003",
-  "<$35,000!!Affordable" = "B25106_004",
-  "<$35,000!!Burden" = "B25106_005",
-  "<$35,000!!Affordable" = "B25106_008",
-  "<$35,000!!Affordable" = "B25106_009",
-  "<$35,000!!Burden" = "B25106_010",
-  "$35,000 to $74,999!!Affordable" = "B25106_012",
-  "$35,000 to $74,999!!Affordable" = "B25106_013",
-  "$35,000 to $74,999!!Burden" = "B25106_014",
-  "$35,000 to $74,999!!Affordable" = "B25106_016",
-  "$35,000 to $74,999!!Affordable" = "B25106_017",
-  "$35,000 to $74,999!!Burden" = "B25106_018",
-  "$75,000+!!Affordable" = "B25106_020",
-  "$75,000+!!Affordable" = "B25106_021",
-  "$75,000+!!Burden" = "B25106_022"
+cost_burden <- hsg %>% 
+  filter(str_detect(variable, "B25106") &
+           str_detect(NAME, "Memphis"))
+
+v_cb_reformat <- c(
+  "Less than " = "<",
+  " to " = "-",
+  " or more" = "+",
+  " percent" = "%"
 )
-```
 
-```{r GRAPHIown, include=FALSE}
-GRAPHIown <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vGRAPHIown,
-  summary_var = "B25106_002",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, "Memphis")) %>% 
-  mutate(tenure = "Owner")
-```
+v_cost_burden <- v_acs5 %>% 
+  filter(str_detect(name, "B25106_")) %>% 
+  mutate(tenure = str_extract(label, "Owner|Renter"), 
+         income = str_extract(label, "(?<=units:!!).*(?=:)"), 
+         burden = str_remove(label, ".*:(!!)?"),
+         across(c(income, burden), ~ str_replace_all(.x, v_cb_reformat)),
+         burden = na_if(burden, ""),
+         cb_sum = case_when(
+           str_detect(burden, "20|No cash rent") ~ "Affordable",
+           str_detect(burden, "30|negative income") ~ "Burden"
+         ),
+         .after = name) %>% 
+  select(-c(label:geography))
 
-```{r vGRAPHIrent}
-vGRAPHIrent <- c(
-  "<$35,000!!Affordable" = "B25106_026",
-  "<$35,000!!Affordable" = "B25106_027",
-  "<$35,000!!Burden" = "B25106_028",
-  "<$35,000!!Affordable" = "B25106_030",
-  "<$35,000!!Affordable" = "B25106_031",
-  "<$35,000!!Burden" = "B25106_032",
-  "$35,000 to $74,999!!Affordable" = "B25106_034",
-  "$35,000 to $74,999!!Affordable" = "B25106_035",
-  "$35,000 to $74,999!!Burden" = "B25106_036",
-  "$35,000 to $74,999!!Affordable" = "B25106_038",
-  "$35,000 to $74,999!!Affordable" = "B25106_039",
-  "$35,000 to $74,999!!Burden" = "B25106_040",
-  "$75,000+!!Affordable" = "B25106_042",
-  "$75,000+!!Affordable" = "B25106_043",
-  "$75,000+!!Burden" = "B25106_044"
-)
-```
-
-```{r GRAPHIrent, include=FALSE}
-GRAPHIrent <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vGRAPHIrent,
-  summary_var = "B25106_024",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, "Memphis")) %>% 
-  mutate(tenure = "Renter")
+graphi <- hsg %>% 
+  filter(str_starts(variable, "B25106")) %>% 
+  left_join(v_cost_burden, by = c("variable" = "name")) %>% 
+  group_by(GEOID, tenure) %>% 
+  mutate(ten_sum = max(estimate)) %>% 
+  group_by(income, .add = TRUE) %>% 
+  mutate(inc_sum = max(estimate)) %>% 
+  ungroup()
 ```
 
 ```{r GRAPHItotal}
-GRAPHItotal <- rbind(GRAPHIown, GRAPHIrent) %>% 
-  select(tenure, variable, estimate, summary_est) %>% 
-  separate(variable, into = c("income", "burden"), sep = "!!") %>% 
-  group_by(tenure, summary_est, income, burden) %>% 
-  summarise(estimate = sum(estimate)) %>% 
+graphi_pl_sum <- graphi %>% 
+  filter(!is.na(cb_sum)) %>% 
+  group_by(GEOID, NAME, tenure, cb_sum) %>% 
+  summarise(estimate = sum(estimate), ten_sum = ten_sum) %>% 
+  arrange(desc(ten_sum)) %>% 
   ungroup() %>% 
-  mutate(percentTen = 100 * (estimate / summary_est),
-         percentTot = 100 * (estimate / 251732))
+  distinct() %>% 
+  mutate(pct = estimate / ten_sum,
+         NAME = str_remove_all(NAME, " (city|town).*$"),
+         NAME = fct_inorder(NAME))
+
+graphi_inc_pl <- graphi %>% 
+  filter(!is.na(income) & !is.na(cb_sum)) %>% 
+  group_by(GEOID, NAME, tenure, income, cb_sum) %>% 
+  summarise(estimate = sum(estimate), inc_sum = inc_sum) %>% 
+  ungroup() %>% 
+  distinct() %>% 
+  mutate(pct = estimate / inc_sum,
+         NAME = str_remove_all(NAME, " (city|town).*$"),
+         NAME = fct_inorder(NAME),
+         income = fct_inorder(income))
 ```
 
-```{r CB1, fig.cap="Cost burden by tenure", preview=TRUE}
-ggplot(GRAPHItotal, aes(x = burden, y = estimate, fill = tenure)) +
+::: {.panel-tabset}
+## Estimate
+
+```{r}
+graphi_pl_sum %>% 
+  ggplot(aes(x = tenure, y = estimate, fill = cb_sum)) +
   geom_col(position = "stack") +
+  scale_y_continuous(labels = scales::label_comma()) +
+  scale_fill_discrete(direction = -1) +
+  facet_wrap(~NAME, scales = "free") +
   theme_minimal() +
-  scale_fill_manual(values = c("mediumturquoise", "salmon")) +
-  labs(title = "Cost burden by tenure",
-       subtitle = "Memphis, TN",
-       caption = "2015-2019 5-year ACS estimates",
+  labs(title = "Cost Burden by Tenure",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 5-Year ACS Estimates",
        y = "",
        x = "",
-       fill = "Tenure")
+       fill = "Housing Costs")
 ```
+
+## Proportion
+
+```{r}
+graphi_pl_sum %>% 
+  ggplot(aes(x = tenure, y = estimate, fill = cb_sum)) +
+  geom_col(position = "fill") +
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_discrete(direction = -1) +
+  facet_wrap(~NAME, scales = "free") +
+  theme_minimal() +
+  labs(title = "Cost Burden by Tenure",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 5-Year ACS Estimates",
+       y = "",
+       x = "",
+       fill = "Housing Costs")
+```
+
+:::
 
 Overall, the majority of households in Memphis have affordable housing, with 62% paying less than 30% of their income towards housing, compared to 35% who are cost burdened. However, separating households by tenure reveals that the majority of households with affordable housing are owner-occupied units. In fact, more renters are cost burdened than have affordable housing. Comparatively, very few homeowners are cost burdened.
 
 As mentioned above, households with higher incomes can afford to pay more of their income towards housing; while they may be literally cost burdened, they can still easily meet their other needs. The figure below divides the above graph in three income brackets.
 
-```{r CB2, fig.cap="Cost burden by income by tenure"}
-ggplot(GRAPHItotal, aes(x = burden, y = estimate, fill = tenure)) +
+::: {.panel-tabset}
+## Estimate
+
+```{r}
+graphi_inc_pl %>% 
+  filter(NAME == "Memphis") %>% 
+  ggplot(aes(x = tenure, y = estimate, fill = cb_sum)) +
   geom_col(position = "stack") +
-  facet_grid(~income) +
+  scale_y_continuous(labels = scales::label_comma()) +
+  scale_fill_discrete(direction = -1) +
+  facet_wrap(~income, scales = "free") +
   theme_minimal() +
-  scale_fill_manual(values = c("mediumturquoise", "salmon")) +
-  labs(title = "Cost burden by income by tenure",
+  labs(title = "Cost Burden by Tenure by Income",
        subtitle = "Memphis, TN",
-       caption = "2015-2019 5-year ACS estimates",
+       caption = "2017-2021 5-Year ACS Estimates",
        y = "",
        x = "",
-       fill = "Tenure")
+       fill = "Housing Costs")
 ```
+
+## Proportion
+
+```{r}
+graphi_inc_pl %>% 
+  filter(NAME == "Memphis") %>% 
+  ggplot(aes(x = tenure, y = estimate, fill = cb_sum)) +
+  geom_col(position = "fill") +
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_discrete(direction = -1) +
+  facet_wrap(~income, scales = "free") +
+  theme_minimal() +
+  labs(title = "Cost Burden by Tenure by Income",
+       subtitle = "Memphis, TN",
+       caption = "2017-2021 5-Year ACS Estimates",
+       y = "",
+       x = "",
+       fill = "Housing Costs")
+```
+
+:::
 
 As shown above, households earning less than \$35,000 are mostly renters, and the vast majority of these renters are cost burdened. While there are also many owner-occupied households earning less than \$35,000, their housing costs are more often affordable.
 
@@ -501,51 +486,46 @@ Nearly all housing is affordable for households earning more than \$75,000, no m
 Next, let's take a deeper look into housing costs paid by renters. Recall that households who pay more than 50% of their income in rent are considered extremely cost burdened. These households are shown in the graph below.
 
 ```{r vGRAPHIdet}
-vGRAPHIdet <- c(
-  "Affordable" = "B25070_002",
-  "Affordable" = "B25070_003",
-  "Affordable" = "B25070_004",
-  "Affordable" = "B25070_005",
-  "Affordable" = "B25070_006",
-  "Burden" = "B25070_007",
-  "Burden" = "B25070_008",
-  "Burden" = "B25070_009",
-  "Extreme burden" = "B25070_010"
-)
-```
+v_renter_cb <- v_acs5 %>% 
+  filter(str_starts(name, "B25070")) %>% 
+  mutate(burden = str_remove(label, ".*:(!!)?"),
+         burden = str_replace_all(burden, v_cb_reformat),
+         burden = na_if(burden, ""),
+         cb_sum = case_when(
+           str_detect(burden, "[12][05]") ~ "Affordable",
+           str_detect(burden, "[34][05]") ~ "Burden",
+           str_detect(burden, "50") ~ "Extreme burden",
+           TRUE ~ burden
+           ),
+         .after = name) %>%
+  select(-c(label:geography))
 
-```{r GRAPHIdet, include=FALSE}
-GRAPHIdet <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vGRAPHIdet,
-  summary_var = "B25070_001",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, "Memphis"))
-```
+renter_cb <- hsg %>% 
+  filter(str_starts(variable, "B25070")) %>% 
+  left_join(v_renter_cb, by = c("variable" = "name"))
 
-```{r GRAPHIdetMem}
-GRAPHIdetMem <- GRAPHIdet %>% 
-  select(variable, estimate) %>% 
-  group_by(variable) %>% 
-  summarise(estimate = sum(estimate)) %>% 
+renter_cb_sum <- renter_cb %>% 
+  filter(!is.na(cb_sum)) %>% 
+  group_by(GEOID, NAME, cb_sum) %>% 
+  summarise(estimate = sum(estimate), summary_est = summary_est) %>% 
   ungroup() %>% 
-  mutate(percent = 100*(estimate/134371))
+  distinct() %>% 
+  mutate(pct = estimate / summary_est,
+         NAME = str_remove_all(NAME, " (city|town).*$"),
+         NAME = fct_reorder(NAME, summary_est, max, .desc = TRUE))
 ```
 
 ```{r ggGRAPHIdetMem, fig.cap="Cost burden for renters"}
-ggplot(GRAPHIdetMem, aes(x = variable, y = percent, fill = variable)) +
-  geom_col(show.legend = FALSE) +
+renter_cb_sum %>% 
+  ggplot(aes(x = NAME, y = pct, fill = cb_sum)) +
+  geom_col(position = position_stack(reverse = TRUE)) +
+  scale_y_continuous(labels = scales::label_percent()) +
+  scale_fill_manual(values = c("mediumseagreen", "goldenrod", "tomato", "gray")) +
   theme_minimal() +
-  scale_y_continuous(labels = function(y) paste0(y, "%")) +
-  scale_fill_manual(values = c("mediumseagreen", "goldenrod", "tomato")) +
-  labs(title = "Cost burden for renters",
-       subtitle = "Memphis, TN",
-       caption = "2015-2019 5-year ACS estimates",
-       y = "",
-       x = "",
-       fill = "")
+  labs(title = "Housing Costs for Renters",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 ACS 5-Year Estimates",
+       x = "", y = "", fill = "Housing Costs")
 ```
 
 Just over 40% of renting households in Memphis have affordable housing, while the majority, 51%, are cost burdened in some way. When we break down cost burden, we see there are more renters who are extremely cost burdened than those who face a moderate burden.
@@ -553,107 +533,85 @@ Just over 40% of renting households in Memphis have affordable housing, while th
 As before, let's separate our graph by income. This time I will take a more detailed look at income groups.
 
 ```{r vGRAPHIdet2}
-vGRAPHIdet2 <- c(
-  "<$10,000!!Affordable" = "B25074_003",
-  "<$10,000!!Affordable" = "B25074_004",
-  "<$10,000!!Affordable" = "B25074_005",
-  "<$10,000!!Burden" = "B25074_006",
-  "<$10,000!!Burden" = "B25074_007",
-  "<$10,000!!Burden" = "B25074_008",
-  "<$10,000!!Extreme burden" = "B25074_009",
-  "$10,000-$19,999!!Affordable" = "B25074_012",
-  "$10,000-$19,999!!Affordable" = "B25074_013",
-  "$10,000-$19,999!!Affordable" = "B25074_014",
-  "$10,000-$19,999!!Burden" = "B25074_015",
-  "$10,000-$19,999!!Burden" = "B25074_016",
-  "$10,000-$19,999!!Burden" = "B25074_017",
-  "$10,000-$19,999!!Extreme burden" = "B25074_018",
-  "$20,000-$34,999!!Affordable" = "B25074_021",
-  "$20,000-$34,999!!Affordable" = "B25074_022",
-  "$20,000-$34,999!!Affordable" = "B25074_023",
-  "$20,000-$34,999!!Burden" = "B25074_024",
-  "$20,000-$34,999!!Burden" = "B25074_025",
-  "$20,000-$34,999!!Burden" = "B25074_026",
-  "$20,000-$34,999!!Extreme burden" = "B25074_027",
-  "$35,000-$49,999!!Affordable" = "B25074_030",
-  "$35,000-$49,999!!Affordable" = "B25074_031",
-  "$35,000-$49,999!!Affordable" = "B25074_032",
-  "$35,000-$49,999!!Burden" = "B25074_033",
-  "$35,000-$49,999!!Burden" = "B25074_034",
-  "$35,000-$49,999!!Burden" = "B25074_035",
-  "$35,000-$49,999!!Extreme burden" = "B25074_036",
-  "$50,000-$74,999!!Affordable" = "B25074_039",
-  "$50,000-$74,999!!Affordable" = "B25074_040",
-  "$50,000-$74,999!!Affordable" = "B25074_041",
-  "$50,000-$74,999!!Burden" = "B25074_042",
-  "$50,000-$74,999!!Burden" = "B25074_043",
-  "$50,000-$74,999!!Burden" = "B25074_044",
-  "$50,000-$74,999!!Extreme burden" = "B25074_045",
-  "$75,000-$99,999!!Affordable" = "B25074_048",
-  "$75,000-$99,999!!Affordable" = "B25074_049",
-  "$75,000-$99,999!!Affordable" = "B25074_050",
-  "$75,000-$99,999!!Burden" = "B25074_051",
-  "$75,000-$99,999!!Burden" = "B25074_052",
-  "$75,000-$99,999!!Burden" = "B25074_053",
-  "$75,000-$99,999!!Extreme burden" = "B25074_054",
-  "$100,000+!!Affordable" = "B25074_057",
-  "$100,000+!!Affordable" = "B25074_058",
-  "$100,000+!!Affordable" = "B25074_059",
-  "$100,000+!!Burden" = "B25074_060",
-  "$100,000+!!Burden" = "B25074_061",
-  "$100,000+!!Burden" = "B25074_062",
-  "$100,000+!!Extreme burden" = "B25074_063"
-)
-```
+v_renter_cb_detail <- v_acs5 %>% 
+  filter(str_starts(name, "B25074")) %>% 
+  mutate(income = str_extract(label, "(?<=Total:!!).*(?=:)"), 
+         burden = str_remove(label, ".*:(!!)?"),
+         across(c(income, burden), ~ str_replace_all(.x, v_cb_reformat)),
+         burden = na_if(burden, ""),
+         cb_sum = case_when(
+           str_detect(burden, "[12][05]") ~ "Affordable",
+           str_detect(burden, "[34][05]") ~ "Burden",
+           str_detect(burden, "50") ~ "Extreme burden",
+           TRUE ~ burden
+           ),
+         .after = name) %>% 
+  select(-c(label:geography))
 
-```{r GRAPHIdet2, include=FALSE}
-GRAPHIdet2 <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vGRAPHIdet2,
-  summary_var = "B25074_001",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, "Memphis"))
-```
+renter_cb_detail <- hsg %>% 
+  filter(str_starts(variable, "B25074")) %>% 
+  left_join(v_renter_cb_detail, by = c("variable" = "name")) %>% 
+  group_by(GEOID, income) %>% 
+  mutate(inc_sum = max(estimate)) %>% 
+  ungroup()
 
-```{r GRAPHIdetMem2}
-GRAPHIdetMem2 <- GRAPHIdet2 %>% 
-  select(variable, estimate) %>% 
-  group_by(variable) %>% 
-  summarise(estimate = sum(estimate)) %>% 
+renter_cb_detail_sum <- renter_cb_detail %>% 
+  filter(!is.na(burden)) %>% 
+  mutate(income = fct_inorder(income)) %>% 
+  group_by(GEOID, NAME, income, cb_sum) %>% 
+  summarise(estimate = sum(estimate), inc_sum = inc_sum) %>% 
   ungroup() %>% 
-  separate(variable, into = c("income", "burden"), sep = "!!")
+  distinct() %>% 
+  mutate(pct = estimate / inc_sum,
+         NAME = str_remove_all(NAME, " (city|town).*$"),
+         NAME = fct_reorder(NAME, inc_sum, max, .desc = TRUE),
+         income = fct_rev(income))
 ```
 
-```{r factorIncome}
-GRAPHIdetMem2$income <- factor(
-  GRAPHIdetMem2$income,
-  levels = c(
-    "$100,000+",
-    "$75,000-$99,999",
-    "$50,000-$74,999",
-    "$35,000-$49,999",
-    "$20,000-$34,999",
-    "$10,000-$19,999",
-    "<$10,000"
-  )
-)
-```
+::: {.panel-tabset}
+## Estimate
 
-```{r ggGRAPHIdetMem2, fig.cap="Cost burden by income for renters"}
-ggplot(GRAPHIdetMem2, aes(x = income, y = estimate, fill = burden)) +
+```{r}
+#| fig-height: 6
+library(scales)
+
+renter_cb_detail_sum %>% 
+  ggplot(aes(x = income, y = estimate, fill = cb_sum)) + 
   geom_col(position = "stack") +
   coord_flip() +
+  scale_fill_manual(values = c("mediumseagreen", "goldenrod", "tomato", "gray")) +
+  scale_y_continuous(labels = scales::label_comma(scale_cut = cut_short_scale())) +
+  facet_wrap(~NAME, scales = "free_x") +
   theme_minimal() +
-  scale_fill_manual(values = c("mediumseagreen", "goldenrod", "tomato")) +
-  labs(title = "Cost burden by income for renters",
-       subtitle = "Memphis, TN",
-       caption = "2015-2019 5-year ACS estimates",
+  labs(title = "Cost burden by Income for Renters",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 5-year ACS estimates",
        y = "",
        x = "",
-       fill = "Housing Costs") 
+       fill = "") +
+  theme(legend.position = "bottom")
 ```
+
+## Proportion
+
+```{r}
+renter_cb_detail_sum %>% 
+  ggplot(aes(x = income, y = pct, fill = cb_sum)) + 
+  geom_col(position = "stack") +
+  coord_flip() +
+  scale_fill_manual(values = c("mediumseagreen", "goldenrod", "tomato", "gray")) +
+  scale_y_continuous(labels = scales::label_percent()) +
+  facet_wrap(~NAME) +
+  theme_minimal() +
+  labs(title = "Cost burden by Income for Renters",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 5-year ACS estimates",
+       y = "",
+       x = "",
+       fill = "")
+```
+
+:::
 
 Below \$20,000, the vast majority of renters face extreme cost burden and there are very few with affordable housing. The largest percentage of renters in Memphis earn between \$20,000 to \$34,999, and nearly all of these renters are still cost burdened, though most no longer face extreme burden. Only above \$35,000 are a majority of renters affordably housed, with a very small rate of extreme burden. Above \$50,000, the vast majority of renters have affordable housing and cost burden is infrequent, and it is practically nonexistent above \$75,000. However, there are few renters at this income range compared to lower income ranges.
 
@@ -682,61 +640,53 @@ This final section looks into certain qualities of rental housing in Memphis. Fi
 Typically apartment complexes are associated with renter-occupied housing, but how true is this for Memphis? The graph below divides housing structures into four categories: single-family; duplex, triplex, and quadplexes, which often resemble single-family homes; larger multifamily structures with five or more units; and alternative housing like mobile homes, boats, vans, etc.
 
 ```{r vUnits}
-vUnits <- c(
-  "Single-family" = "B25032_014",
-  "Single-family" = "B25032_015",
-  "Duplex-Quadplex" = "B25032_016",
-  "Duplex-Quadplex" = "B25032_017",
-  "Larger Multifamily" = "B25032_018",
-  "Larger Multifamily" = "B25032_019",
-  "Larger Multifamily" = "B25032_020",
-  "Larger Multifamily" = "B25032_021",
-  "Mobile home, boat, etc." = "B25032_022",
-  "Mobile home, boat, etc." = "B25032_023"
-)
-```
+v_units <- v_acs5 %>% 
+  filter(str_starts(name, "B25032_")) %>% 
+  mutate(tenure = str_extract(label, "Owner|Renter"), 
+         units = str_remove(label, ".*:(!!)?"),
+         units = na_if(units, ""),
+         unit_sum = case_when(
+           is.na(units) ~ NA_character_,
+           str_detect(units, "\\b1, ") ~ "Single-family",
+           str_detect(units, "\\b[24]\\b") ~ "Duplex-Quadplex",
+           str_detect(units, "Mobile|Boat") ~ "Mobile home, boat, etc.",
+           TRUE ~ "Larger Multifamily"
+         ),
+         .after = name) %>% 
+  select(-c(label:geography))
 
-```{r unitsMem, include=FALSE}
-unitsMem <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vUnits,
-  summary_var = "B25032_013",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, "Memphis"))
-```
+units <- hsg %>% 
+  filter(str_starts(variable, "B25032_")) %>% 
+  left_join(v_units, by = c("variable" = "name")) %>% 
+  group_by(GEOID, tenure) %>% 
+  mutate(ten_sum = max(estimate)) %>% 
+  ungroup()
 
-```{r units}
-units <- unitsMem %>% 
-  group_by(summary_est, variable) %>% 
+units_sum <- units %>% 
+  filter(!is.na(unit_sum)) %>% 
+  mutate(unit_sum = fct_inorder(unit_sum)) %>% 
+  group_by(NAME, tenure, unit_sum, ten_sum) %>% 
   summarise(estimate = sum(estimate)) %>% 
   ungroup() %>% 
-  mutate(percent = 100*(estimate/summary_est))
-```
-
-```{r factorUnits}
-units$variable <- factor(
-  units$variable,
-  levels = c(
-    "Mobile home, boat, etc.",
-    "Larger Multifamily",
-    "Duplex-Quadplex",
-    "Single-family"
-  )
-)
+  mutate(pct = estimate / ten_sum,
+         NAME = str_remove_all(NAME, " (city|town).*$"),
+         NAME = fct_reorder(NAME, ten_sum, max, .desc = TRUE),
+         unit_sum = fct_rev(unit_sum))
 ```
 
 ```{r ggUnits, fig.cap="Units in structure"}
-ggplot(units, aes(x = variable, y = estimate)) +
+units_sum %>% 
+  filter(tenure == "Renter") %>% 
+  ggplot(aes(x = unit_sum, y = estimate)) +
   geom_col(fill = "darkcyan") +
+  facet_wrap(~NAME, scales = "free_x") +
+  scale_y_continuous(labels = label_number(scale_cut = cut_short_scale())) +
   coord_flip() +
   theme_minimal() +
-  labs(title = "Units in structure for renter-occupied housing",
-       subtitle = "Memphis, TN",
-       caption = "2015-2019 5-year ACS estimates",
-       y = "",
-       x = "")
+  labs(title = "Units in Structure for Renters",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 5-year ACS estimates",
+       y = "", x = "")
 ```
 
 The largest proportion of renters, 43%, live in single-family homes. While the majority of renters live in multifamily units, 16% are in duplexes-quadplexes, and 40% are in larger multifamily structures with five or more units. Less than 1% of renters live in a mobile home, RV, boat, van, or some other form of housing.
@@ -746,49 +696,74 @@ The largest proportion of renters, 43%, live in single-family homes. While the m
 How old are the units in which renters live? Older structures are more likely to need maintenance, and they can be susceptible to health risks that are not in newer homes. For instance, the ban on lead based paint was not passed until 1979, and homes built before the ban are likely to have lead paint unless they have been remediated.
 
 ```{r}
-vBuilt <- c(
-  "2010 or later" = "B25036_014",
-  "2010 or later" = "B25036_015",
-  "2000-2009" = "B25036_016",
-  "1990-1999" = "B25036_017",
-  "1980-1989" = "B25036_018",
-  "1970-1979" = "B25036_019",
-  "1960-1969" = "B25036_020",
-  "1950-1959" = "B25036_021",
-  "1940-1949" = "B25036_022",
-  "1939 or earlier" = "B25036_023"
-)
-```
+v_yrblt <- v_acs5 %>% 
+  filter(str_starts(name, "B25036")) %>% 
+  mutate(tenure = str_extract(label, "Owner|Renter"), 
+         yrblt = str_remove(label, ".*:(!!)?"),
+         yrblt = na_if(yrblt, ""),
+         yrblt = str_remove(yrblt, "Built "),
+         yrblt = str_replace(yrblt, " to ", "-"),
+         .after = name) %>% 
+  select(-c(label:geography))
 
-```{r}
-built <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vBuilt,
-  summary_var = "B25036_013",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, "Memphis"))
-```
+yrblts <- hsg %>% 
+  filter(str_starts(variable, "B25036")) %>% 
+  left_join(v_yrblt, by = c("variable" = "name")) %>% 
+  group_by(GEOID, tenure) %>% 
+  mutate(ten_sum = max(estimate)) %>% 
+  ungroup()
 
-```{r}
-built2 <- built %>% 
-  group_by(summary_est, variable) %>% 
+yrblts_sum <- yrblts %>% 
+  filter(!is.na(yrblt)) %>% 
+  mutate(yrblt = fct_inorder(yrblt)) %>% 
+  group_by(NAME, tenure, yrblt, ten_sum) %>% 
   summarise(estimate = sum(estimate)) %>% 
   ungroup() %>% 
-  mutate(percent = 100 * (estimate / summary_est))
+  mutate(pct = estimate / ten_sum,
+         NAME = str_remove_all(NAME, " (city|town).*$"),
+         NAME = fct_reorder(NAME, ten_sum, max, .desc = TRUE))
 ```
 
-```{r fig.cap="Year structure built"}
-ggplot(built2, aes(x = estimate, y = variable)) +
-  geom_col(fill = "peru") +
+::: {.panel-tabset}
+## Estimate
+
+```{r}
+#| fig-height: 7
+
+yrblts_sum %>% 
+  ggplot(aes(x = tenure, y = estimate, fill = yrblt)) +
+  geom_col() +
+  facet_wrap(~NAME, scales = "free_x") +
+  scale_y_continuous(labels = label_number(scale_cut = cut_short_scale())) +
+  coord_flip() +
   theme_minimal() +
-  labs(title = "Year structure built of renter-occupied housing",
-       subtitle = "Memphis, TN",
-       caption = "2015-2019 5-year ACS estimates",
-       y = "",
-       x = "")
+  labs(title = "Year Structure Built",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 5-year ACS estimates",
+       y = "", x = "", fill = "Year Built") +
+  theme(legend.position = "bottom")
 ```
+
+## Proportion
+
+```{r}
+#| fig-height: 7
+
+yrblts_sum %>% 
+  ggplot(aes(x = tenure, y = pct, fill = yrblt)) +
+  geom_col() +
+  facet_wrap(~NAME, scales = "free_x") +
+  scale_y_continuous(labels = label_percent()) +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Year Structure Built",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 5-year ACS estimates",
+       y = "", x = "", fill = "Year Built") +
+  theme(legend.position = "bottom")
+```
+
+:::
 
 Most renters live in older housing structures. Overall, 62% of renter-occupied housing was built before 1980 (and thus are at risk for lead paint problems). Only 3% of renter-occupied housing was built within the past decade, indicative of the construction shortage after the Great Recession. Overall, the median year built for occupied rental units is 1974, 47 years ago, and unless these homes have been properly maintained they are at risk of housing quality problems.
 
@@ -797,7 +772,7 @@ Most renters live in older housing structures. Overall, 62% of renter-occupied h
 Every five years, the American Housing Survey (AHS) provides data on housing quality problems in the Memphis MSA. The most recent survey was completed in 2019. Note that while most of the analysis on this page is specifically for Memphis, the AHS surveys the entire metro region.
 
 ```{r AHSimport, include=FALSE}
-AHSimport <- read_csv("data/table/census/ahs-2019-hsg-quality.csv")
+AHSimport <- read_csv("data/census/ahs-2019-hsg-quality.csv")
 ```
 
 ```{r AHSall}
