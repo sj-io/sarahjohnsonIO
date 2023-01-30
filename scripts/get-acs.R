@@ -6,8 +6,8 @@ new_data <- get_acs(
   geography = "place",
   state = "TN",
   # county = "Shelby",
-  table = "B25074",
-  summary_var = "B25074_001",
+  table = "B25036",
+  summary_var = "B25036_001",
   cache_table = TRUE
 ) %>%
   # filter(str_detect(NAME, "Shelby")) %>%
@@ -18,6 +18,9 @@ new_data <- get_acs(
 existing <- read_csv("data/census/acs5/B25-hsg.csv") 
 joined <- rbind(existing, new_data)
 write_csv(joined, "data/census/acs5/B25-hsg.csv")
+
+hsg <- read_csv("data/census/acs5/B25-hsg.csv") %>% 
+  left_join(geoid, by = "GEOID")
 
 # Get unincorporated data
 incorporated <- shelby_places %>% 

@@ -639,56 +639,54 @@ This final section looks into certain qualities of rental housing in Memphis. Fi
 
 Typically apartment complexes are associated with renter-occupied housing, but how true is this for Memphis? The graph below divides housing structures into four categories: single-family; duplex, triplex, and quadplexes, which often resemble single-family homes; larger multifamily structures with five or more units; and alternative housing like mobile homes, boats, vans, etc.
 
-```{r vUnits, eval=FALSE}
-vUnits <- c(
-  "Single-family" = "B25032_014",
-  "Single-family" = "B25032_015",
-  "Duplex-Quadplex" = "B25032_016",
-  "Duplex-Quadplex" = "B25032_017",
-  "Larger Multifamily" = "B25032_018",
-  "Larger Multifamily" = "B25032_019",
-  "Larger Multifamily" = "B25032_020",
-  "Larger Multifamily" = "B25032_021",
-  "Mobile home, boat, etc." = "B25032_022",
-  "Mobile home, boat, etc." = "B25032_023"
-)
+```{r vUnits}
+v_units <- v_acs5 %>% 
+  filter(str_starts(name, "B25032_")) %>% 
+  mutate(tenure = str_extract(label, "Owner|Renter"), 
+         units = str_remove(label, ".*:(!!)?"),
+         units = na_if(units, ""),
+         unit_sum = case_when(
+           is.na(units) ~ NA_character_,
+           str_detect(units, "\\b1, ") ~ "Single-family",
+           str_detect(units, "\\b[24]\\b") ~ "Duplex-Quadplex",
+           str_detect(units, "Mobile|Boat") ~ "Mobile home, boat, etc.",
+           TRUE ~ "Larger Multifamily"
+         ),
+         .after = name) %>% 
+  select(-c(label:geography))
 
-unitsMem <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vUnits,
-  summary_var = "B25032_013",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, "Memphis"))
+units <- hsg %>% 
+  filter(str_starts(variable, "B25032_")) %>% 
+  left_join(v_units, by = c("variable" = "name")) %>% 
+  group_by(GEOID, tenure) %>% 
+  mutate(ten_sum = max(estimate)) %>% 
+  ungroup()
 
-units <- unitsMem %>% 
-  group_by(summary_est, variable) %>% 
+units_sum <- units %>% 
+  filter(!is.na(unit_sum)) %>% 
+  mutate(unit_sum = fct_inorder(unit_sum)) %>% 
+  group_by(NAME, tenure, unit_sum, ten_sum) %>% 
   summarise(estimate = sum(estimate)) %>% 
   ungroup() %>% 
-  mutate(percent = 100*(estimate/summary_est))
-
-units$variable <- factor(
-  units$variable,
-  levels = c(
-    "Mobile home, boat, etc.",
-    "Larger Multifamily",
-    "Duplex-Quadplex",
-    "Single-family"
-  )
-)
+  mutate(pct = estimate / ten_sum,
+         NAME = str_remove_all(NAME, " (city|town).*$"),
+         NAME = fct_reorder(NAME, ten_sum, max, .desc = TRUE),
+         unit_sum = fct_rev(unit_sum))
 ```
 
-```{r ggUnits, fig.cap="Units in structure", eval=FALSE}
-ggplot(units, aes(x = variable, y = estimate)) +
+```{r ggUnits, fig.cap="Units in structure"}
+units_sum %>% 
+  filter(tenure == "Renter") %>% 
+  ggplot(aes(x = unit_sum, y = estimate)) +
   geom_col(fill = "darkcyan") +
+  facet_wrap(~NAME, scales = "free_x") +
+  scale_y_continuous(labels = label_number(scale_cut = cut_short_scale())) +
   coord_flip() +
   theme_minimal() +
-  labs(title = "Units in structure for renter-occupied housing",
-       subtitle = "Memphis, TN",
-       caption = "2015-2019 5-year ACS estimates",
-       y = "",
-       x = "")
+  labs(title = "Units in Structure for Renters",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 5-year ACS estimates",
+       y = "", x = "")
 ```
 
 The largest proportion of renters, 43%, live in single-family homes. While the majority of renters live in multifamily units, 16% are in duplexes-quadplexes, and 40% are in larger multifamily structures with five or more units. Less than 1% of renters live in a mobile home, RV, boat, van, or some other form of housing.
@@ -697,46 +695,75 @@ The largest proportion of renters, 43%, live in single-family homes. While the m
 
 How old are the units in which renters live? Older structures are more likely to need maintenance, and they can be susceptible to health risks that are not in newer homes. For instance, the ban on lead based paint was not passed until 1979, and homes built before the ban are likely to have lead paint unless they have been remediated.
 
-```{r eval=FALSE}
-vBuilt <- c(
-  "2010 or later" = "B25036_014",
-  "2010 or later" = "B25036_015",
-  "2000-2009" = "B25036_016",
-  "1990-1999" = "B25036_017",
-  "1980-1989" = "B25036_018",
-  "1970-1979" = "B25036_019",
-  "1960-1969" = "B25036_020",
-  "1950-1959" = "B25036_021",
-  "1940-1949" = "B25036_022",
-  "1939 or earlier" = "B25036_023"
-)
+```{r}
+v_yrblt <- v_acs5 %>% 
+  filter(str_starts(name, "B25036")) %>% 
+  mutate(tenure = str_extract(label, "Owner|Renter"), 
+         yrblt = str_remove(label, ".*:(!!)?"),
+         yrblt = na_if(yrblt, ""),
+         yrblt = str_remove(yrblt, "Built "),
+         yrblt = str_replace(yrblt, " to ", "-"),
+         .after = name) %>% 
+  select(-c(label:geography))
 
-built <- get_acs(
-  geography = "place",
-  state = "TN",
-  variables = vBuilt,
-  summary_var = "B25036_013",
-  cache_table = TRUE
-) %>% 
-  filter(str_detect(NAME, "Memphis"))
+yrblts <- hsg %>% 
+  filter(str_starts(variable, "B25036")) %>% 
+  left_join(v_yrblt, by = c("variable" = "name")) %>% 
+  group_by(GEOID, tenure) %>% 
+  mutate(ten_sum = max(estimate)) %>% 
+  ungroup()
 
-built2 <- built %>% 
-  group_by(summary_est, variable) %>% 
+yrblts_sum <- yrblts %>% 
+  filter(!is.na(yrblt)) %>% 
+  mutate(yrblt = fct_inorder(yrblt)) %>% 
+  group_by(NAME, tenure, yrblt, ten_sum) %>% 
   summarise(estimate = sum(estimate)) %>% 
   ungroup() %>% 
-  mutate(percent = 100 * (estimate / summary_est))
+  mutate(pct = estimate / ten_sum,
+         NAME = str_remove_all(NAME, " (city|town).*$"),
+         NAME = fct_reorder(NAME, ten_sum, max, .desc = TRUE))
 ```
 
-```{r fig.cap="Year structure built", eval=FALSE}
-ggplot(built2, aes(x = estimate, y = variable)) +
-  geom_col(fill = "peru") +
+::: {.panel-tabset}
+## Estimate
+
+```{r}
+#| fig-height: 7
+
+yrblts_sum %>% 
+  ggplot(aes(x = tenure, y = estimate, fill = yrblt)) +
+  geom_col() +
+  facet_wrap(~NAME, scales = "free_x") +
+  scale_y_continuous(labels = label_number(scale_cut = cut_short_scale())) +
+  coord_flip() +
   theme_minimal() +
-  labs(title = "Year structure built of renter-occupied housing",
-       subtitle = "Memphis, TN",
-       caption = "2015-2019 5-year ACS estimates",
-       y = "",
-       x = "")
+  labs(title = "Year Structure Built",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 5-year ACS estimates",
+       y = "", x = "", fill = "Year Built") +
+  theme(legend.position = "bottom")
 ```
+
+## Proportion
+
+```{r}
+#| fig-height: 7
+
+yrblts_sum %>% 
+  ggplot(aes(x = tenure, y = pct, fill = yrblt)) +
+  geom_col() +
+  facet_wrap(~NAME, scales = "free_x") +
+  scale_y_continuous(labels = label_percent()) +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Year Structure Built",
+       subtitle = "Places in Shelby County, TN",
+       caption = "2017-2021 5-year ACS estimates",
+       y = "", x = "", fill = "Year Built") +
+  theme(legend.position = "bottom")
+```
+
+:::
 
 Most renters live in older housing structures. Overall, 62% of renter-occupied housing was built before 1980 (and thus are at risk for lead paint problems). Only 3% of renter-occupied housing was built within the past decade, indicative of the construction shortage after the Great Recession. Overall, the median year built for occupied rental units is 1974, 47 years ago, and unless these homes have been properly maintained they are at risk of housing quality problems.
 
