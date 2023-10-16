@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.247">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,14 +19,15 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -40,8 +41,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -77,12 +77,13 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script async="" src="https://hypothes.is/embed.js"></script>
-<script src="../site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-<script src="../site_libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="../site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="../site_libs/plotly-binding-4.10.2/plotly.js"></script>
 <script src="../site_libs/typedarray-0.1/typedarray.min.js"></script>
 <script src="../site_libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
@@ -105,43 +106,45 @@ div.csl-indent {
     <span class="navbar-title">SJ</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">
+    <a class="nav-link" href="../index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../ref.html">
+    <a class="nav-link" href="../ref.html" rel="" target="">
  <span class="menu-text">Reference</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/sarahjohnson_io"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/sarahjohnson_io" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/sj-io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/sj-io" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/sj-io"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://linkedin.com/in/sj-io" rel="" target=""><i class="bi bi-linkedin" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://sarah.fyi/"><i class="bi bi-controller" role="img">
+    <a class="nav-link" href="https://sarah.fyi/" rel="" target=""><i class="bi bi-controller" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -149,7 +152,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of Contents</h2>
    
@@ -163,6 +166,7 @@ div.csl-indent {
   </ul>
 </nav>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
@@ -190,11 +194,17 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Sarah Johnson </p>
+             <p><a href="https://sarahjohnson.io">Sarah Johnson</a> </p>
           </div>
   </div>
     
   
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">October 16, 2023</p>
+    </div>
+  </div>
     
   </div>
   
@@ -218,7 +228,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/hsg-est.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Census methodology to estimate housing units for the PEP. (<a href="https://www.census.gov/programs-surveys/acs/guidance/handbooks/general.html">Census Bureau</a>)</figcaption><p></p>
+<figcaption class="figure-caption">Census methodology to estimate housing units for the PEP. (<a href="https://www.census.gov/programs-surveys/acs/guidance/handbooks/general.html">Census Bureau</a>)</figcaption>
 </figure>
 </div>
 <p>PEP estimates are used as controls for other surveys including the ACS, American Housing Survey, and Housing Vacancy Survey.</p>
@@ -227,26 +237,14 @@ div.csl-indent {
 <section id="data-comparison" class="level1 page-columns page-full">
 <h1>Data Comparison</h1>
 <p>The Census recommends the PEP over the ACS for basic counts of population and housing. However, if you plan to also look at detailed characteristic data, the Census recommends using the ACS throughout your analysis (basically, don’t mix PEP and ACS estimates).<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>I decided to see how the ACS and PEP data compare. Below is an interactive graph comparing ACS and PEP estimates of the number of housing units in Shelby County from 2010 to 2021.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Though ACS 5-Year estimates are not really recommended for yearly time series, I included it for curiosity. Clicking on a dataset in the legend will show/hide the line.</p>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
+<p>I decided to see how the ACS and PEP data compare. Below is an interactive graph comparing ACS and PEP estimates of the number of housing units in Shelby County from 2010 to 2022.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Though ACS 5-Year estimates are not really recommended for yearly time series, I included it for curiosity. Clicking on a dataset in the legend will show/hide the line.</p>
 <div class="cell page-columns page-full">
 <div class="cell-output-display column-page-inset-right">
-<div id="htmlwidget-660b0bbbfd8173dceb1d" style="width:100%;height:464px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-660b0bbbfd8173dceb1d">{"x":{"data":[{"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2021],"y":[398395,398014,399778,401161,403395,404294,406023,405590,406236,407303,401377],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(42,161,152,1)","dash":"solid"},"hoveron":"points","name":"ACS1","legendgroup":"ACS1","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020],"y":[396303,397580,398847,399366,400572,401715,403101,403206,404284,405184,406026],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(7,54,66,1)","dash":"solid"},"hoveron":"points","name":"ACS5","legendgroup":"ACS5","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019],"y":[398273,398979,399547,400990,402246,402818,404141,405455,406116,407273],"text":"","type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(211,54,130,1)","dash":"solid"},"hoveron":"points","name":"PEP","legendgroup":"PEP","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2021],"y":[398395,398014,399778,401161,403395,404294,406023,405590,406236,407303,401377],"text":["<b>ACS1<br>Year: <\/b>2010<br>398,395","<b>ACS1<br>Year: <\/b>2011<br>398,014","<b>ACS1<br>Year: <\/b>2012<br>399,778","<b>ACS1<br>Year: <\/b>2013<br>401,161","<b>ACS1<br>Year: <\/b>2014<br>403,395","<b>ACS1<br>Year: <\/b>2015<br>404,294","<b>ACS1<br>Year: <\/b>2016<br>406,023","<b>ACS1<br>Year: <\/b>2017<br>405,590","<b>ACS1<br>Year: <\/b>2018<br>406,236","<b>ACS1<br>Year: <\/b>2019<br>407,303","<b>ACS1<br>Year: <\/b>2021<br>401,377"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(42,161,152,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(42,161,152,1)"}},"hoveron":"points","name":"ACS1","legendgroup":"ACS1","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020],"y":[396303,397580,398847,399366,400572,401715,403101,403206,404284,405184,406026],"text":["<b>ACS5<br>Year: <\/b>2010<br>396,303","<b>ACS5<br>Year: <\/b>2011<br>397,580","<b>ACS5<br>Year: <\/b>2012<br>398,847","<b>ACS5<br>Year: <\/b>2013<br>399,366","<b>ACS5<br>Year: <\/b>2014<br>400,572","<b>ACS5<br>Year: <\/b>2015<br>401,715","<b>ACS5<br>Year: <\/b>2016<br>403,101","<b>ACS5<br>Year: <\/b>2017<br>403,206","<b>ACS5<br>Year: <\/b>2018<br>404,284","<b>ACS5<br>Year: <\/b>2019<br>405,184","<b>ACS5<br>Year: <\/b>2020<br>406,026"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(7,54,66,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(7,54,66,1)"}},"hoveron":"points","name":"ACS5","legendgroup":"ACS5","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019],"y":[398273,398979,399547,400990,402246,402818,404141,405455,406116,407273],"text":["<b>PEP<br>Year: <\/b>2010<br>398,273","<b>PEP<br>Year: <\/b>2011<br>398,979","<b>PEP<br>Year: <\/b>2012<br>399,547","<b>PEP<br>Year: <\/b>2013<br>400,990","<b>PEP<br>Year: <\/b>2014<br>402,246","<b>PEP<br>Year: <\/b>2015<br>402,818","<b>PEP<br>Year: <\/b>2016<br>404,141","<b>PEP<br>Year: <\/b>2017<br>405,455","<b>PEP<br>Year: <\/b>2018<br>406,116","<b>PEP<br>Year: <\/b>2019<br>407,273"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(211,54,130,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(211,54,130,1)"}},"hoveron":"points","name":"PEP","legendgroup":"PEP","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":25.5707762557078,"l":34.337899543379},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"transparent","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Housing Units in Shelby County, 2010-2021","font":{"color":"rgba(253,246,227,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[2009.45,2021.55],"tickmode":"array","ticktext":["2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2021","2020"],"tickvals":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2021,2020],"categoryorder":"array","categoryarray":["2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2021","2020"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.65296803652968,"tickwidth":0.265670402656704,"showticklabels":true,"tickfont":{"color":"rgba(178,193,196,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":"rgba(253,246,227,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[395753,407853],"tickmode":"array","ticktext":["396K","399K","402K","405K"],"tickvals":[396000,399000,402000,405000],"categoryorder":"array","categoryarray":["396K","399K","402K","405K"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.65296803652968,"tickwidth":0.265670402656704,"showticklabels":true,"tickfont":{"color":"rgba(178,193,196,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":"rgba(253,246,227,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"rgba(0,0,0,1)","borderwidth":1.88976377952756,"font":{"color":"rgba(4,50,61,1)","family":"","size":11.689497716895},"title":{"text":"Dataset:","font":{"color":"rgba(4,50,61,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"modeBarButtonsToRemove":["zoom","pan","select","lasso2d","autoScale","resetScale","zoomIn","zoomOut"]},"source":"A","attrs":{"808268ba4910":{"x":{},"y":{},"colour":{},"type":"scatter"},"80821e12ef27":{"x":{},"y":{},"colour":{},"text":{}}},"cur_data":"808268ba4910","visdat":{"808268ba4910":["function (y) ","x"],"80821e12ef27":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-c3596fd23175c4800f01" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-c3596fd23175c4800f01">{"x":{"data":[{"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2021,2022],"y":[398395,398014,399778,401161,403395,404294,406023,405590,406236,407303,401377,402687],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(42,161,152,1)","dash":"solid"},"hoveron":"points","name":"ACS1","legendgroup":"ACS1","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021],"y":[396303,397580,398847,399366,400572,401715,403101,403206,404284,405184,406026,400662],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(7,54,66,1)","dash":"solid"},"hoveron":"points","name":"ACS5","legendgroup":"ACS5","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022],"y":[398273,398979,399547,400990,402246,402818,404141,405455,406116,407273,400285,401393,402681],"text":"","type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(211,54,130,1)","dash":"solid"},"hoveron":"points","name":"PEP","legendgroup":"PEP","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2021,2022],"y":[398395,398014,399778,401161,403395,404294,406023,405590,406236,407303,401377,402687],"text":["<b>ACS1<br>Year: <\/b>2010<br>398,395","<b>ACS1<br>Year: <\/b>2011<br>398,014","<b>ACS1<br>Year: <\/b>2012<br>399,778","<b>ACS1<br>Year: <\/b>2013<br>401,161","<b>ACS1<br>Year: <\/b>2014<br>403,395","<b>ACS1<br>Year: <\/b>2015<br>404,294","<b>ACS1<br>Year: <\/b>2016<br>406,023","<b>ACS1<br>Year: <\/b>2017<br>405,590","<b>ACS1<br>Year: <\/b>2018<br>406,236","<b>ACS1<br>Year: <\/b>2019<br>407,303","<b>ACS1<br>Year: <\/b>2021<br>401,377","<b>ACS1<br>Year: <\/b>2022<br>402,687"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(42,161,152,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(42,161,152,1)"}},"hoveron":"points","name":"ACS1","legendgroup":"ACS1","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021],"y":[396303,397580,398847,399366,400572,401715,403101,403206,404284,405184,406026,400662],"text":["<b>ACS5<br>Year: <\/b>2010<br>396,303","<b>ACS5<br>Year: <\/b>2011<br>397,580","<b>ACS5<br>Year: <\/b>2012<br>398,847","<b>ACS5<br>Year: <\/b>2013<br>399,366","<b>ACS5<br>Year: <\/b>2014<br>400,572","<b>ACS5<br>Year: <\/b>2015<br>401,715","<b>ACS5<br>Year: <\/b>2016<br>403,101","<b>ACS5<br>Year: <\/b>2017<br>403,206","<b>ACS5<br>Year: <\/b>2018<br>404,284","<b>ACS5<br>Year: <\/b>2019<br>405,184","<b>ACS5<br>Year: <\/b>2020<br>406,026","<b>ACS5<br>Year: <\/b>2021<br>400,662"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(7,54,66,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(7,54,66,1)"}},"hoveron":"points","name":"ACS5","legendgroup":"ACS5","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022],"y":[398273,398979,399547,400990,402246,402818,404141,405455,406116,407273,400285,401393,402681],"text":["<b>PEP<br>Year: <\/b>2010<br>398,273","<b>PEP<br>Year: <\/b>2011<br>398,979","<b>PEP<br>Year: <\/b>2012<br>399,547","<b>PEP<br>Year: <\/b>2013<br>400,990","<b>PEP<br>Year: <\/b>2014<br>402,246","<b>PEP<br>Year: <\/b>2015<br>402,818","<b>PEP<br>Year: <\/b>2016<br>404,141","<b>PEP<br>Year: <\/b>2017<br>405,455","<b>PEP<br>Year: <\/b>2018<br>406,116","<b>PEP<br>Year: <\/b>2019<br>407,273","<b>PEP<br>Year: <\/b>2020<br>400,285","<b>PEP<br>Year: <\/b>2021<br>401,393","<b>PEP<br>Year: <\/b>2022<br>402,681"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(211,54,130,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(211,54,130,1)"}},"hoveron":"points","name":"PEP","legendgroup":"PEP","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.762557077625573,"r":7.3059360730593621,"b":25.57077625570777,"l":34.337899543379002},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"transparent","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Housing Units in Shelby County, 2010-2022","font":{"color":"rgba(253,246,227,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[2009.4000000000001,2022.5999999999999],"tickmode":"array","ticktext":["2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022"],"tickvals":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022],"categoryorder":"array","categoryarray":["2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.6529680365296811,"tickwidth":0.26567040265670405,"showticklabels":true,"tickfont":{"color":"rgba(178,193,196,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":"rgba(253,246,227,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[395753,407853],"tickmode":"array","ticktext":["396K","399K","402K","405K"],"tickvals":[396000,399000,402000,405000],"categoryorder":"array","categoryarray":["396K","399K","402K","405K"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.6529680365296811,"tickwidth":0.26567040265670405,"showticklabels":true,"tickfont":{"color":"rgba(178,193,196,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":"rgba(253,246,227,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"rgba(0,0,0,1)","borderwidth":1.8897637795275593,"font":{"color":"rgba(4,50,61,1)","family":"","size":11.68949771689498},"title":{"text":"Dataset:","font":{"color":"rgba(4,50,61,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"modeBarButtonsToRemove":["zoom","pan","select","lasso2d","autoScale","resetScale","zoomIn","zoomOut"]},"source":"A","attrs":{"622454f5fb70":{"x":{},"y":{},"colour":{},"type":"scatter"},"6224614ea1a3":{"x":{},"y":{},"colour":{},"text":{}}},"cur_data":"622454f5fb70","visdat":{"622454f5fb70":["function (y) ","x"],"6224614ea1a3":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-<p>Presently, the ACS 1-Year and PEP estimates are near identical; there was only a 30-unit difference in 2019 values. There was a bit of variation in 2011 and 2014-2016, mostly with the ACS overestimating the PEP values, but the variation was never more than 1,882 units (&lt;0.5% of total estimate). Yet while the counts have been similar, the PEP values gradually increased over the decade while the ACS was more erratic, fluctuating downward in 2011 and 2017.</p>
+<p>Presently, the ACS 1-Year and PEP estimates are near identical; there was only a 6-unit difference in 2022 values. There was a bit of variation in 2011 and 2014-2016, mostly with the ACS overestimating the PEP values, but the variation was never more than 1,882 units (&lt;0.5% of total estimate). Yet while the counts have been similar, the PEP values gradually increased over the decade while the ACS was more erratic, fluctuating downward in 2011 and 2017.</p>
 <p>Meanwhile, the ACS 5-Year is more smooth than the 1-year data, with no downward fluctuations. But we can clearly see how the values lag behind the ACS 1-Year and PEP data. Five-year values are more representative of the midpoint year than the release year. For instance, 2015-2019 data is more representative of 2017 estimates than 2019.</p>
 <p>The overall variations in ACS and PEP data were not large. I will primarily use ACS data, as it contains more variables and is available down to at least the tract level.</p>
 
@@ -255,17 +253,17 @@ div.csl-indent {
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-uscensusbureau2019" class="csl-entry" role="doc-biblioentry">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-uscensusbureau2019" class="csl-entry" role="listitem">
 US Census Bureau. 2019. <span>“Methodology for State and County Total Housing Unit Estimates.”</span> <a href="https://www2.census.gov/programs-surveys/popest/technical-documentation/methodology/2010-2019/2019-hu-meth.pdf">https://www2.census.gov/programs-surveys/popest/technical-documentation/methodology/2010-2019/2019-hu-meth.pdf</a>.
 </div>
-<div id="ref-uscensusbureau2020" class="csl-entry" role="doc-biblioentry">
+<div id="ref-uscensusbureau2020" class="csl-entry" role="listitem">
 ———. 2020. <span>“Understanding and Using American Community Survey Data: What All Data Users Need to Know.”</span> <a href="https://www.census.gov/programs-surveys/acs/guidance/handbooks/general.html">https://www.census.gov/programs-surveys/acs/guidance/handbooks/general.html</a>.
 </div>
-<div id="ref-uscensusbureau2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-uscensusbureau2021" class="csl-entry" role="listitem">
 ———. 2021. <span>“American Community Survey (ACS).”</span> <a href="https://www.census.gov/programs-surveys/acs">https://www.census.gov/programs-surveys/acs</a>.
 </div>
-<div id="ref-walker2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-walker2021" class="csl-entry" role="listitem">
 Walker, Kyle E. 2021. <em>Analyzing US Census Data</em>. CRC Press. <a href="https://walker-data.com/census-r">https://walker-data.com/census-r</a>.
 </div>
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
@@ -275,13 +273,13 @@ Walker, Kyle E. 2021. <em>Analyzing US Census Data</em>. CRC Press. <a href="htt
 <li id="fn2"><p>The regular 1-year ACS for 2020 was not released. Due to low response rates, the Census Bureau instead released a set of experimental estimates for the 2020 1-year ACS. These estimates can be downloaded <a href="https://www.census.gov/programs-surveys/acs/data/experimental-data/1-year.html">here</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{johnson,
-  author = {Sarah Johnson},
+  author = {Johnson, Sarah},
   title = {Surveys \&amp; {Programs}},
-  url = {https://sarahjohnson.io/surveys.html},
+  url = {https://sarahjohnson.io/census/surveys.html},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-johnson" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Sarah Johnson. n.d. <span>“Surveys &amp; Programs.”</span> <a href="https://sarahjohnson.io/surveys.html">https://sarahjohnson.io/surveys.html</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-johnson" class="csl-entry quarto-appendix-citeas" role="listitem">
+Johnson, Sarah. n.d. <span>“Surveys &amp; Programs.”</span> <a href="https://sarahjohnson.io/census/surveys.html">https://sarahjohnson.io/census/surveys.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -310,9 +308,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -377,6 +389,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
