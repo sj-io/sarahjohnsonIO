@@ -22,11 +22,11 @@ website:
         href: https://linkedin.com/in/sj-io
       - icon: controller
         href: https://sarah.fyi/
+  body-footer: <script data-goatcounter="https://sarahjohnson.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
 format:
   html:
-    theme: solar
-    css: styles.css
+    theme: minty
     
 comments: 
   hypothesis: true

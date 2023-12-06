@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://sarahjohnson.io/ref.html</loc>
-    <lastmod>2023-10-16T19:23:22.552Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/census/boundaries.html</loc>
-    <lastmod>2023-10-16T18:01:58.877Z</lastmod>
+    <loc>https://sarahjohnson.io/census/surveys.html</loc>
+    <lastmod>2023-10-16T19:23:20.486Z</lastmod>
   </url>
   <url>
     <loc>https://sarahjohnson.io/census/variables.html</loc>
-    <lastmod>2023-10-16T18:40:27.761Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/census/surveys.html</loc>
-    <lastmod>2023-10-16T19:23:22.200Z</lastmod>
+    <lastmod>2023-10-16T18:40:23.398Z</lastmod>
   </url>
   <url>
     <loc>https://sarahjohnson.io/index.html</loc>
-    <lastmod>2023-10-16T18:52:57.692Z</lastmod>
+    <lastmod>2023-10-16T18:52:57.423Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/law/URLTA.html</loc>
+    <lastmod>2023-10-16T17:53:43.461Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/law/hsg-acts.html</loc>
+    <lastmod>2023-10-16T17:53:43.462Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/law/npa.html</loc>
+    <lastmod>2023-10-16T17:53:43.474Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/ref.html</loc>
+    <lastmod>2023-10-16T17:53:43.475Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/census/boundaries.html</loc>
+    <lastmod>2023-10-16T17:53:43.358Z</lastmod>
   </url>
 </urlset>
