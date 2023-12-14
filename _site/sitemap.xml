@@ -2,38 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sarahjohnson.io/census/surveys.html</loc>
-    <lastmod>2023-10-16T19:23:20.486Z</lastmod>
+    <lastmod>2023-12-14T20:12:14.616Z</lastmod>
   </url>
   <url>
     <loc>https://sarahjohnson.io/census/variables.html</loc>
-    <lastmod>2023-10-16T18:40:23.398Z</lastmod>
+    <lastmod>2023-12-14T20:15:50.899Z</lastmod>
   </url>
   <url>
-    <loc>https://sarahjohnson.io/index.html</loc>
-    <lastmod>2023-10-16T18:52:57.423Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/law/npa.html</loc>
-    <lastmod>2023-10-16T17:53:43.474Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/law/hsg-acts.html</loc>
-    <lastmod>2023-10-16T17:53:43.462Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/law/URLTA.html</loc>
-    <lastmod>2023-10-16T17:53:43.461Z</lastmod>
+    <loc>https://sarahjohnson.io/housing.html</loc>
+    <lastmod>2023-12-14T18:04:52.744Z</lastmod>
   </url>
   <url>
     <loc>https://sarahjohnson.io/other/apple-sleep-data.html</loc>
-    <lastmod>2023-12-14T05:59:55.637Z</lastmod>
+    <lastmod>2023-12-14T19:57:38.419Z</lastmod>
   </url>
   <url>
-    <loc>https://sarahjohnson.io/ref.html</loc>
-    <lastmod>2023-12-13T03:28:51.056Z</lastmod>
+    <loc>https://sarahjohnson.io/law/URLTA.html</loc>
+    <lastmod>2023-12-14T20:16:45.924Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/law/hsg-acts.html</loc>
+    <lastmod>2023-12-14T20:14:08.909Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/law/npa.html</loc>
+    <lastmod>2023-12-14T20:15:10.905Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/index.html</loc>
+    <lastmod>2023-12-14T20:26:29.581Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/r.html</loc>
+    <lastmod>2023-12-14T19:42:43.915Z</lastmod>
   </url>
   <url>
     <loc>https://sarahjohnson.io/census/boundaries.html</loc>
-    <lastmod>2023-10-16T17:53:43.358Z</lastmod>
+    <lastmod>2023-12-14T20:05:46.196Z</lastmod>
   </url>
 </urlset>

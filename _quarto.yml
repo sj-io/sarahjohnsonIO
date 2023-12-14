@@ -2,6 +2,13 @@ project:
   type: website
   execute-dir: file
 
+execute: 
+  freeze: auto
+
+author: 
+  - name: Sarah Johnson
+    url: https://sarahjohnson.io
+
 website:
   title: "SJ"
   favicon: blueshell.png
@@ -11,8 +18,10 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: ref.qmd
-        text: Reference
+      - href: housing.qmd
+        text: Housing
+      - href: r.qmd
+        text: R Analysis
     right: 
       - icon: twitter
         href: https://twitter.com/sarahjohnson_io
@@ -26,7 +35,7 @@ website:
 
 format:
   html:
-    theme: morph
+    theme: [morph, custom.scss]
     
 comments: 
   hypothesis: true

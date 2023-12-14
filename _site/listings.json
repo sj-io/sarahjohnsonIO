@@ -1,14 +1,34 @@
 [
   {
-    "listing": "/ref.html",
+    "listing": "/housing.html",
     "items": [
       "/census/variables.html",
       "/census/boundaries.html",
       "/census/surveys.html",
       "/law/npa.html",
       "/law/hsg-acts.html",
-      "/law/URLTA.html",
+      "/law/URLTA.html"
+    ]
+  },
+  {
+    "listing": "/r.html",
+    "items": [
+      "/census/variables.html",
+      "/census/boundaries.html",
+      "/census/surveys.html",
       "/other/apple-sleep-data.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/other/apple-sleep-data.html",
+      "/census/variables.html",
+      "/census/boundaries.html",
+      "/census/surveys.html",
+      "/law/hsg-acts.html",
+      "/law/URLTA.html",
+      "/law/npa.html"
     ]
   }
 ]

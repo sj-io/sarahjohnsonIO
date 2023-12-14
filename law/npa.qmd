@@ -5,6 +5,7 @@ description: |
 categories:
   - law
 image: "img/npa.jpg" 
+date: "2022-01-21"
 ---
 
 <!-- 

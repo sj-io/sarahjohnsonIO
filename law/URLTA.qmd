@@ -5,6 +5,7 @@ description: |
 categories:
   - law
 image: "img/urlta.jpg" 
+date: "2021-11-10"
 ---
 
 <!-- 

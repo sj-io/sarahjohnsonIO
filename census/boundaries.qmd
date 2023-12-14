@@ -3,8 +3,7 @@ title: "Geographic Boundaries"
 description: |
   Mapping all available Census boundaries for one area.
 image: "img/boundaries.png"
-execute: 
-  freeze: true
+date: "2022-10-29"
 bibliography: references.bib
 ---
 

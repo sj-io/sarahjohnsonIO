@@ -5,6 +5,7 @@ description: |
 categories:
   - law
 image: "img/hsg-acts.jpg" 
+date: "2021-11-07"
 bibliography: references.bib
 ---
 

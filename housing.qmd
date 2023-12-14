@@ -1,0 +1,25 @@
+---
+title: "Housing"
+listing: 
+  - id: census
+    contents: "census/*.qmd"
+    type: grid
+    fields: [image, title, description, reading-time]
+  - id: law
+    contents: "law/*.qmd"
+    type: grid
+    fields: [image, title, description, reading-time]
+comments: false
+---
+
+A collection of useful pages for housing research.
+
+## Census
+
+:::{#census}
+:::
+
+## Law
+
+:::{#law}
+:::

@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Sarah Johnson">
 <meta name="dcterms.date" content="2023-12-14">
 
 <title>SJ - Analyze Apple Health sleep data with R</title>
@@ -134,8 +135,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../ref.html"> 
-<span class="menu-text">Reference</span></a>
+    <a class="nav-link" href="../housing.html"> 
+<span class="menu-text">Housing</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../r.html"> 
+<span class="menu-text">R Analysis</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -186,9 +191,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#analyze-your-sleep-data" id="toc-analyze-your-sleep-data" class="nav-link" data-scroll-target="#analyze-your-sleep-data">Analyze your sleep data</a>
   <ul class="collapse">
-  <li><a href="#sleep-by-day-of-week" id="toc-sleep-by-day-of-week" class="nav-link" data-scroll-target="#sleep-by-day-of-week">Sleep by Day of Week</a></li>
-  <li><a href="#sleep-cycle-amounts" id="toc-sleep-cycle-amounts" class="nav-link" data-scroll-target="#sleep-cycle-amounts">Sleep Cycle Amounts</a></li>
-  <li><a href="#sleep-cycle-activity" id="toc-sleep-cycle-activity" class="nav-link" data-scroll-target="#sleep-cycle-activity">Sleep Cycle Activity</a></li>
+  <li><a href="#sleep-by-day-of-week" id="toc-sleep-by-day-of-week" class="nav-link" data-scroll-target="#sleep-by-day-of-week">Sleep by day of week</a></li>
+  <li><a href="#sleep-cycle-amounts" id="toc-sleep-cycle-amounts" class="nav-link" data-scroll-target="#sleep-cycle-amounts">Sleep cycle amounts</a></li>
+  <li><a href="#sleep-cycle-activity" id="toc-sleep-cycle-activity" class="nav-link" data-scroll-target="#sleep-cycle-activity">Sleep cycle activity</a></li>
   
   </ul></li>
   </ul>
@@ -206,6 +211,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://sarahjohnson.io">Sarah Johnson</a> </p>
+          </div>
+  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
@@ -225,7 +236,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I’ve always struggled with falling asleep early, so I purchased an Apple Watch to monitor my sleep. This post details how to access your Apple Health data and analyze it.</p>
 <section id="get-data" class="level1">
 <h1>Export your Health data</h1>
-<p>Unfortunately I could not find a direct way to access the health data, but you can export it from your profile in the Apple Health app.</p>
+<p>Unfortunately I could not find a direct way to access the health data, but you can export it from the Apple Health app by clicking on your profile.</p>
 <div>
 
 </div>
@@ -389,15 +400,16 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="fl">1.5</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">1.25</span>, <span class="st">"cm"</span>),</span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#1C1B1D"</span>),</span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"#4B4A4C"</span>),</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"#94949B"</span>, <span class="at">family =</span> <span class="st">"Helvetica"</span>),</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"#94949B"</span>, <span class="at">family =</span> <span class="st">"SF Pro Rounded"</span>),</span>
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">vjust =</span> <span class="dv">5</span>),</span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"#94949B"</span>),</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">vjust =</span> <span class="dv">5</span>)</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">vjust =</span> <span class="dv">4</span>, <span class="at">size =</span> <span class="dv">24</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">10</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The colors for the sleep stages were pulled from Apple’s Health data app.</p>
 <section id="sleep-by-day-of-week" class="level2">
-<h2 class="anchored" data-anchor-id="sleep-by-day-of-week">Sleep by Day of Week</h2>
+<h2 class="anchored" data-anchor-id="sleep-by-day-of-week">Sleep by day of week</h2>
 <p>How much sleep do I average for each night of the week?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sleep_by_wday <span class="ot">&lt;-</span> asleep <span class="sc">|&gt;</span> </span>
@@ -407,9 +419,9 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">wday_sleep =</span> <span class="fu">mean</span>(daily_sleep), <span class="at">.by =</span> wday)</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># mutate(readable = seconds_to_period(wday_sleep))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Get the amount of sleep for that row by subtracting the <code>endDate</code> by the <code>startDate</code>. Add up the sleep activity for each night by grouping by the <code>creationDate</code>.</p>
+<p>Get the amount of sleep for each record by subtracting the <strong>endDate</strong> by the <strong>startDate</strong>. Group by <strong>creationDate</strong> to sum up all sleep activity for each night.</p>
 <p>Then, use <code>lubridate::wday()</code> function to get the day of the week. Finally, find the average amount of sleep for each weekday. The total will be given in seconds; turn this into a readable format with <code>seconds_to_period()</code>.</p>
-<p>Turn the table into a graph with <code>ggplot</code>’s <code>geom_col()</code>.</p>
+<p>Turn the table into a graph with ggplot’s <code>geom_col()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sleep_by_wday <span class="sc">|&gt;</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
@@ -418,11 +430,11 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> wday_sleep,</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="fu">as.numeric</span>(wday_sleep)</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_time</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_time</span>(<span class="at">format =</span> <span class="st">"%H"</span>)) <span class="sc">+</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_continuous</span>() <span class="sc">+</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_time</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_time</span>(<span class="at">format =</span> <span class="st">"%H H"</span>)) <span class="sc">+</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#35339C"</span>, <span class="at">high =</span> <span class="st">"#80CFF9"</span>) <span class="sc">+</span></span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average sleep by day of week"</span>,</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Hours Asleep"</span>, <span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">""</span>, <span class="at">x =</span> <span class="st">""</span>,</span>
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"sarahjohnson.io"</span>) <span class="sc">+</span></span>
 <span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
 <span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  sleep_theme</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -437,7 +449,7 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 <p>Unsurprisingly, I get the most sleep on Saturdays where I average just over 8 hours, followed by Sunday with 7.5 hours. All weekdays I average below 7 hours of sleep, with Monday and Wednesday averaging under 6 hours (5H 50M and 5H 57M, respectively).</p>
 </section>
 <section id="sleep-cycle-amounts" class="level2">
-<h2 class="anchored" data-anchor-id="sleep-cycle-amounts">Sleep Cycle Amounts</h2>
+<h2 class="anchored" data-anchor-id="sleep-cycle-amounts">Sleep cycle amounts</h2>
 <p>How much of each sleep cycle do I experience each night?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cycle_by_day <span class="ot">&lt;-</span> asleep <span class="sc">|&gt;</span></span>
@@ -506,11 +518,11 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 </div>
 </section>
 <section id="sleep-cycle-activity" class="level2">
-<h2 class="anchored" data-anchor-id="sleep-cycle-activity">Sleep Cycle Activity</h2>
+<h2 class="anchored" data-anchor-id="sleep-cycle-activity">Sleep cycle activity</h2>
 <p>How do I make a sleep graph similar to the one in Apple’s Health app?</p>
 <p><img src="apple-health-sleep-graph.jpg" class="img-fluid"></p>
 <p>I’ve always wanted to view the sleep cycle for all days at once. However, the graph needs some adjustments to plot correctly.</p>
-<p>If you attempt to use the <code>startDate</code> or <code>endDate</code> on the y-axis, the dates will prevent the times from aligning. The result is a bunch of very short lines stacking diagonally into oblivion. Use <code>hms::as_hms()</code> to pull just the time.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>If you attempt to use the <strong>startDate</strong> or <strong>endDate</strong> on the y-axis, the dates will prevent the times from aligning. The result is a bunch of very short lines stacking diagonally into oblivion. Use <code>hms::as_hms()</code> to pull just the time.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cycle_activity <span class="ot">&lt;-</span> asleep <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">start_time =</span> hms<span class="sc">::</span><span class="fu">as_hms</span>(startDate),</span>
@@ -521,7 +533,7 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    .x</span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> hms<span class="sc">::</span><span class="fu">as_hms</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The next problem I ran into was that sleep starts on one night and ends on the next. If you do not adjust the hours and y-axis, you’ll have a disjoined graph. Assuming a normal sleep schedule, a bit of the data will be at the bottom (for hours slept between ~10PM/22:00 to midnight) and a large amount towards the bottom (for midnight/00:00 to wake-up), and there will be a large gap of no data in the middle for hours you are awake.</p>
+<p>The next problem I ran into was that sleep starts on one night and ends on the next. If you do not adjust the hours and y-axis, you’ll have a disjoined graph. Assuming a normal sleep schedule, a bit of the data will be at the bottom (for hours slept between ~10PM/22:00 to midnight) and a large amount towards the top (for midnight/00:00 to wake-up), and there will be a large gap of no data in the middle for hours you are awake.</p>
 <p>To correct for this, I decided to alter the value for any time with an hour value greater than 12. Since I was working with a 24-hour time, I subtracted 24 from the hour value, resulting in a negative time. For instance, 11:58PM/23:58 became -00:02.</p>
 <p>In your graph, you’ll still need to adjust the axis breaks to something like <code>seq(-7200, 43200, by = 3600)</code>, which would show breaks at every hour (3600 seconds) from 10PM (-7200) to noon (43200). Thankfully ggplot’s labelling automatically turns these negative times into values like “11PM” or “23:00”.</p>
 <p>Lastly, I wanted to see my typical wake and sleep times, but with the day-to-day variances smoothed out.</p>
@@ -604,9 +616,9 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 <script data-goatcounter="https://sarahjohnson.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><div id="quarto-appendix" class="default"><section id="acknowledgments" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Acknowledgments</h2><div class="quarto-appendix-contents">
 
 <p>Inspiration for this post from <a href="https://www.jonbusby.co.uk/2021/06/analysing-apple-health-data-in-python-part-1-extraction-and-sleep-data/">Jon Busby’s blog</a>, who used Python to access this data.</p>
-<p><a href="https://taraskaduk.com/posts/2019-03-23-apple-health/">Taras Kaduk</a></p>
-<p><a href="https://www.relevantmisc.com/r/2020/06/01/baby-sleep-radial/">Relevant Miscellany</a></p>
-<p><a href="https://stackoverflow.com/questions/68578242/plot-arrival-and-departure-times-that-cross-midnight">This stackoverflow question</a></p>
+<p><a href="https://taraskaduk.com/posts/2019-03-23-apple-health/">Taras Kaduk’s blog</a> who also used R to gather Apple Health data.</p>
+<p><a href="https://www.relevantmisc.com/r/2020/06/01/baby-sleep-radial/">Relevant Miscellany</a>’s sleep data mapping also helped inspire this post.</p>
+<p><a href="https://stackoverflow.com/questions/68578242/plot-arrival-and-departure-times-that-cross-midnight">This stackoverflow question</a> helped me figure out how to graph across midnight.</p>
 
 
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
@@ -616,7 +628,17 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 <li id="fn2"><p><a href="https://taraskaduk.com/posts/2019-03-23-apple-health/">Taras Kaduk’s</a> blog post also shows other data available for analysis.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p><code>lubridate::hms()</code> is used for time periods, like a race that takes 3H 42M 6S.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section></div></main> <!-- /main -->
+</section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{johnson2023,
+  author = {Johnson, Sarah},
+  title = {Analyze {Apple} {Health} Sleep Data with {R}},
+  date = {2023-12-14},
+  url = {https://sarahjohnson.io/other/apple-sleep-data.html},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-johnson2023" class="csl-entry quarto-appendix-citeas" role="listitem">
+Johnson, Sarah. 2023. <span>“Analyze Apple Health Sleep Data with
+R.”</span> December 14, 2023. <a href="https://sarahjohnson.io/other/apple-sleep-data.html">https://sarahjohnson.io/other/apple-sleep-data.html</a>.
+</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
