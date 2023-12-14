@@ -26,7 +26,7 @@ website:
 
 format:
   html:
-    theme: minty
+    theme: morph
     
 comments: 
   hypothesis: true

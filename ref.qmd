@@ -9,6 +9,10 @@ listing:
     contents: "law/*.qmd"
     type: grid
     fields: [image, title, description, reading-time]
+  - id: other
+    contents: "other/*.qmd"
+    type: grid
+    fields: [title, description, reading-time]
 comments: false
 ---
 
@@ -22,4 +26,9 @@ A collection of useful pages for housing research.
 ## Law
 
 :::{#law}
+:::
+
+## Other
+
+:::{#other}
 :::
