@@ -5,10 +5,6 @@ project:
 execute: 
   freeze: auto
 
-author: 
-  - name: Sarah Johnson
-    url: https://sarahjohnson.io
-
 website:
   title: "SJ"
   favicon: blueshell.png
