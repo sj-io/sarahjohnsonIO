@@ -229,6 +229,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
   </div>
   
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">December 15, 2023</p>
+    </div>
+  </div>
     
   </div>
   
@@ -349,14 +355,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="analyze-your-sleep-data" class="level1 page-columns page-full">
 <h1>Analyze your sleep data</h1>
-<p>To access the data again, just use <code>read_parquet()</code>. I also want to filter to only use my watch data.</p>
+<p>To access the data again, just use <code>read_parquet()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sleep_data <span class="ot">&lt;-</span> <span class="fu">read_parquet</span>(<span class="fu">paste0</span>(path, <span class="st">"health/sleep.parquet"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(sourceName, <span class="st">"Watch"</span>))</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sleep_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 8,833
+<pre><code>Rows: 8,877
 Columns: 6
 $ sourceName    &lt;chr&gt; "Sarah’s Apple&nbsp;Watch", "Sarah’s Apple&nbsp;Watch", "Sarah’s A…
 $ sourceVersion &lt;chr&gt; "9.3.1", "9.3.1", "9.3.1", "9.3.1", "9.3.1", "9.3.1", "9…
@@ -376,29 +382,37 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"source"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>I also changed the <strong>creationDate</strong> to remove the time for easier future use.</p>
-<p>I’ll be using the following theming options for my plots.</p>
+<p>Click below to see theme options for my plots.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrounded)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>sleep_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"REM"</span> <span class="ot">=</span> <span class="st">"#80CFF9"</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Core"</span> <span class="ot">=</span> <span class="st">"#3A81F6"</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Deep"</span> <span class="ot">=</span> <span class="st">"#35339C"</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Unspecified"</span> <span class="ot">=</span> <span class="st">"#87E3E0"</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>sleep_theme <span class="ot">&lt;-</span> <span class="fu">theme</span>(</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="fl">1.5</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">1.25</span>, <span class="st">"cm"</span>),</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#1C1B1D"</span>),</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"#4B4A4C"</span>),</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"#94949B"</span>, <span class="at">family =</span> <span class="st">"SF Pro Rounded"</span>),</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">vjust =</span> <span class="dv">5</span>),</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"#94949B"</span>),</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">vjust =</span> <span class="dv">4</span>, <span class="at">size =</span> <span class="dv">24</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">10</span>)</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(showtext)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add</span>(<span class="at">family =</span> <span class="st">"SF Pro"</span>, <span class="at">regular =</span> <span class="st">"SF-Pro.ttf"</span>, <span class="at">bold =</span> <span class="st">"SF-Pro.ttf"</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add</span>(<span class="at">family =</span> <span class="st">"SF Pro Rounded"</span>, <span class="at">regular =</span> <span class="st">"SF-Pro-Rounded-Regular.otf"</span>, <span class="at">bold =</span> <span class="st">"SF-Pro-Rounded-Bold.otf"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_auto</span>()</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>sleep_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"REM"</span> <span class="ot">=</span> <span class="st">"#80CFF9"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Core"</span> <span class="ot">=</span> <span class="st">"#3A81F6"</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Deep"</span> <span class="ot">=</span> <span class="st">"#35339C"</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Unspecified"</span> <span class="ot">=</span> <span class="st">"#87E3E0"</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># colors from Apple Health app</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>sleep_theme <span class="ot">&lt;-</span> <span class="fu">theme</span>(</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="fl">1.5</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">1.25</span>, <span class="st">"cm"</span>),</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#1C1B1D"</span>),</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"#4B4A4C"</span>),</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"#94949B"</span>, <span class="at">family =</span> <span class="st">"SF Pro Rounded"</span>),</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">vjust =</span> <span class="dv">5</span>),</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"#94949B"</span>),</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">vjust =</span> <span class="dv">4</span>, <span class="at">size =</span> <span class="dv">24</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">10</span>)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-<p>The colors for the sleep stages were pulled from Apple’s Health data app.</p>
 <section id="sleep-by-day-of-week" class="level2">
 <h2 class="anchored" data-anchor-id="sleep-by-day-of-week">Sleep by day of week</h2>
 <p>How much sleep do I average for each night of the week?</p>
@@ -534,7 +548,7 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">start_time =</span> hms<span class="sc">::</span><span class="fu">as_hms</span>(startDate),</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">end_time =</span> hms<span class="sc">::</span><span class="fu">as_hms</span>(endDate)) <span class="sc">|&gt;</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">ends_with</span>(<span class="st">"_time"</span>), <span class="sc">~</span> <span class="fu">ifelse</span>(</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.numeric</span>(<span class="fu">hour</span>(.x)) <span class="sc">&gt;</span> <span class="dv">12</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.numeric</span>(<span class="fu">hour</span>(.x)) <span class="sc">&gt;</span> <span class="dv">18</span>,</span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    .x <span class="sc">-</span> hms<span class="sc">::</span><span class="fu">hms</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">24</span>),</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    .x</span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> hms<span class="sc">::</span><span class="fu">as_hms</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

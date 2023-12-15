@@ -5,6 +5,7 @@ toc: true
 toc-location: left
 layout: full
 date: "2023-12-14"
+date-modified: "2023-12-15"
 image: "preview-image.png"
 author: 
   - name: Sarah Johnson
@@ -41,10 +42,6 @@ library(arrow) # optional
 
 ```{r, echo=FALSE, message=FALSE}
 path <- Sys.getenv("MAIN_DATA_DIR")
-library(showtext)
-font_add(family = "SF Pro", regular = "SF-Pro.ttf", bold = "SF-Pro.ttf")
-font_add(family = "SF Pro Rounded", regular = "SF-Pro-Rounded-Regular.otf", bold = "SF-Pro-Rounded-Bold.otf")
-showtext_auto()
 ```
 
 `xml2` is included in the `tidyverse` and does not need to be installed separately. I use the `arrow` package to save the cleaned data as parquet files because they take up less space than csv files and load faster.
@@ -148,7 +145,7 @@ Congratulations! You now have all your health records saved in an easy format.
 
 # Analyze your sleep data
 
-To access the data again, just use `read_parquet()`. I also want to filter to only use my watch data.
+To access the data again, just use `read_parquet()`.
 
 ```{r}
 sleep_data <- read_parquet(paste0(path, "health/sleep.parquet")) |> 
@@ -171,10 +168,16 @@ asleep <- sleep_data |>
 
 I also changed the **creationDate** to remove the time for easier future use.
 
-I'll be using the following theming options for my plots.
+Click below to see theme options for my plots.
 
-```{r}
+```{r, message=FALSE}
+#| code-fold: true
 library(ggrounded)
+
+library(showtext)
+font_add(family = "SF Pro", regular = "SF-Pro.ttf", bold = "SF-Pro.ttf")
+font_add(family = "SF Pro Rounded", regular = "SF-Pro-Rounded-Regular.otf", bold = "SF-Pro-Rounded-Bold.otf")
+showtext_auto()
 
 sleep_colors <- c(
   "REM" = "#80CFF9",
@@ -182,6 +185,7 @@ sleep_colors <- c(
   "Deep" = "#35339C",
   "Unspecified" = "#87E3E0"
 )
+# colors from Apple Health app
 
 sleep_theme <- theme(
     plot.margin = margin(1.5, 1, 1, 1.25, "cm"),
@@ -194,8 +198,6 @@ sleep_theme <- theme(
     plot.caption = element_text(face = "bold", size = 10)
   )
 ```
-
-The colors for the sleep stages were pulled from Apple's Health data app.
 
 ## Sleep by day of week
 
@@ -287,7 +289,7 @@ cycle_by_day |>
                    radius = grid::unit(2, "pt")) +
   scale_fill_manual(values = sleep_colors) +
   scale_y_time(expand = c(0, 0),
-               breaks = seq(3600, 43200, by = 7200),
+               breaks = seq(3600, 50400, by = 7200),
                minor_breaks = NULL,
                labels = scales::label_time(format = "%H H")) +
   scale_x_date(expand = c(0, 5),
@@ -391,7 +393,7 @@ cycle_activity <- asleep |>
   mutate(start_time = hms::as_hms(startDate),
          end_time = hms::as_hms(endDate)) |>
   mutate(across(ends_with("_time"), ~ ifelse(
-    as.numeric(hour(.x)) > 12,
+    as.numeric(hour(.x)) > 18,
     .x - hms::hms(0, 0, 24),
     .x
   ) |> hms::as_hms()))
@@ -440,7 +442,7 @@ ggplot() +
                breaks = "1 month",
                date_labels = "%b") +
   scale_y_time(expand = c(0, 0),
-               breaks = seq(-7200, 43200, by = 7200),
+               breaks = seq(-43200, 64800, by = 7200),
                minor_breaks = NULL,
                labels = scales::label_time(format = "%I %p")) +
   theme_minimal() +
@@ -479,7 +481,7 @@ ggplot() +
                breaks = "1 month",
                date_labels = "%b") +
   scale_y_time(expand = c(0, 0),
-               breaks = seq(-7200, 43200, by = 7200),
+               breaks = seq(-43200, 64800, by = 7200),
                minor_breaks = NULL,
                labels = scales::label_time(format = "%I %p")) +
   theme_minimal() +
@@ -547,18 +549,18 @@ sleep_heatmap <- asleep |>
 
 ### Heatmap
 
-```{r, fig.width=12, fig.height=4.65, echo=FALSE}
+```{r, fig.width=12, fig.height=4.8, echo=FALSE}
 #| column: screen-inset-right
 sleep_heatmap |> 
-  ggplot(aes(x = week, y = wday, fill = as.numeric(daily_sleep))) +
+  ggplot(aes(x = week, y = wday, fill = as.numeric(daily_sleep)/3600)) +
   geom_tile() +
   scale_x_continuous(
     breaks = c(18, 23, 27, 32, 36, 40, 44, 49),
     labels = c("May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
   ) +
   scale_fill_gradient(high = "#35339C", low = "#80CFF9",
-                      breaks = seq(0, 43200, by = 7200),
-                      labels = c("0", "2", "4", "6", "8", "10", "12")) +
+                      breaks = seq(0, 12, by = 2)
+                      ) +
   coord_equal() +
   theme_minimal() +
   labs(x = "", y = "", title = "Weekly sleep heatmap", 
@@ -566,7 +568,7 @@ sleep_heatmap |>
   guides(fill = guide_legend(title.position = "top",
                              label.position = "bottom")) +
   theme(legend.position = "bottom",
-        legend.margin = margin(0, 11.5, 0, 0, unit = "cm"),
+        legend.box.margin = margin(0, 9, 0, 0, unit = "in"),
         panel.grid.major = element_blank()) +
   sleep_theme
 ```
