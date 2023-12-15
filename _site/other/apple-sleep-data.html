@@ -113,7 +113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="nav-fixed">
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -174,9 +174,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
@@ -199,9 +198,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   </ul>
 </nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -344,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Congratulations! You now have all your health records saved in an easy format.</p>
 </section>
 </section>
-<section id="analyze-your-sleep-data" class="level1">
+<section id="analyze-your-sleep-data" class="level1 page-columns page-full">
 <h1>Analyze your sleep data</h1>
 <p>To access the data again, just use <code>read_parquet()</code>. I also want to filter to only use my watch data.</p>
 <div class="cell">
@@ -353,7 +356,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sleep_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 8,720
+<pre><code>Rows: 8,833
 Columns: 6
 $ sourceName    &lt;chr&gt; "Sarah’s Apple&nbsp;Watch", "Sarah’s Apple&nbsp;Watch", "Sarah’s A…
 $ sourceVersion &lt;chr&gt; "9.3.1", "9.3.1", "9.3.1", "9.3.1", "9.3.1", "9.3.1", "9…
@@ -447,7 +450,7 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 </div>
 <p>Unsurprisingly, I get the most sleep on Saturdays where I average just over 8 hours, followed by Sunday with 7.5 hours. All weekdays I average below 7 hours of sleep, with Monday and Wednesday averaging under 6 hours (5H 50M and 5H 57M, respectively).</p>
 </section>
-<section id="sleep-cycle-amounts" class="level2">
+<section id="sleep-cycle-amounts" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sleep-cycle-amounts">Sleep cycle amounts</h2>
 <p>How much of each sleep cycle do I experience each night?</p>
 <div class="cell">
@@ -457,26 +460,26 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(<span class="st">"creationDate"</span>, <span class="st">"value"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Again get the amount of sleep activity for each row and sum the amounts. This time we will also group by the <strong>value</strong> column which defines the type of sleep activity.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Stack</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Fill</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Code</a></li></ul>
-<div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="apple-sleep-data_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="768"></p>
+<div class="tab-content page-columns page-full">
+<div id="tabset-2-1" class="tab-pane active page-columns page-full" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="apple-sleep-data_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="768"></p>
+<div id="tabset-2-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -517,10 +520,13 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 </div>
 </div>
 </section>
-<section id="sleep-cycle-activity" class="level2">
+<section id="sleep-cycle-activity" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sleep-cycle-activity">Sleep cycle activity</h2>
 <p>How do I make a sleep graph similar to the one in Apple’s Health app?</p>
-<p><img src="apple-health-sleep-graph.jpg" class="img-fluid"></p>
+<center>
+<img src="apple-health-sleep-graph.jpg" class="img-fluid" style="width:40.0%">
+</center>
+<p><br></p>
 <p>I’ve always wanted to view the sleep cycle for all days at once. However, the graph needs some adjustments to plot correctly.</p>
 <p>If you attempt to use the <strong>startDate</strong> or <strong>endDate</strong> on the y-axis, the dates will prevent the times from aligning. The result is a bunch of very short lines stacking diagonally into oblivion. Use <code>hms::as_hms()</code> to pull just the time.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <div class="cell">
@@ -545,26 +551,26 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(end_time, <span class="at">by =</span> <span class="st">"creationDate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To get this data, just slice your earliest and latest sleep time for each day.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Sleep Activity</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Smooth Sleep/Wake</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Code</a></li></ul>
-<div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="apple-sleep-data_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="768"></p>
+<div class="tab-content page-columns page-full">
+<div id="tabset-3-1" class="tab-pane active page-columns page-full" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="apple-sleep-data_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="768"></p>
+<div id="tabset-3-2" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -610,7 +616,7 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 </div>
 </div>
 </section>
-<section id="sleep-heatmap" class="level2">
+<section id="sleep-heatmap" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sleep-heatmap">Sleep heatmap</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>sleep_heatmap <span class="ot">&lt;-</span> asleep <span class="sc">|&gt;</span> </span>
@@ -619,15 +625,15 @@ $ value         &lt;chr&gt; "AsleepCore", "InBed", "Awake", "AsleepCore", "Aslee
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wday =</span> <span class="fu">wday</span>(creationDate, <span class="at">label =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">week =</span> <span class="fu">week</span>(creationDate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Heatmap</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Code</a></li></ul>
-<div class="tab-content">
-<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="apple-sleep-data_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="768"></p>
+<div class="tab-content page-columns page-full">
+<div id="tabset-4-1" class="tab-pane active page-columns page-full" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
 </figure>
 </div>
 </div>

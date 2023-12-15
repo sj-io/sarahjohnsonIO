@@ -2,6 +2,7 @@
 title: "Analyze Apple Health sleep data with R"
 freeze: auto
 toc: true
+toc-location: left
 layout: full
 date: "2023-12-14"
 image: "preview-image.png"
@@ -265,7 +266,7 @@ Unsurprisingly, I get the most sleep on Saturdays where I average just over 8 ho
 
 How much of each sleep cycle do I experience each night?
 
-```{r, fig.width=8, fig.height=5}
+```{r}
 cycle_by_day <- asleep |>
   mutate(cycle_amount = endDate - startDate) |>
   summarise(cycle_amount = sum(cycle_amount),
@@ -278,14 +279,15 @@ Again get the amount of sleep activity for each row and sum the amounts. This ti
 
 ### Stack
 
-```{r, fig.width=8, fig.height=5, echo=FALSE}
+```{r, fig.width=12, fig.height=5, echo=FALSE}
+#| column: screen-inset-right
 cycle_by_day |>
   ggplot() +
   geom_col_rounded(aes(x = creationDate, y = cycle_amount, fill = value),
-                   radius = grid::unit(1, "pt")) +
+                   radius = grid::unit(2, "pt")) +
   scale_fill_manual(values = sleep_colors) +
   scale_y_time(expand = c(0, 0),
-               breaks = seq(3600, 43200, by = 3600),
+               breaks = seq(3600, 43200, by = 7200),
                minor_breaks = NULL,
                labels = scales::label_time(format = "%H H")) +
   scale_x_date(expand = c(0, 5),
@@ -302,13 +304,14 @@ cycle_by_day |>
   ) +
   guides(fill = guide_legend(title.position = "top")) +
   theme(legend.position = "bottom",
-        legend.box.margin = margin(0, 9, 0, 0, unit = "cm")) +
+        legend.box.margin = margin(0, 7.4, 0, 0, unit = "in")) +
   sleep_theme
 ```
 
 ### Fill
 
-```{r, fig.width=8, fig.height=5, echo=FALSE}
+```{r, fig.width=12, fig.height=5, echo=FALSE}
+#| column: screen-inset-right
 cycle_by_day |>
   ggplot() +
   geom_col_rounded(aes(x = creationDate, y = cycle_amount, fill = value),
@@ -331,7 +334,7 @@ cycle_by_day |>
   ) +
   guides(fill = guide_legend(title.position = "top")) +
   theme(legend.position = "bottom",
-        legend.box.margin = margin(0, 9, 0, 0, unit = "cm")) +
+        legend.box.margin = margin(0, 7.4, 0, 0, unit = "in")) +
   sleep_theme
 ```
 
@@ -375,7 +378,9 @@ cycle_by_day |>
 
 How do I make a sleep graph similar to the one in Apple's Health app?
 
-![](apple-health-sleep-graph.jpg)
+<center>
+![](apple-health-sleep-graph.jpg){width=40%}
+</center><br>
 
 I've always wanted to view the sleep cycle for all days at once. However, the graph needs some adjustments to plot correctly.
 
@@ -414,7 +419,8 @@ To get this data, just slice your earliest and latest sleep time for each day.
 
 ### Sleep Activity
 
-```{r, fig.width=8, fig.height=5, echo=FALSE}
+```{r, fig.width=12, fig.height=5, echo=FALSE}
+#| column: screen-inset-right
 ggplot() +
   geom_rect(
     data = cycle_activity,
@@ -450,7 +456,8 @@ ggplot() +
 
 ### Smooth Sleep/Wake
 
-```{r, fig.width=8, fig.height=5, echo=FALSE, message=FALSE}
+```{r, fig.width=12, fig.height=5, echo=FALSE, message=FALSE}
+#| column: screen-inset-right
 ggplot() +
   geom_rect(
     data = cycle_activity,
@@ -540,7 +547,8 @@ sleep_heatmap <- asleep |>
 
 ### Heatmap
 
-```{r echo=FALSE, fig.height=3.92, fig.width=8}
+```{r, fig.width=12, fig.height=4.65, echo=FALSE}
+#| column: screen-inset-right
 sleep_heatmap |> 
   ggplot(aes(x = week, y = wday, fill = as.numeric(daily_sleep))) +
   geom_tile() +
