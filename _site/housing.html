@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Sarah Johnson">
 
 <title>SJ - Housing</title>
 <style>
@@ -82,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
     const options = {
       valueNames: ['listing-image','listing-title','listing-description','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-title","listing-author","listing-image","listing-description"],
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -110,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
     const options = {
       valueNames: ['listing-image','listing-title','listing-description','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-title","listing-author","listing-image","listing-description"],
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -208,12 +207,6 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p><a href="https://sarahjohnson.io">Sarah Johnson</a> </p>
-          </div>
-  </div>
     
   
     
@@ -229,7 +222,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="census">Census</h2>
 <div id="listing-census" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="census" data-listing-file-modified-sort="1702584950899" data-listing-reading-time-sort="10" data-listing-word-count-sort="1980">
+<div class="g-col-1" data-index="0" data-categories="census" data-listing-date-sort="1640325600000" data-listing-file-modified-sort="1702584950899" data-listing-date-modified-sort="1697432400000" data-listing-reading-time-sort="10" data-listing-word-count-sort="1980">
 <a href="./census/variables.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -249,7 +242,7 @@ ACS Variables
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1702584346196" data-listing-reading-time-sort="11" data-listing-word-count-sort="2192">
+<div class="g-col-1" data-index="1" data-listing-date-sort="1667019600000" data-listing-file-modified-sort="1702584346196" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2192">
 <a href="./census/boundaries.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -269,7 +262,7 @@ Geographic Boundaries
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="census,memphis" data-listing-file-modified-sort="1702584734616" data-listing-reading-time-sort="7" data-listing-word-count-sort="1281">
+<div class="g-col-1" data-index="2" data-categories="census,memphis" data-listing-date-sort="1655614800000" data-listing-file-modified-sort="1702584734616" data-listing-date-modified-sort="1697432400000" data-listing-reading-time-sort="7" data-listing-word-count-sort="1281">
 <a href="./census/surveys.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -299,7 +292,7 @@ No matching items
 <h2 class="anchored" data-anchor-id="law">Law</h2>
 <div id="listing-law" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="law" data-listing-file-modified-sort="1702584910905" data-listing-reading-time-sort="20" data-listing-word-count-sort="3821">
+<div class="g-col-1" data-index="0" data-categories="law" data-listing-date-sort="1642744800000" data-listing-file-modified-sort="1702584910905" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20" data-listing-word-count-sort="3821">
 <a href="./law/npa.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -319,7 +312,7 @@ NPA
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="law" data-listing-file-modified-sort="1702584848909" data-listing-reading-time-sort="41" data-listing-word-count-sort="8051">
+<div class="g-col-1" data-index="1" data-categories="law" data-listing-date-sort="1636261200000" data-listing-file-modified-sort="1702584848909" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="41" data-listing-word-count-sort="8051">
 <a href="./law/hsg-acts.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -339,7 +332,7 @@ U.S. Housing Acts
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="law" data-listing-file-modified-sort="1702585005924" data-listing-reading-time-sort="55" data-listing-word-count-sort="10822">
+<div class="g-col-1" data-index="2" data-categories="law" data-listing-date-sort="1636524000000" data-listing-file-modified-sort="1702585005924" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="55" data-listing-word-count-sort="10822">
 <a href="./law/URLTA.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">

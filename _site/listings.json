@@ -18,17 +18,5 @@
       "/census/surveys.html",
       "/other/apple-sleep-data.html"
     ]
-  },
-  {
-    "listing": "/index.html",
-    "items": [
-      "/other/apple-sleep-data.html",
-      "/census/variables.html",
-      "/census/boundaries.html",
-      "/census/surveys.html",
-      "/law/hsg-acts.html",
-      "/law/URLTA.html",
-      "/law/npa.html"
-    ]
   }
 ]

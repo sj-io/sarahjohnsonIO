@@ -5,7 +5,7 @@ toc: true
 toc-location: left
 layout: full
 date: "2023-12-14"
-date-modified: "2023-12-15"
+date-modified: "2023-12-18"
 image: "preview-image.png"
 author: 
   - name: Sarah Johnson
@@ -99,19 +99,15 @@ First, the `attr_to_col()` function pulls attribute data from each xml element. 
 The `xml_to_tibble()` function runs the above function for each attribute defined in `col_names`. Then, all the columns are binded together into one table.
 
 ```{r eval=FALSE}
-records <- xml_to_tibble(xml_records, col_names)
-```
-
-Clean up your records table by converting date columns and making some values more legible.
-
-```{r eval=FALSE}
-records <- records |> 
+records <- xml_to_tibble(xml_records, col_names) |> 
   mutate(
     across(ends_with("Date"), ~ as_datetime(.x) |> with_tz("US/Central")),
     type = str_remove_all(type, "HK(Category|Quantity)TypeIdentifier"),
     value = str_remove_all(value, "HKCategoryValue(SleepAnalysis)?")
   )
 ```
+
+Clean up your records table by converting date columns and making some values more legible.
 
 Note this changes all date columns to US/Central timezone; excluding the timezone adjustment keeps all data in UTC time. I might adjust my code in the future to use the local timezone of wherever the data was collected.
 
@@ -148,8 +144,8 @@ Congratulations! You now have all your health records saved in an easy format.
 To access the data again, just use `read_parquet()`.
 
 ```{r}
-sleep_data <- read_parquet(paste0(path, "health/sleep.parquet")) |> 
-  filter(str_detect(sourceName, "Watch"))
+sleep_data <- read_parquet(paste0(path, "health/sleep.parquet"))
+  # filter(str_detect(sourceName, "Watch"))
 
 glimpse(sleep_data)
 ```
@@ -208,8 +204,8 @@ sleep_by_wday <- asleep |>
   mutate(activity_amount = endDate - startDate) |> 
   summarise(daily_sleep = sum(activity_amount), .by = creationDate) |> 
   mutate(wday = wday(creationDate, label = TRUE)) |> 
-  summarise(wday_sleep = mean(daily_sleep), .by = wday)
-  # mutate(readable = seconds_to_period(wday_sleep))
+  summarise(wday_sleep = mean(daily_sleep), .by = wday) |> 
+  mutate(readable = seconds_to_period(wday_sleep))
 ```
 
 Get the amount of sleep for each record by subtracting the **endDate** by the **startDate**. Group by **creationDate** to sum up all sleep activity for each night.
@@ -262,7 +258,7 @@ sleep_by_wday |>
 
 :::
 
-Unsurprisingly, I get the most sleep on Saturdays where I average just over 8 hours, followed by Sunday with 7.5 hours. All weekdays I average below 7 hours of sleep, with Monday and Wednesday averaging under 6 hours (5H 50M and 5H 57M, respectively).
+Unsurprisingly, I get the most sleep on Saturdays where I average 8.5 hours, followed by Sunday with 7.5 hours. All weekdays I average below 7 hours of sleep, with Monday averaging under 6 hours (5H 44M).
 
 ## Sleep cycle amounts
 
@@ -393,17 +389,17 @@ cycle_activity <- asleep |>
   mutate(start_time = hms::as_hms(startDate),
          end_time = hms::as_hms(endDate)) |>
   mutate(across(ends_with("_time"), ~ ifelse(
-    as.numeric(hour(.x)) > 18,
-    .x - hms::hms(0, 0, 24),
+    as.numeric(.x) <= 48000,
+    .x + hms::hms(0, 0, 24),
     .x
   ) |> hms::as_hms()))
 ```
 
 The next problem I ran into was that sleep starts on one night and ends on the next. If you do not adjust the hours and y-axis, you'll have a disjoined graph. Assuming a normal sleep schedule, a bit of the data will be at the bottom (for hours slept between ~10PM/22:00 to midnight) and a large amount towards the top (for midnight/00:00 to wake-up), and there will be a large gap of no data in the middle for hours you are awake.
 
-To correct for this, I decided to alter the value for any time with an hour value greater than 12. Since I was working with a 24-hour time, I subtracted 24 from the hour value, resulting in a negative time. For instance, 11:58PM/23:58 became -00:02.
+To correct for this, pick a halfway time where any value under this period has 24 hours added. The halfway time should be a period where you were awake on all days (so if there isn't a time like that for you, stick with the regular 24-hour cycle).
 
-In your graph, you'll still need to adjust the axis breaks to something like `seq(-7200, 43200, by = 3600)`, which would show breaks at every hour (3600 seconds) from 10PM (-7200) to noon (43200). Thankfully ggplot's labelling automatically turns these negative times into values like "11PM" or "23:00". 
+There was one sliver of time between 1:00PM and 1:30PM where I was awake on all days. I decided all times before 1:20PM (48000 seconds) to add 24 hours. If I had a cycle that started at 11:55PM/23:55 and ended at 12:05AM/00:05, the end time would now read as 24:05. The graph would originally show two 5 minute chunks at the top and bottom of the graph, now will show one 10 minute bar in the middle of the graph. Thankfully ggplot's labelling automatically turns these times into values like "6AM". 
 
 Lastly, I wanted to see my typical wake and sleep times, but with the day-to-day variances smoothed out. 
 
@@ -429,8 +425,8 @@ ggplot() +
     aes(
       xmin = creationDate,
       xmax = creationDate + days(1),
-      ymin = start_time,
-      ymax = end_time,
+      ymin = end_time,
+      ymax = start_time,
       color = value,
       fill = value
     ),
@@ -442,7 +438,7 @@ ggplot() +
                breaks = "1 month",
                date_labels = "%b") +
   scale_y_time(expand = c(0, 0),
-               breaks = seq(-43200, 64800, by = 7200),
+               breaks = seq(48000, 134400, by = 7200),
                minor_breaks = NULL,
                labels = scales::label_time(format = "%I %p")) +
   theme_minimal() +
@@ -455,6 +451,7 @@ ggplot() +
   theme(legend.position = "none") +
   sleep_theme
 ```
+
 
 ### Smooth Sleep/Wake
 
@@ -481,7 +478,7 @@ ggplot() +
                breaks = "1 month",
                date_labels = "%b") +
   scale_y_time(expand = c(0, 0),
-               breaks = seq(-43200, 64800, by = 7200),
+               breaks = seq(48000, 134400, by = 7200),
                minor_breaks = NULL,
                labels = scales::label_time(format = "%I %p")) +
   theme_minimal() +
@@ -519,7 +516,7 @@ ggplot() +
                breaks = "1 month",
                date_labels = "%b") +
   scale_y_time(expand = c(0, 0),
-               breaks = seq(-7200, 43200, by = 7200), # 3600 = 1H
+               breaks = seq(48000, 134400, by = 7200), # 3600 = 1H
                minor_breaks = NULL,
                labels = scales::label_time(format = "%I %p")) + # %H for 24-hour time
   theme_minimal() +
@@ -549,7 +546,7 @@ sleep_heatmap <- asleep |>
 
 ### Heatmap
 
-```{r, fig.width=12, fig.height=4.8, echo=FALSE}
+```{r, fig.width=12, fig.height=4.75, echo=FALSE}
 #| column: screen-inset-right
 sleep_heatmap |> 
   ggplot(aes(x = week, y = wday, fill = as.numeric(daily_sleep)/3600)) +
@@ -559,7 +556,7 @@ sleep_heatmap |>
     labels = c("May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
   ) +
   scale_fill_gradient(high = "#35339C", low = "#80CFF9",
-                      breaks = seq(0, 12, by = 2)
+                      breaks = seq(0, 15, by = 3)
                       ) +
   coord_equal() +
   theme_minimal() +
