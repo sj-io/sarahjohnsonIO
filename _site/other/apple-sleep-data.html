@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.520">
+<meta name="generator" content="quarto-1.4.546">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -251,18 +251,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-figure quarto-figure-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="apple-health-get-sleep-data-1.PNG" class="img-fluid figure-img"></p>
 <figcaption>Click your profile picture.</figcaption>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="apple-health-get-sleep-data-2.PNG" class="img-fluid figure-img"></p>
 <figcaption>Scroll to the bottom and export data.</figcaption>
 </figure>
+</div>
 </div>
 </div>
 </div>
@@ -359,7 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sleep_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 10,391
+<pre><code>Rows: 10,476
 Columns: 6
 $ sourceName    &lt;chr&gt; "iPhone fyi", "iPhone fyi", "Sarah’s Apple&nbsp;Watch", "Sara…
 $ sourceVersion &lt;chr&gt; "16.3", "16.3", "9.3.1", "9.3.1", "9.3.1", "9.3.1", "9.3…
@@ -417,9 +421,10 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sleep_by_wday <span class="ot">&lt;-</span> asleep <span class="sc">|&gt;</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">activity_amount =</span> endDate <span class="sc">-</span> startDate) <span class="sc">|&gt;</span> </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">daily_sleep =</span> <span class="fu">sum</span>(activity_amount), <span class="at">.by =</span> creationDate) <span class="sc">|&gt;</span> </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wday =</span> <span class="fu">wday</span>(creationDate, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">wday_sleep =</span> <span class="fu">mean</span>(daily_sleep), <span class="at">.by =</span> wday) <span class="sc">|&gt;</span> </span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">readable =</span> <span class="fu">seconds_to_period</span>(wday_sleep))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wday =</span> <span class="fu">wday</span>(creationDate, </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">abbr =</span> <span class="cn">FALSE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">wday_sleep =</span> <span class="fu">mean</span>(daily_sleep), <span class="at">.by =</span> wday) <span class="sc">|&gt;</span> </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">readable =</span> <span class="fu">seconds_to_period</span>(wday_sleep))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Get the amount of sleep for each record by subtracting the <strong>endDate</strong> by the <strong>startDate</strong>. Group by <strong>creationDate</strong> to sum up all sleep activity for each night.</p>
 <p>Then, use <code>lubridate::wday()</code> function to get the day of the week. Finally, find the average amount of sleep for each weekday. The total will be given in seconds; turn this into a readable format with <code>seconds_to_period()</code>.</p>
@@ -459,7 +464,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 </div>
 </div>
 </div>
-<p>Unsurprisingly, I get the most sleep on Saturdays where I average 8.5 hours, followed by Sunday with 7.5 hours. All weekdays I average below 7 hours of sleep, with Monday averaging under 6 hours (5H 44M).</p>
+<p>I get the most sleep on Saturdays where I average 8H 30M 24S. I sleep the least on Mondays with an average of 5H 44M 51S.</p>
 </section>
 <section id="sleep-cycle-amounts" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sleep-cycle-amounts">Sleep cycle amounts</h2>
@@ -479,7 +484,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <div class="cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
+<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -490,7 +495,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <div class="cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
+<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -530,6 +535,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 </div>
 </div>
 </div>
+<p>Excluding unspecified sleep stages, core sleep makes up 66% of my sleep cycles; deep sleep is 11%; and REM sleep makes up 23%.</p>
 </section>
 <section id="sleep-cycle-activity" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sleep-cycle-activity">Sleep cycle activity</h2>
@@ -570,7 +576,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <div class="cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
+<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -581,7 +587,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <div class="cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
+<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -626,6 +632,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 </div>
 </div>
 </div>
+<p>The month where I averaged the most sleep was December with an average of 7H 21M 44S per night. The month with the least was June with an average of 6H 26M 44S per night. I woke up the earliest on average in June at around 08:16:53 and the latest in December at around 09:39:47. I went to bed the earliest on average in May at around 01:11:43 and the latest in August at around 02:03:36.</p>
 </section>
 <section id="sleep-heatmap" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sleep-heatmap">Sleep heatmap</h2>
@@ -644,7 +651,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <div class="cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
+<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
 </figure>
 </div>
 </div>
@@ -835,27 +842,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
     stripColumnClz(note)
-    const typesetMath = (el) => {
-      if (window.MathJax) {
-        // MathJax Typeset
-        window.MathJax.typeset([el]);
-      } else if (window.katex) {
-        // KaTeX Render
-        var mathElements = el.getElementsByClassName("math");
-        var macros = [];
-        for (var i = 0; i < mathElements.length; i++) {
-          var texText = mathElements[i].firstChild;
-          if (mathElements[i].tagName == "SPAN") {
-            window.katex.render(texText.data, mathElements[i], {
-              displayMode: mathElements[i].classList.contains('display'),
-              throwOnError: false,
-              macros: macros,
-              fleqn: false
-            });
-          }
-        }
-      }
-    }
     if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
@@ -870,10 +856,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             break;
           }
         }
-        typesetMath(container);
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
         return container.innerHTML
       } else {
-        typesetMath(note);
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
         return note.innerHTML;
       }
     } else {
@@ -882,8 +872,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (anchorLink) {
         anchorLink.remove();
       }
-      typesetMath(note);
-      return note.innerHTML;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

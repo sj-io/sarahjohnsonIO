@@ -203,7 +203,8 @@ How much sleep do I average for each night of the week?
 sleep_by_wday <- asleep |> 
   mutate(activity_amount = endDate - startDate) |> 
   summarise(daily_sleep = sum(activity_amount), .by = creationDate) |> 
-  mutate(wday = wday(creationDate, label = TRUE)) |> 
+  mutate(wday = wday(creationDate, 
+                     label = TRUE, abbr = FALSE)) |> 
   summarise(wday_sleep = mean(daily_sleep), .by = wday) |> 
   mutate(readable = seconds_to_period(wday_sleep))
 ```
@@ -258,7 +259,13 @@ sleep_by_wday |>
 
 :::
 
-Unsurprisingly, I get the most sleep on Saturdays where I average 8.5 hours, followed by Sunday with 7.5 hours. All weekdays I average below 7 hours of sleep, with Monday averaging under 6 hours (5H 44M).
+```{r, echo=FALSE}
+most_sleep <- slice_max(sleep_by_wday, wday_sleep)
+
+least_sleep <- slice_min(sleep_by_wday, wday_sleep)
+```
+
+I get the most sleep on `r most_sleep$wday`s where I average `r as.character(round(most_sleep$readable))`. I sleep the least on `r least_sleep$wday`s with an average of `r as.character(round(least_sleep$readable))`. 
 
 ## Sleep cycle amounts
 
@@ -369,8 +376,21 @@ cycle_by_day |>
   sleep_theme
 ```
 
-
 :::
+
+```{r echo=FALSE}
+lp <- scales::label_percent()
+
+cycle_amounts <- cycle_by_day |> 
+  filter(value != "Unspecified") |> 
+  summarise(cycle_amount = sum(cycle_amount), 
+            .by = "value") |> 
+  mutate(pct = (as.numeric(cycle_amount) / 
+                  sum(as.numeric(cycle_amount))) |> lp()
+         )
+```
+
+Excluding unspecified sleep stages, core sleep makes up `r cycle_amounts[cycle_amounts$value == "Core", ]$pct` of my sleep cycles; deep sleep is `r cycle_amounts[cycle_amounts$value == "Deep", ]$pct`; and REM sleep makes up `r cycle_amounts[cycle_amounts$value == "REM", ]$pct`.
 
 ## Sleep cycle activity
 
@@ -531,6 +551,30 @@ ggplot() +
 ```
 
 :::
+
+```{r echo=FALSE}
+monthly_sleep <- cycle_activity |> 
+  mutate(cycle_time = endDate - startDate) |> 
+  summarise(daily_sleep = sum(cycle_time), .by = creationDate) |> 
+  mutate(month = month(creationDate, label = TRUE, abbr = FALSE)) |> 
+  left_join(sleep_start |> select(creationDate, start_time), by = "creationDate") |> 
+  left_join(sleep_end |> select(creationDate, end_time), by = "creationDate") |> 
+  summarise(avg_start = round(mean(start_time)),
+            avg_end = round(mean(end_time)),
+            avg_daily = mean(daily_sleep),
+            .by = "month") |> 
+  mutate(across(c(avg_start, avg_end), ~ hms::as_hms(.x - 86400)),
+         avg_daily = seconds_to_period(avg_daily))
+
+month_early_bed <- slice_min(monthly_sleep, avg_start)
+month_late_bed <- slice_max(monthly_sleep, avg_start)
+month_late_wake <- slice_max(monthly_sleep, avg_end)
+month_early_wake <- slice_min(monthly_sleep, avg_end)
+month_least <- slice_min(monthly_sleep, avg_daily)
+month_max <- slice_max(monthly_sleep, avg_daily)
+```
+
+The month where I averaged the most sleep was `r month_max$month` with an average of `r as.character(round(month_max$avg_daily))` per night. The month with the least was `r month_least$month` with an average of `r as.character(round(month_least$avg_daily))` per night. I woke up the earliest on average in `r month_early_wake$month` at around `r as.character(month_early_wake$avg_end)` and the latest in `r month_late_wake$month` at around `r as.character(month_late_wake$avg_end)`. I went to bed the earliest on average in `r month_early_bed$month` at around `r as.character(month_early_bed$avg_start)` and the latest in `r month_late_bed$month` at around `r as.character(month_late_bed$avg_start)`.
 
 ## Sleep heatmap
 
