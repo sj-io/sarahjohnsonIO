@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.546">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,6 +76,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -144,11 +147,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/sarahjohnson_io"> <i class="bi bi-twitter" role="img">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/sj-io"> <i class="bi bi-github" role="img">
 </i> 
@@ -232,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">December 18, 2023</p>
+      <p class="date-modified">February 5, 2024</p>
     </div>
   </div>
     
@@ -255,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="apple-health-get-sleep-data-1.PNG" class="img-fluid figure-img"></p>
+<p><a href="apple-health-get-sleep-data-1.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1" title="Click your profile picture."><img src="apple-health-get-sleep-data-1.PNG" class="img-fluid figure-img" alt="Click your profile picture."></a></p>
 <figcaption>Click your profile picture.</figcaption>
 </figure>
 </div>
@@ -263,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="apple-health-get-sleep-data-2.PNG" class="img-fluid figure-img"></p>
+<p><a href="apple-health-get-sleep-data-2.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2" title="Scroll to the bottom and export data."><img src="apple-health-get-sleep-data-2.PNG" class="img-fluid figure-img" alt="Scroll to the bottom and export data."></a></p>
 <figcaption>Scroll to the bottom and export data.</figcaption>
 </figure>
 </div>
@@ -295,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="access-health-records">Access health records</h3>
 <p>There’s some valuable information at the top of the xml document on what tables are included in the file and related metadata. This post will focus on the <strong>Record</strong> table, but other data available includes Activity Summary, Workout, Clinical Record, and more.</p>
 <p>Below are the attributes for the Records data, which we will turn into columns.</p>
-<p><img src="apple-health-records-attributes.png" class="img-fluid"></p>
+<p><a href="apple-health-records-attributes.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="apple-health-records-attributes.png" class="img-fluid"></a></p>
 <p>Use <code>xml_find_all("//Record")</code> to narrow the xml document to just your health records.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>xml_records <span class="ot">&lt;-</span> xml <span class="sc">|&gt;</span> <span class="fu">xml_find_all</span>(<span class="st">"//Record"</span>)</span>
@@ -363,7 +361,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sleep_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 10,476
+<pre><code>Rows: 12,433
 Columns: 6
 $ sourceName    &lt;chr&gt; "iPhone fyi", "iPhone fyi", "Sarah’s Apple&nbsp;Watch", "Sara…
 $ sourceVersion &lt;chr&gt; "16.3", "16.3", "9.3.1", "9.3.1", "9.3.1", "9.3.1", "9.3…
@@ -379,8 +377,10 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>asleep <span class="ot">&lt;-</span> sleep_data <span class="sc">|&gt;</span> </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(value, <span class="st">"Asleep"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">value =</span> <span class="fu">str_remove</span>(value, <span class="st">"Asleep"</span>),</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">creationDate =</span> <span class="fu">date</span>(creationDate)) <span class="sc">|&gt;</span> </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"source"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">creationDate =</span> <span class="fu">date</span>(creationDate),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">creationDate =</span> <span class="fu">if_else</span>((<span class="fu">date</span>(creationDate) <span class="sc">-</span> <span class="fu">date</span>(startDate) <span class="sc">&gt;=</span> <span class="dv">2</span>), <span class="fu">date</span>(endDate), <span class="fu">date</span>(creationDate)),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">|&gt;</span> </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"source"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>I also changed the <strong>creationDate</strong> to remove the time for easier future use.</p>
 <p>Click below to see theme options for my plots.</p>
@@ -437,7 +437,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="apple-sleep-data_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="768"></p>
+<p><a href="apple-sleep-data_files/figure-html/unnamed-chunk-14-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="768"></a></p>
 </figure>
 </div>
 </div>
@@ -464,7 +464,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 </div>
 </div>
 </div>
-<p>I get the most sleep on Saturdays where I average 8H 30M 24S. I sleep the least on Mondays with an average of 5H 44M 51S.</p>
+<p>I get the most sleep on Saturdays where I average 8H 10M 15S. I sleep the least on Mondays with an average of 6H 1M 20S.</p>
 </section>
 <section id="sleep-cycle-amounts" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sleep-cycle-amounts">Sleep cycle amounts</h2>
@@ -484,7 +484,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <div class="cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
+<p class="page-columns page-full"><a href="apple-sleep-data_files/figure-html/unnamed-chunk-18-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-5"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></a></p>
 </figure>
 </div>
 </div>
@@ -495,7 +495,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <div class="cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
+<p class="page-columns page-full"><a href="apple-sleep-data_files/figure-html/unnamed-chunk-19-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-6"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></a></p>
 </figure>
 </div>
 </div>
@@ -535,7 +535,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 </div>
 </div>
 </div>
-<p>Excluding unspecified sleep stages, core sleep makes up 66% of my sleep cycles; deep sleep is 11%; and REM sleep makes up 23%.</p>
+<p>Excluding unspecified sleep stages, core sleep makes up 67% of my sleep cycles; deep sleep is 11%; and REM sleep makes up 23%.</p>
 </section>
 <section id="sleep-cycle-activity" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sleep-cycle-activity">Sleep cycle activity</h2>
@@ -576,7 +576,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <div class="cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
+<p class="page-columns page-full"><a href="apple-sleep-data_files/figure-html/unnamed-chunk-24-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-7"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></a></p>
 </figure>
 </div>
 </div>
@@ -587,7 +587,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <div class="cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
+<p class="page-columns page-full"><a href="apple-sleep-data_files/figure-html/unnamed-chunk-25-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-8"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></a></p>
 </figure>
 </div>
 </div>
@@ -632,7 +632,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 </div>
 </div>
 </div>
-<p>The month where I averaged the most sleep was December with an average of 7H 21M 44S per night. The month with the least was June with an average of 6H 26M 44S per night. I woke up the earliest on average in June at around 08:16:53 and the latest in December at around 09:39:47. I went to bed the earliest on average in May at around 01:11:43 and the latest in August at around 02:03:36.</p>
+<p>The month where I averaged the most sleep was February with an average of 7H 44M 8S per night. The month with the least was June with an average of 6H 26M 44S per night. I woke up the earliest on average in June at around 08:16:53 and the latest in February at around 11:10:02. I went to bed the earliest on average in December at around 00:09:05 and the latest in February at around 02:31:02.</p>
 </section>
 <section id="sleep-heatmap" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sleep-heatmap">Sleep heatmap</h2>
@@ -641,7 +641,13 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">activity_amount =</span> endDate <span class="sc">-</span> startDate) <span class="sc">|&gt;</span> </span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">daily_sleep =</span> <span class="fu">sum</span>(activity_amount), <span class="at">.by =</span> creationDate) <span class="sc">|&gt;</span> </span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wday =</span> <span class="fu">wday</span>(creationDate, <span class="at">label =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">week =</span> <span class="fu">week</span>(creationDate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">year =</span> <span class="fu">year</span>(creationDate),</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">week =</span> <span class="fu">week</span>(creationDate),</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">week =</span> <span class="fu">case_when</span>(</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>           year <span class="sc">==</span> <span class="st">"2024"</span> <span class="sc">~</span> week <span class="sc">+</span> <span class="dv">52</span>,</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">.default =</span> week</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>           )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Heatmap</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Code</a></li></ul>
@@ -651,7 +657,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <div class="cell-output-display page-columns page-full">
 <div class="page-columns page-full">
 <figure class="figure page-columns page-full">
-<p class="page-columns page-full"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></p>
+<p class="page-columns page-full"><a href="apple-sleep-data_files/figure-html/unnamed-chunk-29-1.png" class="lightbox page-columns page-full" data-gallery="quarto-lightbox-gallery-9"><img src="apple-sleep-data_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img column-screen-inset-right" width="1152"></a></p>
 </figure>
 </div>
 </div>
@@ -660,15 +666,15 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>sleep_heatmap <span class="sc">|&gt;</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> wday, <span class="at">fill =</span> <span class="fu">as.numeric</span>(daily_sleep))) <span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> wday, <span class="at">fill =</span> <span class="fu">as.numeric</span>(daily_sleep)<span class="sc">/</span><span class="dv">3600</span>)) <span class="sc">+</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">23</span>, <span class="dv">27</span>, <span class="dv">32</span>, <span class="dv">36</span>, <span class="dv">40</span>, <span class="dv">44</span>, <span class="dv">49</span>),</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"May"</span>, <span class="st">"Jun"</span>, <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">23</span>, <span class="dv">27</span>, <span class="dv">32</span>, <span class="dv">36</span>, <span class="dv">40</span>, <span class="dv">44</span>, <span class="dv">49</span>, <span class="dv">53</span>, <span class="dv">57</span>),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"May"</span>, <span class="st">"Jun"</span>, <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span>, <span class="st">"Jan"</span>, <span class="st">"Feb"</span>)</span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">high =</span> <span class="st">"#35339C"</span>, <span class="at">low =</span> <span class="st">"#80CFF9"</span>,</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">43200</span>, <span class="at">by =</span> <span class="dv">7200</span>),</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"2"</span>, <span class="st">"4"</span>, <span class="st">"6"</span>, <span class="st">"8"</span>, <span class="st">"10"</span>, <span class="st">"12"</span>)) <span class="sc">+</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">15</span>, <span class="at">by =</span> <span class="dv">3</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>                      ) <span class="sc">+</span></span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
 <span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">""</span>, <span class="at">title =</span> <span class="st">"Weekly sleep heatmap"</span>, </span>
@@ -676,7 +682,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title.position =</span> <span class="st">"top"</span>,</span>
 <span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>                             <span class="at">label.position =</span> <span class="st">"bottom"</span>)) <span class="sc">+</span></span>
 <span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="at">unit =</span> <span class="st">"cm"</span>),</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.box.margin =</span> <span class="fu">margin</span>(<span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="at">unit =</span> <span class="st">"in"</span>),</span>
 <span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
 <span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  sleep_theme</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -696,6 +702,10 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <p><a href="https://stackoverflow.com/questions/68578242/plot-arrival-and-departure-times-that-cross-midnight">This stackoverflow question</a> helped me figure out how to graph across midnight.</p>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Click your profile picture.</span>
+<span class="glightbox-desc lightbox-desc-2">Scroll to the bottom and export data.</span>
+</div>
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
@@ -1102,6 +1112,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

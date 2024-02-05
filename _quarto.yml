@@ -19,8 +19,6 @@ website:
       - href: r.qmd
         text: R Analysis
     right: 
-      - icon: twitter
-        href: https://twitter.com/sarahjohnson_io
       - icon: github
         href: https://github.com/sj-io
       - icon: linkedin

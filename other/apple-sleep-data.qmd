@@ -5,8 +5,9 @@ toc: true
 toc-location: left
 layout: full
 date: "2023-12-14"
-date-modified: "2023-12-18"
+date-modified: "2024-02-05"
 image: "preview-image.png"
+lightbox: true
 author: 
   - name: Sarah Johnson
     url: https://sarahjohnson.io
@@ -158,7 +159,9 @@ This post will focus on rows where I'm asleep, so let's filter for that. All of 
 asleep <- sleep_data |> 
   filter(str_detect(value, "Asleep")) |> 
   mutate(value = str_remove(value, "Asleep"),
-         creationDate = date(creationDate)) |> 
+         creationDate = date(creationDate),
+         creationDate = if_else((date(creationDate) - date(startDate) >= 2), date(endDate), date(creationDate)),
+         ) |> 
   select(-starts_with("source"))
 ```
 
@@ -583,21 +586,27 @@ sleep_heatmap <- asleep |>
   mutate(activity_amount = endDate - startDate) |> 
   summarise(daily_sleep = sum(activity_amount), .by = creationDate) |> 
   mutate(wday = wday(creationDate, label = TRUE),
-         week = week(creationDate))
+         year = year(creationDate),
+         week = week(creationDate),
+         week = case_when(
+           year == "2024" ~ week + 52,
+           .default = week
+         )
+           )
 ```
 
 ::: {.panel-tabset}
 
 ### Heatmap
 
-```{r, fig.width=12, fig.height=4.75, echo=FALSE}
+```{r, fig.width=12, fig.height=4.45, echo=FALSE}
 #| column: screen-inset-right
 sleep_heatmap |> 
   ggplot(aes(x = week, y = wday, fill = as.numeric(daily_sleep)/3600)) +
   geom_tile() +
   scale_x_continuous(
-    breaks = c(18, 23, 27, 32, 36, 40, 44, 49),
-    labels = c("May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+    breaks = c(18, 23, 27, 32, 36, 40, 44, 49, 53, 57),
+    labels = c("May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb")
   ) +
   scale_fill_gradient(high = "#35339C", low = "#80CFF9",
                       breaks = seq(0, 15, by = 3)
@@ -618,15 +627,15 @@ sleep_heatmap |>
 
 ```{r eval=FALSE}
 sleep_heatmap |> 
-  ggplot(aes(x = week, y = wday, fill = as.numeric(daily_sleep))) +
+  ggplot(aes(x = week, y = wday, fill = as.numeric(daily_sleep)/3600)) +
   geom_tile() +
   scale_x_continuous(
-    breaks = c(18, 23, 27, 32, 36, 40, 44, 49),
-    labels = c("May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+    breaks = c(18, 23, 27, 32, 36, 40, 44, 49, 53, 57),
+    labels = c("May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb")
   ) +
   scale_fill_gradient(high = "#35339C", low = "#80CFF9",
-                      breaks = seq(0, 43200, by = 7200),
-                      labels = c("0", "2", "4", "6", "8", "10", "12")) +
+                      breaks = seq(0, 15, by = 3)
+                      ) +
   coord_equal() +
   theme_minimal() +
   labs(x = "", y = "", title = "Weekly sleep heatmap", 
@@ -634,7 +643,7 @@ sleep_heatmap |>
   guides(fill = guide_legend(title.position = "top",
                              label.position = "bottom")) +
   theme(legend.position = "bottom",
-        legend.margin = margin(0, 8, 0, 0, unit = "cm"),
+        legend.box.margin = margin(0, 9, 0, 0, unit = "in"),
         panel.grid.major = element_blank()) +
   sleep_theme
 ```
