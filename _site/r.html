@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.546">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -80,7 +80,8 @@ ul.task-list li input[type="checkbox"] {
 
     const options = {
       valueNames: ['listing-image','listing-title','listing-description','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
+      page: 3,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
     };
 
@@ -278,21 +279,21 @@ No matching items
 <h2 class="anchored" data-anchor-id="census">Census</h2>
 <div id="listing-census" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="census" data-listing-date-sort="1640325600000" data-listing-file-modified-sort="1702584950899" data-listing-date-modified-sort="1697432400000" data-listing-reading-time-sort="10" data-listing-word-count-sort="1980">
-<a href="./census/variables.html" class="quarto-grid-link">
+<div class="g-col-1" data-index="0" data-listing-date-sort="1707112800000" data-listing-file-modified-sort="1707163229616" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1799">
+<a href="./census/tidychas.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./census/img/variables.png" class="thumbnail-image card-img" style="height: 150px;">
+<img src="./census/img/tidychas-preview.png" class="thumbnail-image card-img" style="height: 150px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
-ACS Variables
+Introducing the <code>tidychas</code> R package
 </h5>
 <div class="listing-reading-time card-text text-muted">
-10 min
+9 min
 </div>
 <div class="card-text listing-description">
-<p>An overview of Census ACS variables, particularly related to housing.</p>
+A package to access full CHAS data in a tidy format.
 </div>
 </div>
 </div>
@@ -338,10 +339,33 @@ Surveys &amp; Programs
 </div>
 </a>
 </div>
+<div class="g-col-1" data-index="3" data-categories="census" data-listing-date-sort="1640325600000" data-listing-file-modified-sort="1702584950899" data-listing-date-modified-sort="1697432400000" data-listing-reading-time-sort="10" data-listing-word-count-sort="1980">
+<a href="./census/variables.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img data-src="./census/img/variables.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+ACS Variables
+</h5>
+<div class="listing-reading-time card-text text-muted">
+10 min
+</div>
+<div class="card-text listing-description">
+<p>An overview of Census ACS variables, particularly related to housing.</p>
+</div>
+</div>
+</div>
+</a>
+</div>
 </div>
 <div class="listing-no-matching d-none">
 No matching items
 </div>
+<nav id="census-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div>
 
 

@@ -2,9 +2,10 @@
   {
     "listing": "/housing.html",
     "items": [
-      "/census/variables.html",
+      "/census/tidychas.html",
       "/census/boundaries.html",
       "/census/surveys.html",
+      "/census/variables.html",
       "/law/npa.html",
       "/law/hsg-acts.html",
       "/law/URLTA.html"
@@ -13,9 +14,10 @@
   {
     "listing": "/r.html",
     "items": [
-      "/census/variables.html",
+      "/census/tidychas.html",
       "/census/boundaries.html",
       "/census/surveys.html",
+      "/census/variables.html",
       "/other/apple-sleep-data.html"
     ]
   }

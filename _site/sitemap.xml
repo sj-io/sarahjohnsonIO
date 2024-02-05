@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://sarahjohnson.io/housing.html</loc>
-    <lastmod>2023-12-14T18:04:52.744Z</lastmod>
+    <lastmod>2024-02-05T20:02:45.547Z</lastmod>
   </url>
   <url>
     <loc>https://sarahjohnson.io/other/apple-sleep-data.html</loc>
@@ -34,10 +34,18 @@
   </url>
   <url>
     <loc>https://sarahjohnson.io/r.html</loc>
-    <lastmod>2023-12-14T19:42:43.915Z</lastmod>
+    <lastmod>2024-02-05T20:04:19.613Z</lastmod>
   </url>
   <url>
     <loc>https://sarahjohnson.io/census/boundaries.html</loc>
     <lastmod>2023-12-14T20:05:46.196Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/other/tidychas.html</loc>
+    <lastmod>2024-02-05T19:16:43.384Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/census/tidychas.html</loc>
+    <lastmod>2024-02-05T20:00:29.616Z</lastmod>
   </url>
 </urlset>

@@ -1,0 +1,128 @@
+---
+title: "Introducing the `tidychas` R package"
+date: 2024-02-05
+image: "img/tidychas-preview.png"
+description: "A package to access full CHAS data in a tidy format."
+execute: 
+  echo: true
+---
+
+# Summary
+
+CHAS (Comprehensive Housing Affordability Strategy) data are custom tabulations of ACS data created to show housing need. The data, released annually by HUD, is used by local governments to estimate how many households in their jurisdiction qualify for assistance. The [`tidychas`](https://github.com/sj-io/tidychas) package allows users full access to CHAS data in a tidy format.
+
+The package has not been submitted to CRAN; to install it, run:
+
+```{r eval=FALSE}
+# install.packages("devtools")
+devtools::install_github("sj-io/tidychas")
+```
+
+Load the package into your library to use it.
+
+```{r}
+library(tidychas)
+```
+
+Get CHAS data by requesting a geography. You can also specify a year (defaults to 2020), state, and county using FIPS codes.
+
+```{r, message=FALSE, warning=FALSE}
+library(dplyr)
+```
+
+```{r, message=FALSE, warning=FALSE}
+tn <- get_chas("state", state = "47")
+tn |> select(-c(st, cnty)) |> head(6) |> knitr::kable()
+```
+
+# Background
+
+When interned at my local county's Department of Housing in 2018, one of my assignments was to help fill in the tables required for our 5-Year Consolidated Plan (ConPlan). The data used for the ConPlan is [exclusively available through HUD](https://www.huduser.gov/portal/datasets/cp.html#data_2006-2020), called the CHAS dataset. It contains special enumerations of Census data not available through typical ACS datasets.
+
+I discovered R and the `tidycensus` package during that semester, and I recall my frustration that there wasn't a package that made accessing CHAS data as easy as the `tidycensus` package for ACS data. While there is a query tool on the CHAS webpage, it only offers summaries of the data and omits details that are required for the ConPlan. Additionally, because I work in an urban county jurisdiction, I had to calculate estimates for all value by subtracting the City of Memphis from the overall Shelby County data. More detailed data provided by IDIS or CPD Maps is outdated compared to the data available.
+
+Five years later and I am back in the Department of Housing and tasked with the same assignment of filling in data for our ConPlan. I have greatly expanded my R knowledge over this period, and began dipping my toe into package creation last year with my [`mk8dx`](https://github.com/sj-io/mk8dx) package to convert Mario Kart 8 Deluxe speedrunning data from `.lss` files to datatables. I figured a package for accessing CHAS data would be a useful project since ConPlans are required from jurisdictions across the country.
+
+# Challenges
+
+I couldn't simply clone the `tidycensus` package and adapt it for CHAS data due to some challenges that arose during development:
+
+- **CHAS data is not fully available through an API.** HUD offers [an API for CHAS data](https://www.huduser.gov/portal/dataset/chas-api.html) (which can be accessed through the `hudr` package), but it only contains summary data found on the CHAS query tool website. I also found the data dictionary on the API site to be broken, so I had no idea what data variables provided. **Downloading zip files from the CHAS website is the only way to download full datasets.**
+- **CHAS data is not in a tidy format.** Unzipping a CHAS data file reveals 24 files labelled "Table1.csv" to "Table18C.csv". Data required for one ConPlan table may be spread across multiple CHAS tables. Each geography has one row per table and values are entered under column names formatted like "T1_est1" and "T18C_moe1". To decipher the values, there is an excel file containing a data dictionary listing descriptions for all variables. **tidychas pivots data into a tidy format and joins it with the data dictionary.**
+- **Descriptions are inconsistent across variables**; such as "other household type (non-elderly non-family)" in Table 7 or "AND household type is non-family non-elderly" in Table 16. These descriptions are divided up into simple columns of "Description 1" to "Description 5". **tidychas standardizes variable labels and concepts.**
+- **Tidying data can require massive amounts of memory.** The 2020 unzipped tract data folder contains 1.26 GB of csv files, and it takes a lot of memory to read, filter, pivot, and join the table. **tidychas uses `arrow` to ease memory strain.** While initial data requests might still use a large amount of memory, the data is cached and requires significantly less memory in the future.
+
+# Overview
+
+The `tidychas` package currently has one exported function: [`get_chas()`](https://github.com/sj-io/tidychas/blob/main/R/get_chas.R). 
+
+`get_chas(geography, year = NULL, state = NULL, county = NULL, keep_zip = TRUE)`
+
+- Users can search for the following `geography`: 
+
+  - "state"
+  - "county"
+  - "tract": Census tracts
+  - "place": Census places (cannot narrow by county)
+  - "counties by place": Places in counties. When I searched for "Memphis", the data in this geography was the same as from "places", with the bonus of being able to subset by county beforehand (for less memory strain).
+  - "mcd": Minor civil divisions (such as county commission districts for Shelby County, TN)
+  - "consolidated cities": Consolidated city-county governments, such as Nashville-Davidson county.
+
+There is also a "remainders" geography available from HUD, but this geography is not readily split by "state" or "county" so it requires a massive amount of memory to tidy. As such, this geography is disabled until I develop a better way to tidy the data.
+
+- If no year is specified, the most current year is used (2020 as of this posting).
+- Users can also filter by "state" or "county" when the geography allows.
+- By default, `tidychas` keeps the zip file downloaded from the HUD website to easily access it for future use. These files take up additional space in the cache, ranging from a few hundred kilobytes to a few hundred megabytes. You can choose to delete the file after use with `keep_zip = FALSE`.
+
+## Cache
+
+`tidychas` uses the `rappdirs` package to locate the default cache folder of the system you're using. For instance, the cache will be located: 
+
+- macos: `/Users/{user}/Library/Caches/tidychas/`
+- Windows: `\Users\{user}\AppData\Local\tidychas\`.
+
+If the requested data is not already in the cache, the package will download the relevant zip file from HUD's website. A temporary directory is created to store the unzipped files, which is deleted after use.
+
+My initial attempts to tidy the data took far too much memory, so I used the `arrow` package, which is better at managing memory and significantly faster than packages such as `readr`. Each csv file is opened as an arrow table, narrowed for the requested geography, and saved in the temporary directory. Then each csv file is reopened, pivoted to a tidy format, and rows for each table are binded together into one table. I found this method of opening, narrowing, saving, reopening, tidying, and binding to be much less burdensome on memory than skipping saving and reopening the files, particularly for smaller geographies. 
+
+The tidied data is then stored in the cache as a dataset easily useable by arrow. Arrow can simultaneously partion data while saving it, breaking the file into smaller chunks more easily read in the future. The data is partitioned by `year` and `geography`, and there is currently a cap of one million rows per csv file. If there is already a file with the specified year and geography, the new data is binded to the existing data before saving.
+
+## Variables
+
+The package creates a csv of variables for the given year (if one hasn't been created) using the data dictionary provided in the unzipped folder. The variables are standardized using a lookup table within the package, which also assigns a concept to each variable. For instance, "AND household income is greater than 40% but less than or equal to 50% of HAMFI" is converted to "40-50% HAMFI" and the concept will be "Household Income". 
+
+Rather than variables being in columns labeled "Description_1" to "Description_5", the "Description_1" column is relabeled to `universe`, referring to the overall category the data belongs to. The universe will be one of the following:
+
+```{r}
+unique(tn$universe)
+```
+
+Elements in "Description_2" to "Description_5" are united together into one `label` column, with each element separated by "!!". The `concept` assigned to each variable are also united together into one table and separated with " by " (such as "Housing Problems by Household Income by Race"). This was done to match the formatting of variables from the `tidycensus` package. 
+
+There is one minor annoyance with the `tidycensus` package I wanted to address with this package. With `tidycensus`, you must first use `load_variables()` to find the table/variables you wish to call, and then `get_acs(..., variables = "XXXXXXXX")` to get the data. If you want to see the default variable labels next to the data, you have to join these tables. However, the column name for variables is `name` from the `load_variables()` function and `variable` from the `get_acs()` function, and `get_acs()` also returns a `NAME` column containing the name of the requested geography, which I've found confusing.
+
+```{r, message=FALSE, echo=TRUE}
+library(tidycensus)
+
+v21 <- load_variables(2021, "acs5")
+example <- get_acs("state", variables = "B01001A_029")
+
+joined <- example |> 
+  left_join(v21 |> select(-geography), by = c("variable" = "name")) |> relocate(c(estimate, moe), .after = "concept")
+  
+
+joined |> head(4) |> knitr::kable()
+```
+
+For `tidychas`, variable codes are always in the `variable` column, and `name` is always used for the name of the geography. Additionally, tables are always returned with the variable labels joined to the variables.
+
+# Future plans
+
+- Allow users to call specific tables/variables. Currently the package pulls all variables for a specific geography. I did this partly because CHAS data required for the ConPlan is spread across multiple tables, and it is easier for me to figure out which variables I need by getting all the data. In the future I want a system similar to `tidycensus` where users can call for a specific table or variable.
+- Have a FIPS code reference to allow easier filtering for geographies, in the same method as `tidycensus`. As the package stands, you have to know the FIPS code for the state and/or county for which you want to request data. Instead, I want to allow people to be able to enter state data like "TN" for Tennessee, instead of "47".
+- Correct label tidying for years prior to 2018. The labels I tidied work for 2018-2020 data, but prior years still need to be cleaned. Currently, labels that are missed by tidying are still output, but they don't match the formatting of more recent datasets.
+- Allow users to keep default CHAS labels. While I ensure the shortened labels accurately reflect the original CHAS labels, I want to give users the options to keep the default rather than being forced to use my relabeling.
+- Possibly switch cache data from csv to parquet files. I originally used parquet files in the cache; however, parquet files are generally not recommended for files smaller than 200MB. I noticed most cached data was smaller than this limit, and in testing csv files were quicker to process at this size than parquet. However, smaller geographies such as tracts can exceed the 200MB limit and might benefit from being saved as parquet files rather than csv.
+- Create a package to generate ConPlan tables from CHAS data. This will allow local governments to easily update their ConPlan with the most recent CHAS data without wrangling the data.
+
+To keep up with issues and enhancements to the package, check out the [github repo](https://github.com/sj-io/tidychas), specifically the [issues](https://github.com/sj-io/tidychas/issues) tab.

@@ -5,6 +5,8 @@ listing:
     contents: "census/*.qmd"
     type: grid
     fields: [image, title, description, reading-time]
+    page-size: 3
+    sort: "date desc"
   - id: law
     contents: "law/*.qmd"
     type: grid
