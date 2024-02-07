@@ -31,6 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./blueshell.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -66,7 +68,65 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-all .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-image','listing-title','listing-description','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-all'] = new List('listing-all', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -129,6 +189,11 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     
 <!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+
+
+
 <div class="quarto-about-solana column-body content">
   <div class="about-entity">
     <div class="entity-contents">
@@ -139,10 +204,6 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
   </div>
 </header> <div class="about-links">
-  <a href="https://twitter.com/sarahjohnson_io" class="about-link" rel="" target="">
-    <i class="bi bi-twitter"></i>
-     <span class="about-link-text">sarahjohnson_io</span>
-  </a>
   <a href="https://github.com/sj-io" class="about-link" rel="" target="">
     <i class="bi bi-github"></i>
      <span class="about-link-text">sj-io</span>
@@ -156,18 +217,98 @@ ul.task-list li input[type="checkbox"] {
      <span class="about-link-text">email</span>
   </a>
 </div>
-      <div class="about-contents"><main class="content" id="quarto-document-content">
-<p>Hello 🤠</p>
-<p>I’m the Business Service Analyst at the Shelby County Department of Housing. I received my bachelor’s in economics and master’s in urban planning from the University of Memphis. I’m passionate about guaranteeing people access to healthy, safe, affordable housing.</p>
-
-
-<script data-goatcounter="https://sarahjohnson.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script></main></div>
+      <div class="about-contents"><div id="hello">
+<p>Hello 🤠 I’m the Business Service Analyst at the Shelby County Department of Housing. I received my bachelor’s in economics and master’s in urban planning from the University of Memphis. I’m passionate about guaranteeing people access to healthy, safe, affordable housing.</p>
+</div></div>
     </div>
     <img src="me.png" class="about-image
   rounded " style="width: 15em;">
   </div>
 </div>
- <!-- /main -->
+
+<hr>
+<section id="most-recent-posts" class="level2">
+<h2 data-anchor-id="most-recent-posts">Most Recent Posts</h2>
+<div id="listing-all" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-listing-date-sort="1707112800000" data-listing-file-modified-sort="1707163229616" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1799">
+<a href="./census/tidychas.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./census/img/tidychas-preview.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Introducing the <code>tidychas</code> R package
+</h5>
+<div class="card-text listing-description">
+A package to access full CHAS data in a tidy format.
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Feb 5, 2024
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-listing-date-sort="1702533600000" data-listing-file-modified-sort="1707342083384" data-listing-date-modified-sort="1707112800000" data-listing-reading-time-sort="22" data-listing-word-count-sort="4326">
+<a href="./other/apple-sleep-data.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./other/preview-image.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Analyze Apple Health sleep data with R
+</h5>
+<div class="card-text listing-description">
+I’ve always struggled with falling asleep early, so I purchased an Apple Watch to monitor my sleep. This post details how to access your Apple Health data and analyze it.
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Dec 14, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-listing-date-sort="1667019600000" data-listing-file-modified-sort="1702584346196" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2192">
+<a href="./census/boundaries.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./census/img/boundaries.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Geographic Boundaries
+</h5>
+<div class="card-text listing-description">
+<p>Mapping all available Census boundaries for one area.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Oct 29, 2022
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
+
+
+
+
+</section>
+
+<script data-goatcounter="https://sarahjohnson.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

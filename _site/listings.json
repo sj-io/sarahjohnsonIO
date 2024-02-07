@@ -20,5 +20,18 @@
       "/census/variables.html",
       "/other/apple-sleep-data.html"
     ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/census/tidychas.html",
+      "/other/apple-sleep-data.html",
+      "/census/boundaries.html",
+      "/census/surveys.html",
+      "/law/npa.html",
+      "/census/variables.html",
+      "/law/URLTA.html",
+      "/law/hsg-acts.html"
+    ]
   }
 ]

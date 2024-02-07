@@ -2,11 +2,9 @@
 title: "Sarah Johnson"
 image: me.png
 about:
+  id: hello
   template: solana
   links:
-    - icon: twitter
-      text: sarahjohnson_io
-      href: https://twitter.com/sarahjohnson_io
     - icon: github
       text: sj-io
       href: https://github.com/sj-io
@@ -16,10 +14,24 @@ about:
     - icon: envelope
       text: email
       href: mailto:sarahviamemphis@gmail.com
+listing: 
+  - id: all
+    contents: "*/*.qmd"
+    type: grid
+    fields: [image, title, description, date]
+    max-items: 3
+    sort: "date desc"
 comments: false
 toc: false
 ---
 
+:::{#hello}
 Hello 🤠
-
 I’m the Business Service Analyst at the Shelby County Department of Housing. I received my bachelor’s in economics and master’s in urban planning from the University of Memphis. I’m passionate about guaranteeing people access to healthy, safe, affordable housing.
+:::
+
+---
+
+## Most Recent Posts
+:::{#all}
+:::
