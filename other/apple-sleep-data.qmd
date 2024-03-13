@@ -5,7 +5,7 @@ toc: true
 toc-location: left
 layout: full
 date: "2023-12-14"
-date-modified: "2024-02-05"
+date-modified: "2024-03-13"
 image: "preview-image.png"
 lightbox: true
 author: 
@@ -268,7 +268,7 @@ most_sleep <- slice_max(sleep_by_wday, wday_sleep)
 least_sleep <- slice_min(sleep_by_wday, wday_sleep)
 ```
 
-I get the most sleep on `r most_sleep$wday`s where I average `r as.character(round(most_sleep$readable))`. I sleep the least on `r least_sleep$wday`s with an average of `r as.character(round(least_sleep$readable))`. 
+I get the most sleep on **`r most_sleep$wday`s** where I average **`r as.character(round(most_sleep$readable))`**. I sleep the least on **`r least_sleep$wday`s** with an average of **`r as.character(round(least_sleep$readable))`**. 
 
 ## Sleep cycle amounts
 
@@ -355,8 +355,8 @@ cycle_by_day |>
                    radius = grid::unit(1, "pt")
                    # position = "fill"
                    ) +
-  geom_vline(aes(xintercept = as_date("2023-5-17")), color = "pink", linewidth = .5) +
-  geom_vline(aes(xintercept = as_date("2023-8-1")), color = "pink", linewidth = .5) +
+  geom_vline(aes(xintercept = as_date("2023-12-23")), color = "pink", linewidth = .5) +
+  geom_vline(aes(xintercept = as_date("2024-01-03")), color = "pink", linewidth = .5) +
   scale_fill_manual(values = sleep_colors) +
   scale_y_time(expand = c(0, 0),
                breaks = seq(3600, 43200, by = 3600),
@@ -412,7 +412,7 @@ cycle_activity <- asleep |>
   mutate(start_time = hms::as_hms(startDate),
          end_time = hms::as_hms(endDate)) |>
   mutate(across(ends_with("_time"), ~ ifelse(
-    as.numeric(.x) <= 48000,
+    as.numeric(.x) <= 64800,
     .x + hms::hms(0, 0, 24),
     .x
   ) |> hms::as_hms()))
@@ -422,7 +422,7 @@ The next problem I ran into was that sleep starts on one night and ends on the n
 
 To correct for this, pick a halfway time where any value under this period has 24 hours added. The halfway time should be a period where you were awake on all days (so if there isn't a time like that for you, stick with the regular 24-hour cycle).
 
-There was one sliver of time between 1:00PM and 1:30PM where I was awake on all days. I decided all times before 1:20PM (48000 seconds) to add 24 hours. If I had a cycle that started at 11:55PM/23:55 and ended at 12:05AM/00:05, the end time would now read as 24:05. The graph would originally show two 5 minute chunks at the top and bottom of the graph, now will show one 10 minute bar in the middle of the graph. Thankfully ggplot's labelling automatically turns these times into values like "6AM". 
+There was one sliver of time around 6:00 PM where I was awake on all days. I decided all times before 6PM (64800 seconds) to add 24 hours. If I had a cycle that started at 11:55PM/23:55 and ended at 12:05AM/00:05, the end time would now read as 24:05. The graph would originally show two 5 minute chunks at the top and bottom of the graph, now will show one 10 minute bar in the middle of the graph. Thankfully ggplot's labelling automatically turns these times into values like "6AM". 
 
 Lastly, I wanted to see my typical wake and sleep times, but with the day-to-day variances smoothed out. 
 
@@ -443,6 +443,8 @@ To get this data, just slice your earliest and latest sleep time for each day.
 ```{r, fig.width=12, fig.height=5, echo=FALSE}
 #| column: screen-inset-right
 ggplot() +
+  # geom_vline(aes(xintercept = as_date("2023-12-23")), color = "pink", linewidth = .5) +
+  # geom_vline(aes(xintercept = as_date("2024-01-03")), color = "pink", linewidth = .5) +
   geom_rect(
     data = cycle_activity,
     aes(
@@ -461,7 +463,8 @@ ggplot() +
                breaks = "1 month",
                date_labels = "%b") +
   scale_y_time(expand = c(0, 0),
-               breaks = seq(48000, 134400, by = 7200),
+               breaks = seq(64800, 151200, by = 7200),
+               # breaks = seq(48000, 134400, by = 7200),
                minor_breaks = NULL,
                labels = scales::label_time(format = "%I %p")) +
   theme_minimal() +
@@ -501,7 +504,7 @@ ggplot() +
                breaks = "1 month",
                date_labels = "%b") +
   scale_y_time(expand = c(0, 0),
-               breaks = seq(48000, 134400, by = 7200),
+               breaks = seq(64800, 151200, by = 7200),
                minor_breaks = NULL,
                labels = scales::label_time(format = "%I %p")) +
   theme_minimal() +
@@ -539,7 +542,8 @@ ggplot() +
                breaks = "1 month",
                date_labels = "%b") +
   scale_y_time(expand = c(0, 0),
-               breaks = seq(48000, 134400, by = 7200), # 3600 = 1H
+               breaks = seq(64800, 151200, by = 7200),
+               # breaks = seq(48000, 134400, by = 7200), # 3600 = 1H
                minor_breaks = NULL,
                labels = scales::label_time(format = "%I %p")) + # %H for 24-hour time
   theme_minimal() +
@@ -577,7 +581,7 @@ month_least <- slice_min(monthly_sleep, avg_daily)
 month_max <- slice_max(monthly_sleep, avg_daily)
 ```
 
-The month where I averaged the most sleep was `r month_max$month` with an average of `r as.character(round(month_max$avg_daily))` per night. The month with the least was `r month_least$month` with an average of `r as.character(round(month_least$avg_daily))` per night. I woke up the earliest on average in `r month_early_wake$month` at around `r as.character(month_early_wake$avg_end)` and the latest in `r month_late_wake$month` at around `r as.character(month_late_wake$avg_end)`. I went to bed the earliest on average in `r month_early_bed$month` at around `r as.character(month_early_bed$avg_start)` and the latest in `r month_late_bed$month` at around `r as.character(month_late_bed$avg_start)`.
+The month where I averaged the most sleep was **`r month_max$month`** with an average of **`r as.character(round(month_max$avg_daily))`** per night. The month with the least was **`r month_least$month`** with an average of **`r as.character(round(month_least$avg_daily))`** per night. I woke up the earliest on average in **`r month_early_wake$month`** at around **`r as.character(month_early_wake$avg_end)`** and the latest in **`r month_late_wake$month`** at around **`r as.character(month_late_wake$avg_end)`**. I went to bed the earliest on average in **`r month_early_bed$month`** at around **`r as.character(month_early_bed$avg_start)`** and the latest in **`r month_late_bed$month`** at around **`r as.character(month_late_bed$avg_start)`**.
 
 ## Sleep heatmap
 
@@ -599,14 +603,14 @@ sleep_heatmap <- asleep |>
 
 ### Heatmap
 
-```{r, fig.width=12, fig.height=4.45, echo=FALSE}
+```{r, fig.width=12, fig.height=4.29, echo=FALSE}
 #| column: screen-inset-right
 sleep_heatmap |> 
   ggplot(aes(x = week, y = wday, fill = as.numeric(daily_sleep)/3600)) +
   geom_tile() +
   scale_x_continuous(
-    breaks = c(18, 23, 27, 32, 36, 40, 44, 49, 53, 57),
-    labels = c("May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb")
+    breaks = c(18, 23, 27, 32, 36, 40, 44, 49, 53, 57, 62),
+    labels = c("May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar")
   ) +
   scale_fill_gradient(high = "#35339C", low = "#80CFF9",
                       breaks = seq(0, 15, by = 3)
@@ -630,8 +634,8 @@ sleep_heatmap |>
   ggplot(aes(x = week, y = wday, fill = as.numeric(daily_sleep)/3600)) +
   geom_tile() +
   scale_x_continuous(
-    breaks = c(18, 23, 27, 32, 36, 40, 44, 49, 53, 57),
-    labels = c("May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb")
+    breaks = c(18, 23, 27, 32, 36, 40, 44, 49, 53, 57, 62),
+    labels = c("May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar")
   ) +
   scale_fill_gradient(high = "#35339C", low = "#80CFF9",
                       breaks = seq(0, 15, by = 3)
@@ -649,6 +653,15 @@ sleep_heatmap |>
 ```
 
 :::
+
+```{r, echo=FALSE}
+sleep_debt <- sleep_heatmap |> 
+  mutate(sleepy_debt = 25200 - as.numeric(daily_sleep)) |> 
+  summarise(weekly_debt = sum(sleepy_debt), .by = week)
+```
+To find my sleep debt, I subtracted by nightly sleep time by 7 hours. If I slept 4 hours, I would have 3 hours of sleep debt. 
+
+Since I began tracking my sleep, my total sleep debt is **`r round(sum(sleep_debt$weekly_debt)/3600, 2)` hours**.
 
 ## Acknowledgments {.appendix}
 

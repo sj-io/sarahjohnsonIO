@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -230,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">February 5, 2024</p>
+      <p class="date-modified">March 13, 2024</p>
     </div>
   </div>
     
@@ -253,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="apple-health-get-sleep-data-1.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1" title="Click your profile picture."><img src="apple-health-get-sleep-data-1.PNG" class="img-fluid figure-img" alt="Click your profile picture."></a></p>
+<p><a href="apple-health-get-sleep-data-1.PNG" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="Click your profile picture."><img src="apple-health-get-sleep-data-1.PNG" class="img-fluid figure-img" alt="Click your profile picture."></a></p>
 <figcaption>Click your profile picture.</figcaption>
 </figure>
 </div>
@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="apple-health-get-sleep-data-2.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2" title="Scroll to the bottom and export data."><img src="apple-health-get-sleep-data-2.PNG" class="img-fluid figure-img" alt="Scroll to the bottom and export data."></a></p>
+<p><a href="apple-health-get-sleep-data-2.PNG" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" title="Scroll to the bottom and export data."><img src="apple-health-get-sleep-data-2.PNG" class="img-fluid figure-img" alt="Scroll to the bottom and export data."></a></p>
 <figcaption>Scroll to the bottom and export data.</figcaption>
 </figure>
 </div>
@@ -361,7 +361,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sleep_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 12,433
+<pre><code>Rows: 14,068
 Columns: 6
 $ sourceName    &lt;chr&gt; "iPhone fyi", "iPhone fyi", "Sarah’s Apple&nbsp;Watch", "Sara…
 $ sourceVersion &lt;chr&gt; "16.3", "16.3", "9.3.1", "9.3.1", "9.3.1", "9.3.1", "9.3…
@@ -464,7 +464,7 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 </div>
 </div>
 </div>
-<p>I get the most sleep on Saturdays where I average 8H 10M 15S. I sleep the least on Mondays with an average of 6H 1M 20S.</p>
+<p>I get the most sleep on <strong>Saturdays</strong> where I average <strong>8H 8M 34S</strong>. I sleep the least on <strong>Mondays</strong> with an average of <strong>6H 5M 9S</strong>.</p>
 </section>
 <section id="sleep-cycle-amounts" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sleep-cycle-amounts">Sleep cycle amounts</h2>
@@ -509,8 +509,8 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">radius =</span> grid<span class="sc">::</span><span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">"pt"</span>)</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                   <span class="co"># position = "fill"</span></span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                   ) <span class="sc">+</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">as_date</span>(<span class="st">"2023-5-17"</span>)), <span class="at">color =</span> <span class="st">"pink"</span>, <span class="at">linewidth =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">as_date</span>(<span class="st">"2023-8-1"</span>)), <span class="at">color =</span> <span class="st">"pink"</span>, <span class="at">linewidth =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">as_date</span>(<span class="st">"2023-12-23"</span>)), <span class="at">color =</span> <span class="st">"pink"</span>, <span class="at">linewidth =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">as_date</span>(<span class="st">"2024-01-03"</span>)), <span class="at">color =</span> <span class="st">"pink"</span>, <span class="at">linewidth =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> sleep_colors) <span class="sc">+</span></span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_time</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">3600</span>, <span class="dv">43200</span>, <span class="at">by =</span> <span class="dv">3600</span>),</span>
@@ -551,14 +551,14 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">start_time =</span> hms<span class="sc">::</span><span class="fu">as_hms</span>(startDate),</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">end_time =</span> hms<span class="sc">::</span><span class="fu">as_hms</span>(endDate)) <span class="sc">|&gt;</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">ends_with</span>(<span class="st">"_time"</span>), <span class="sc">~</span> <span class="fu">ifelse</span>(</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.numeric</span>(.x) <span class="sc">&lt;=</span> <span class="dv">48000</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.numeric</span>(.x) <span class="sc">&lt;=</span> <span class="dv">64800</span>,</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    .x <span class="sc">+</span> hms<span class="sc">::</span><span class="fu">hms</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">24</span>),</span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    .x</span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> hms<span class="sc">::</span><span class="fu">as_hms</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The next problem I ran into was that sleep starts on one night and ends on the next. If you do not adjust the hours and y-axis, you’ll have a disjoined graph. Assuming a normal sleep schedule, a bit of the data will be at the bottom (for hours slept between ~10PM/22:00 to midnight) and a large amount towards the top (for midnight/00:00 to wake-up), and there will be a large gap of no data in the middle for hours you are awake.</p>
 <p>To correct for this, pick a halfway time where any value under this period has 24 hours added. The halfway time should be a period where you were awake on all days (so if there isn’t a time like that for you, stick with the regular 24-hour cycle).</p>
-<p>There was one sliver of time between 1:00PM and 1:30PM where I was awake on all days. I decided all times before 1:20PM (48000 seconds) to add 24 hours. If I had a cycle that started at 11:55PM/23:55 and ended at 12:05AM/00:05, the end time would now read as 24:05. The graph would originally show two 5 minute chunks at the top and bottom of the graph, now will show one 10 minute bar in the middle of the graph. Thankfully ggplot’s labelling automatically turns these times into values like “6AM”.</p>
+<p>There was one sliver of time around 6:00 PM where I was awake on all days. I decided all times before 6PM (64800 seconds) to add 24 hours. If I had a cycle that started at 11:55PM/23:55 and ended at 12:05AM/00:05, the end time would now read as 24:05. The graph would originally show two 5 minute chunks at the top and bottom of the graph, now will show one 10 minute bar in the middle of the graph. Thankfully ggplot’s labelling automatically turns these times into values like “6AM”.</p>
 <p>Lastly, I wanted to see my typical wake and sleep times, but with the day-to-day variances smoothed out.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sleep_start <span class="ot">&lt;-</span> cycle_activity <span class="sc">|&gt;</span> </span>
@@ -616,23 +616,24 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>               <span class="at">breaks =</span> <span class="st">"1 month"</span>,</span>
 <span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_labels =</span> <span class="st">"%b"</span>) <span class="sc">+</span></span>
 <span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_time</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">48000</span>, <span class="dv">134400</span>, <span class="at">by =</span> <span class="dv">7200</span>), <span class="co"># 3600 = 1H</span></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>               <span class="at">minor_breaks =</span> <span class="cn">NULL</span>,</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>               <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_time</span>(<span class="at">format =</span> <span class="st">"%I %p"</span>)) <span class="sc">+</span> <span class="co"># %H for 24-hour time</span></span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Time"</span>,</span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Daily sleep activity"</span>,</span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"sarahjohnson.io"</span></span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>  sleep_theme</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">64800</span>, <span class="dv">151200</span>, <span class="at">by =</span> <span class="dv">7200</span>),</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>               <span class="co"># breaks = seq(48000, 134400, by = 7200), # 3600 = 1H</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>               <span class="at">minor_breaks =</span> <span class="cn">NULL</span>,</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>               <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_time</span>(<span class="at">format =</span> <span class="st">"%I %p"</span>)) <span class="sc">+</span> <span class="co"># %H for 24-hour time</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Time"</span>,</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Daily sleep activity"</span>,</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"sarahjohnson.io"</span></span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>  sleep_theme</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
-<p>The month where I averaged the most sleep was February with an average of 7H 44M 8S per night. The month with the least was June with an average of 6H 26M 44S per night. I woke up the earliest on average in June at around 08:16:53 and the latest in February at around 11:10:02. I went to bed the earliest on average in December at around 00:09:05 and the latest in February at around 02:31:02.</p>
+<p>The month where I averaged the most sleep was <strong>March</strong> with an average of <strong>7H 41M 35S</strong> per night. The month with the least was <strong>June</strong> with an average of <strong>6H 26M 44S</strong> per night. I woke up the earliest on average in <strong>June</strong> at around <strong>08:16:53</strong> and the latest in <strong>February</strong> at around <strong>10:36:27</strong>. I went to bed the earliest on average in <strong>December</strong> at around <strong>00:09:05</strong> and the latest in <strong>February</strong> at around <strong>02:52:52</strong>.</p>
 </section>
 <section id="sleep-heatmap" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sleep-heatmap">Sleep heatmap</h2>
@@ -669,8 +670,8 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> wday, <span class="at">fill =</span> <span class="fu">as.numeric</span>(daily_sleep)<span class="sc">/</span><span class="dv">3600</span>)) <span class="sc">+</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">23</span>, <span class="dv">27</span>, <span class="dv">32</span>, <span class="dv">36</span>, <span class="dv">40</span>, <span class="dv">44</span>, <span class="dv">49</span>, <span class="dv">53</span>, <span class="dv">57</span>),</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"May"</span>, <span class="st">"Jun"</span>, <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span>, <span class="st">"Jan"</span>, <span class="st">"Feb"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">23</span>, <span class="dv">27</span>, <span class="dv">32</span>, <span class="dv">36</span>, <span class="dv">40</span>, <span class="dv">44</span>, <span class="dv">49</span>, <span class="dv">53</span>, <span class="dv">57</span>, <span class="dv">62</span>),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"May"</span>, <span class="st">"Jun"</span>, <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span>, <span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>)</span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">high =</span> <span class="st">"#35339C"</span>, <span class="at">low =</span> <span class="st">"#80CFF9"</span>,</span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">15</span>, <span class="at">by =</span> <span class="dv">3</span>)</span>
@@ -689,6 +690,8 @@ $ value         &lt;chr&gt; "InBed", "InBed", "AsleepCore", "InBed", "Awake", "A
 </div>
 </div>
 </div>
+<p>To find my sleep debt, I subtracted by nightly sleep time by 7 hours. If I slept 4 hours, I would have 3 hours of sleep debt.</p>
+<p>Since I began tracking my sleep, my total sleep debt is <strong>29.76 hours</strong>.</p>
 </section>
 
 </section>
@@ -1112,7 +1115,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","loop":false,"closeEffect":"zoom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom","selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
