@@ -33,3 +33,6 @@ census/data/2021_DataProductList.xlsx
 /.quarto/
 *.DS_Store
 _archive/
+# Render ignores
+/.quarto/
+/_site/
