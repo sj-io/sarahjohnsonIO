@@ -1,0 +1,640 @@
+---
+title: "Memphis Code Enforcement Data"
+author: "Sarah Johnson"
+format: revealjs
+draft: true
+---
+
+## Background
+
+While pursuing my master's degree, I lived in a rental home with a lot of problems. When I tried to find ways to help, I felt limited. When I tried to do research on how many other people have problems, I also felt limited.
+
+## Renter Problems
+
+- Lack of resources
+- Fear of retaliation
+  - Reporting problems = Risking home stability
+- Lack of record keeping
+
+## 311 Dataset
+
+- 1.13GB, 1.87M rows (as of 2/14/24)
+- Code Enforcement rows: 242,470
+- 51-56 columns when downloaded
+
+```{r}
+library(tidyverse)
+library(RSocrata)
+```
+
+```{r}
+test_soc <- read.socrata("https://data.memphistn.gov/resource/hmd4-ddta.json?department='Code Enforcement'&$where=date_trunc_ymd(creation_date) = '2024-02-02'")
+```
+
+
+```{r}
+library(tidyverse)
+library(httr2)
+
+url_request <- "https://data.memphistn.gov/resource/hmd4-ddta.json?department=Code%20Enforcement&$where=date_trunc_ymd(last_modified_date)%20=%272024-02-01%27"
+
+req2 <- request(url_request)
+resp2 <- req_perform(req2) |> resp_body_json(simplifyVector = TRUE) |> distinct()
+
+is_complete <- function(resp) {
+  length(resp_body_json(resp)$data) == 0
+}
+req <- request(url_request)
+resp <- req_perform_iterative(
+  req,
+  next_req = iterate_with_offset("offset", offset = 1000, resp_complete = is_complete),
+  max_reqs = Inf
+)
+
+ending <- resp |> resps_successes() |> resps_data(\(resp) resp_body_json(resp, simplifyVector = TRUE))
+
+ending <- resp |> resp_body_json(simplifyVector = TRUE) |> distinct()
+```
+
+
+```{r}
+library(tidyverse)
+library(arrow)
+mdf <- Sys.getenv("MY_DATA_FOLDER")
+
+raw <- read_parquet(paste0(mdf, "code-enforcement/requests.parquet"), as_data_frame = FALSE) |>
+  # mutate(DEPARTMENT = tolower(DEPARTMENT)) |> 
+  filter(DEPARTMENT == "Code Enforcement") |>
+  select(INCIDENT_NUMBER, PARCEL_ID, ADDRESS1, REQUEST_TYPE, CE_CATEGORY, RESOLUTION_CODE:RESOLUTION_SUMMARY, REQUEST_STATUS, REPORTED_DATE, LAST_MODIFIED_DATE, OWNER_NAME, CREATED_BY_USER, location1) |>
+  collect() |> 
+  mutate(across(starts_with("RESOLUTION_"), ~ str_to_lower(.)),
+         across(ends_with("_DATE"), ~ mdy_hms(.))) |>
+  arrange(desc(REPORTED_DATE)) |>
+  distinct()
+
+resolution_table <- raw |> 
+  select(RESOLUTION_CODE, RESOLUTION_CODE_MEANING) |> 
+  filter(!is.na(RESOLUTION_CODE_MEANING)) |> 
+  distinct() |> 
+  mutate(code_meaning_2 = str_replace_all(RESOLUTION_CODE_MEANING, "[:symbol:]|\\;|\\(|\\)|\\/|\\-", " ") |> str_remove_all("[:punct:]") |> str_squish())
+```
+
+```{r}
+not_housing <- c("cvoyc", "voyc", "cvoat", "cvoar", "voar", "shelby", "stcleaning", "transfer to health", "covid19-incompliance", "pending_sc_tax_sale", "swmad4", "back to mcsc")
+
+not_relevant <- str_flatten(c(
+  "\\b\\d{7,9}\\b",
+  "see sr",
+  "duplicate",
+  "wrong ad(d)?ress",
+  "901(-|\\)( )?)222-",
+  "222[:punct:](23|90)00",
+  "901-820-7878", # mlgw
+  "636[:punct:]6500", # 311
+  "545-2677", # non-emergency police
+  "416-5300", # schools
+  "^not a (city|residential)?( )?code (concern|violation|matter)$",
+  "^sent to shelby county$",
+  "^(insufficient|not enough) info(rmation)?$"
+), collapse = "|")
+
+possible_building <- raw |> 
+  mutate(RESOLUTION_SUMMARY = str_squish(RESOLUTION_SUMMARY)) |> 
+  filter(!(str_detect(RESOLUTION_SUMMARY, not_relevant)) 
+         & str_detect(REQUEST_TYPE, "Miscellaneous|Derelict") 
+         & !(RESOLUTION_CODE %in% not_housing) 
+         & !is.na(RESOLUTION_SUMMARY) 
+         & (RESOLUTION_CODE != RESOLUTION_SUMMARY)) |> 
+  arrange(desc(REPORTED_DATE))
+```
+
+
+```{r}
+v_phone <- "\\b(\\d{3}[:punct:]( )?)?\\d{3}[:punct:]\\d{4}\\b(?! days)"
+v_date <- str_c("((on|\\bf(.)?u\\b) )?\\b(", str_flatten(c(
+    "\\d{1,2}\\W+\\d{1,2}(\\W+\\d{1,4})?",
+    "\\d{4}\\W+\\d{1,2}\\W+\\d{1,2}"
+  ), collapse = "|"), ")([:alpha:]+)?\\b")
+
+clean_0 <- possible_building |> select(INCIDENT_NUMBER, RESOLUTION_SUMMARY) |> 
+  mutate(
+    # copy original table
+    original_summary = RESOLUTION_SUMMARY,
+    # remove phone numbers
+    phone = str_extract_all(RESOLUTION_SUMMARY, v_phone),
+    RESOLUTION_SUMMARY = str_remove_all(RESOLUTION_SUMMARY, v_phone) |> str_squish(),
+    # extract dates
+    update_date = str_extract_all(RESOLUTION_SUMMARY, v_date),
+    RESOLUTION_SUMMARY = str_remove_all(RESOLUTION_SUMMARY, v_date) |> str_remove("^\\W+") |> str_squish(),
+    RESOLUTION_SUMMARY = na_if(RESOLUTION_SUMMARY, "")
+    ) |> 
+  filter(!is.na(RESOLUTION_SUMMARY))
+```
+
+
+```{r}
+v_typos <- tibble(
+  input = c(
+    "attemp\\b",
+    "accrptable",
+    "addrsss",
+    "\\baddres\\b",
+    "(?<=this )compliant",
+    "in( )?compl[ia]+nce",
+    "\\binsuf\\b",
+    "insuffient",
+    "\\binsp\\b",
+    "insp[ect]+[io]+n",
+    "informayion",
+    "jusitified",
+    "montior",
+    "st[ru]+(c)?tural",
+    "t[enat]{3,}t",
+    "tenante(d)?",
+    "rrplced",
+    "reslove",
+    "vo(i)?lation",
+    "violstion",
+    "\\bv[iola]+tion",
+    "viola(t|y)?(i)+on",
+    "vuolation",
+    "\\bun( )?c[opr]+er[at]+[iv]+e\\b",
+    "\\buncooper\\b",
+    "\\buc\\b",
+    "\\bwete\\b"
+  ),
+  output = c(
+    "attempt",
+    "acceptable",
+    "address",
+    "address",
+    "complaint",
+    "in compliance",
+    "insufficient",
+    "insufficient",
+    "inspection",
+    "inspection",
+    "information",
+    "justified",
+    "monitor",
+    "structural",
+    "tenant",
+    "tenant",
+    "replaced",
+    "resolve",
+    "violation",
+    "violation",
+    "violation",
+    "violation",
+    "violation",
+    "uncooperative",
+    "uncooperative",
+    "uncooperative",
+    "were"
+  )
+)
+
+v_inspectors <- tibble(
+  input = c(
+    "jn",
+    "ma",
+    "mc",
+    "(e)?( )?blow",
+    "(k)?( )?boone",
+    "(c)?( )?boykins",
+    "b( )?bratten",
+    "(d)?( )?burton",
+    "(s)?( )?burgess",
+    "l( )?busby",
+    "(d)?( )?butler",
+    "(c)?(heryl)?( )?clausel",
+    "(t)?( )?cobb",
+    "a( )?collins",
+    "(j)?( )?cooper",
+    "a( )?davis",
+    "l( )?davis",
+    "v( )?ervin",
+    "j( )?freeman",
+    "(t)?( )?fry",
+    "k( )?funches",
+    "s( )?gasper",
+    "(q)?( )?gilchrest",
+    "d( )?grafton",
+    "r(obert)?( )?gray",
+    "d( )?hearn",
+    "r( )?hill",
+    "c( )?higgenbottom",
+    "d( )?house",
+    "(s)?( )?howell",
+    "sh",
+    "j( )?hymon",
+    "j(ames)?( )?jackson",
+    "(m)?( )?james",
+    "(a)?( )?knox",
+    "r( )?lake",
+    "lewis",
+    "a( )?lewis",
+    "m( )?lewis",
+    "w( )?lewis",
+    "m( )?middlebrooks",
+    "s( )?milan",
+    "d( )?mitchell",
+    "(v)?( )?moses",
+    "r mosley",
+    "t( )?neff",
+    "r( )?nelson",
+    "l(ewis)?( )?nickson",
+    "j(udith)?( )?norman",
+    "t( )?norwood",
+    "(r)?( )?peete",
+    "(t)?( )?pegues",
+    "(b)?( )?pat(t)?erson",
+    "k( )?payne",
+    "a( )?powell",
+    "n( )?rashada",
+    "(s)?( )?rice",
+    "t( )?richardson",
+    "c( )?sager",
+    "b( )?smith",
+    "(i)?( )?stig(l)?er",
+    "t( )?strong",
+    "t( )?swift",
+    "p( )?tyler",
+    "(m)?( )?taylor",
+    "(b)?( )?thomas",
+    "(c)?( )?thom(a)?s",
+    "thornton",
+    "j( )?tumbrink",
+    "(j)?( )?walker",
+    "(m)?( )?ward",
+    "k( )?washington",
+    "a( )?williams",
+    "c( )?williams",
+    "(r)?( )?witter",
+    "(b)?( )?woodland",
+    "(v)?( )?woods( jr)?"
+  ),
+  output = c(
+    "JN",
+    "ma",
+    "mc",
+    "E. Blow",
+    "K. Boone",
+    "c. boykins",
+    "b. bratten",
+    "D. Burton",
+    "s. burgess",
+    "l. busby",
+    "D. Butler",
+    "c. clausel",
+    "T. Cobb",
+    "a. collins",
+    "J. Cooper",
+    "a. davis",
+    "l. davis",
+    "v. ervin",
+    "j. freeman",
+    "T. Fry",
+    "k. funches",
+    "s. gasper",
+    "Q. Gilchrest",
+    "d. grafton",
+    "R. Gray",
+    "d. hearn",
+    "R. Hill",
+    "c. higgenbottom",
+    "d. house",
+    "s. howell",
+    "s. howell",
+    "J. Hymon",
+    "j. jackson",
+    "m. james",
+    "a. knox",
+    "R. Lake",
+    "lewis",
+    "a. lewis",
+    "m. lewis",
+    "w. lewis",
+    "m. middlebrooks",
+    "s. milan",
+    "d. mitchell",
+    "v. moses",
+    "r. mosley",
+    "t. neff",
+    "r. nelson",
+    "l. nickson",
+    "J. Norman",
+    "t. norwood",
+    "r. peete",
+    "t. pegues",
+    "B. Patterson",
+    "k. payne",
+    "a. powell",
+    "n. rashada",
+    "S. Rice",
+    "T. Richardson",
+    "c. sager",
+    "b. smith",
+    "i. stigler",
+    "T. Strong",
+    "t. swift",
+    "p. tyler",
+    "Taylor",
+    "Thomas",
+    "Thomas",
+    "thornton",
+    "J. Tumbrink",
+    "J. Walker",
+    "M. Ward",
+    "k. washington",
+    "a. williams",
+    "c. williams",
+    "R. Witter",
+    "b. woodland",
+    "v. woods"
+  )
+) |> mutate(input = paste0("(per )?(inspe[cs]tor )?\\b", input, "\\b"))
+
+r_typos <- v_typos$output
+names(r_typos) <- v_typos$input
+r_inspectors <- v_inspectors$output
+names(r_inspectors) <- v_inspectors$input
+
+clean_1 <- clean_0 |> 
+  mutate(
+    # clean up punctuation
+    RESOLUTION_SUMMARY = 
+      str_replace_all(RESOLUTION_SUMMARY, "[:symbol:]|\\;|\\(|\\)|\\/|\\-", " ") |> str_remove_all("[:punct:]") |> str_squish(),
+    # fix typos
+    RESOLUTION_SUMMARY = str_replace_all(RESOLUTION_SUMMARY, r_typos),
+    # extract inspectors
+    inspector = str_extract_all(RESOLUTION_SUMMARY, str_flatten(v_inspectors$input, collapse = "|")) |> 
+      str_replace_all(r_inspectors),
+    RESOLUTION_SUMMARY = str_remove_all(RESOLUTION_SUMMARY, str_flatten(v_inspectors$input, collapse = "|")) |> str_squish(),
+    # remove R.S. that completely match (QUESTIONABLE)
+    RESOLUTION_SUMMARY = if_else(
+           RESOLUTION_SUMMARY %in% c(
+             resolution_table$RESOLUTION_CODE, 
+             resolution_table$RESOLUTION_CODE_MEANING,
+             resolution_table$code_meaning_2), 
+           NA_character_, RESOLUTION_SUMMARY, RESOLUTION_SUMMARY),
+    RESOLUTION_SUMMARY = na_if(RESOLUTION_SUMMARY, "")
+    ) |> 
+  filter(!is.na(RESOLUTION_SUMMARY))
+```
+
+
+```{r}
+v_standardize <- tibble(
+  input = c(
+    # outside of jurisdiction
+    "not in city limits",
+    "customer lives in the county",
+    # wrong address
+    "violation is at another address",
+    "wrong (property|parcel|location|house|address|building|apartment)( (address|unit|number))?( given)?",
+    "address (doesnt exist|incorrect)",
+    # insufficient information
+    "unable to find correct address",
+    "insufficient (address|information)( (for complaint|to (locate|issue a) violation))?((was)? given)?",
+    "need(s)? more information",
+    "not enough information",
+    # in compliance
+    "(the )?property (was )?in( )?compliance( with the city)?( code)?",
+    "in compliance",
+    # no violation
+    "((there|this) (was|were|is) )?no(t a)?( (residential|housing))?( code)?( )?violation(s)?( )?((was|w(h)?ere) )?(found(ed)?|present|observed|existed|seen|noticed)?( at this address)?",
+    "(the )?(violation was )?not justified",
+    "(the )?violation (did not|didnt) exist",
+    "\\bnj\\b",
+    "(the )?property (was not|(does not|didnt) appear to be) (substandard )?(and )?derelict( structure)?",
+    "all is ok",
+    "there was no valid complaint",
+    # violation corrected
+    "((all|the) )?(code )?(issue|violation|problem)(s)? (have|has|had|is|was)?( )?(been|w(h)?ere|was)?( )?(resolve(d)?|corrected|taken care of|no longer exists|in compliance|fixed|addressed|repaired)",
+    "these repairs were done",
+    # yard clean
+    "(the )?(yard|grass) ((is|was) )?(cut and )?clean(ed)?",
+    "(the )?(yard|grass) (is|has been|was( being)?)?( )?cut",
+    # property secured
+    "((the|this) )?(property|house|structure|home) (is now|ha[ds] been|was)?( )?secure(d)?",
+    # property boarded
+    "((the|this) )?(property|house|structure) (is( now)?|ha[ds] been|was)?( )?board(ed)?( up)?( and secure(d)?)?",
+    # property repaired
+    "(the )?property (was|has been)?( )?(repaired|rehabbed)",
+    "((the|all) )?repair(s)? (was|w(h)?ere|(have|had) been)?( )?(made|completed)( to)?(( this)? (unit|structure|property))?",
+    # property demolished
+    "((property|house) )?demolished( by the owner)?",
+    # property vacant
+    "vacant (property|(town )?house|home|apt|apartment|unit)",
+    "unit ((is|was) )?(now )?vacant",
+    "((the|this) )?(property|house|structure) (is (now)?|ha[ds] been|was)?( )?vacant",
+    # property occupied
+    "((the|this) )?(property|house|structure) (is (now)?|ha[ds] been|was)?( )?occupied",
+    # vacant lot
+    "(this )?(is )?(a )?vacant lot",
+    # tenant moved
+    "(the )?(tenant|renter|resident)(s)? ((has|have|is|had) )?(mov(ed|ing)( out)?|vacated|no longer ((lives )?at|occup(ies|y)))(( from)? ((of )?the|to another|(of )?this) (unit|property|address))?",
+    # no one home
+    "no( )?one (was )?home",
+    "\\bnoh\\b",
+    # no access to property
+    "could not access the property",
+    # no response
+    "no (one )?(response|answer(ed)?|came to this door)( the phone)?",
+    # uncooperative
+    "uncooperative",
+    # no further action
+    "no further actions will be taken at this time",
+    # issued notice
+    "a violation order was issued to the owner",
+    # issued notice to correct
+    "(a )?(final )?notice to correct (was )?issued",
+    # issued notice to rehab
+    "issued notice to rehab property",
+    "wrote up property (to be|for) rehabbed",
+    "wrote property up (to be|for) rehabbed",
+    # issued notice to condemn
+    "wrote up property (to be in|for) condemnation",
+    # will monitor
+    "will (continue to )?monitor (the )?property",
+    "will monitor for structural violations",
+    # will reissue
+    "will (re)?( )?(create|issue) new sr",
+    "will (be )?re( )?issue(d)?( )?(for )?(at a later date|proper service)?",
+    # cancelled
+    "this sr is cancelled",
+    # active npa case
+    "active npa case",
+    # court order
+    "(with a )?court order",
+    # shelby county property
+    "unincorporated",
+    "property is (a )?sh[le]+by county (owned )?(property)?",
+    "sh[le]+by county (owned )?(property)?",
+    # duplicate
+    "justified active( open violation)?",
+    "\\bja\\b",
+    # test
+    "test sr.*",
+    "training( purposes)?",
+    # error
+    "created by mistake",
+    "(created|written( up)?|placed) in error",
+    "wrong (ticket|type|request( type)?)( (of|for) code)?",
+    "when system comes back online"
+  ),
+  output = c(
+    "outside of jurisdiction",
+    "outside of jurisdiction",
+    "wrong address",
+    "wrong address",
+    "wrong address",
+    "insufficient information",
+    "insufficient information",
+    "insufficient information",
+    "insufficient information",
+    "in compliance",
+    "in compliance",
+    "no violation",
+    "no violation",
+    "no violation",
+    "no violation",
+    "no violation",
+    "no violation",
+    "no violation",
+    "violation corrected",
+    "violation corrected",
+    "yard clean",
+    "yard clean",
+    "property secured",
+    "property boarded",
+    "property repaired",
+    "property repaired",
+    "property demolished",
+    "property vacant",
+    "property vacant",
+    "property vacant",
+    "property occupied",
+    "vacant lot",
+    "tenant moved",
+    "no one home",
+    "no one home",
+    "no access to property",
+    "no response",
+    "uncooperative",
+    "no further action",
+    "issued notice",
+    "issued notice to correct",
+    "issued notice to rehab",
+    "issued notice to rehab",
+    "issued notice to rehab",
+    "issued notice to condemn",
+    "will monitor",
+    "will monitor",
+    "cancelled",
+    "active npa case",
+    "court order",
+    "will reissue",
+    "will reissue",
+    "shelby county property",
+    "shelby county property",
+    "shelby county property",
+    "duplicate",
+    "duplicate",
+    "test",
+    "test",
+    "error",
+    "error",
+    "error",
+    "error"
+  )
+)
+
+v_update_type <- tibble(
+  input = c(
+    "(at )?((the|this) )?time of ((the|this|my) )?inspection",
+    "(during|at|upon|per) ((the|my) )?inspection",
+    "at (the )?time of re( )?(inspection|check)",
+    "upon (follow( )?up|fu|further) inspection",
+    "(after|made)?( )?(1(st)?|one|first) (unsuccessful )?(attempt|try|visit)(s)?( (have been|was|were))?( made)?( to (property|inspect|make contact|address))?( this complaint)?",
+    "(after|made)?( )?(2(nd)?|two|second) (unsuccessful )?(attempt|try|visit)(s)?( (have been|was|were))?( made)?( to (property|inspect|make contact|address))?( this complaint)?",
+    "(after|made)?( )?(3(rd)?|three|third) (unsuccessful )?(attempt|try|visit)(s)?( (have been|was|were))?( made)?( to (property|inspect|make contact|address))?( this complaint)?"
+  ),
+  output = c(
+    "inspection",
+    "inspection",
+    "reinspection",
+    "reinspection",
+    "attempt 1",
+    "attempt 2",
+    "attempt 3"
+  )
+)
+
+r_update_type <- v_update_type$output
+names(r_update_type) <- v_update_type$input
+r_standardize <- v_standardize$output
+names(r_standardize) <- v_standardize$input
+
+
+clean_2 <- clean_1 |> 
+  mutate(
+    # extract update_type
+    update_type = str_extract_all(RESOLUTION_SUMMARY, str_flatten(v_update_type$input, collapse = "|")) |> 
+      str_replace_all(r_update_type),
+    RESOLUTION_SUMMARY = str_remove_all(RESOLUTION_SUMMARY, str_flatten(v_update_type$input, collapse = "|")) |> str_squish(),
+    # extract update_tags
+    update_tags = str_extract_all(RESOLUTION_SUMMARY, str_flatten(v_standardize$input, collapse = "|")) |> 
+      str_replace_all(r_standardize),
+    RESOLUTION_SUMMARY = str_remove_all(RESOLUTION_SUMMARY, str_flatten(v_standardize$input, collapse = "|")) |> str_squish(),
+    RESOLUTION_SUMMARY = na_if(RESOLUTION_SUMMARY, "")
+    ) |> 
+  filter(!is.na(RESOLUTION_SUMMARY))
+```
+
+```{r}
+v_contacts <- tibble(
+  input = c(
+    "(the )?tenant(s)? (state[sd]|showed me|said|says|called( back)?|confirmed|advised)( that)?",
+    "(i )?(as stated by|advised|call(ed)?|talked|spoke|per( conversation)?)( (with|to))? (the )?tenant(s)?"
+  ),
+  output = c(
+    "tenant",
+    "tenant"
+  )
+)
+
+r_contacts <- v_contacts$output
+names(r_contacts) <- v_contacts$input
+
+clean_3 <- clean_2 |> 
+  mutate(
+    contact = str_extract_all(RESOLUTION_SUMMARY, str_flatten(v_contacts$input, collapse = "|")) |> 
+      str_replace_all(r_contacts),
+    RESOLUTION_SUMMARY = str_remove_all(RESOLUTION_SUMMARY, str_flatten(v_contacts$input, collapse = "|")) |> str_squish(),
+    RESOLUTION_SUMMARY = na_if(RESOLUTION_SUMMARY, "")
+    ) |> 
+  filter(!is.na(RESOLUTION_SUMMARY))
+```
+
+```{r}
+tbd <- clean_3 |> group_by(RESOLUTION_SUMMARY) |> count() |> arrange(desc(n))
+tbd <- clean_3 |> filter(str_length(RESOLUTION_SUMMARY) == 2)
+```
+
+
+## What Data to use?
+
+## Proposed Solutions: Simple
+
+- Create a new "Request Type"
+
+- Narrow the output of the data
+  - Filter table for code enforcement requests
+  - Show only relevant columns
+- Show additional data already collected
+  - occupied = TRUE/FALSE
+  - building_section = c("interior", "exterior", "both")
+  - problem = text()
+  

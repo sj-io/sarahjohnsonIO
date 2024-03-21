@@ -4,7 +4,7 @@ comments: false
 listing: 
   id: packages
   contents: 
-    - "census/tidychas.qmd"
+    - "packages"
 ---
 
 :::{#packages}
