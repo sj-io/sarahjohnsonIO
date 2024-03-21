@@ -4,6 +4,9 @@ description: |
   An overview of Census ACS variables, particularly related to housing.
 categories:
   - census
+  - housing
+  - tidycensus
+  - R
 image: "img/variables.png"
 date: "2021-12-24"
 date-modified: "2023-10-16"

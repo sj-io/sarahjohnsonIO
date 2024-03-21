@@ -7,11 +7,17 @@ layout: full
 date: "2023-12-14"
 date-modified: "2024-03-13"
 image: "preview-image.png"
+categories:
+  - R
+  - health
+  - xml2
+  - ggplot2
 lightbox: true
 author: 
   - name: Sarah Johnson
     url: https://sarahjohnson.io
 citation: true
+draft: true
 ---
 
 I've always struggled with falling asleep early, so I purchased an Apple Watch to monitor my sleep. This post details how to access your Apple Health data and analyze it.
@@ -145,7 +151,8 @@ Congratulations! You now have all your health records saved in an easy format.
 To access the data again, just use `read_parquet()`.
 
 ```{r}
-sleep_data <- read_parquet(paste0(path, "health/sleep.parquet"))
+# sleep_data <- read_parquet(paste0(path, "health/sleep.parquet"))
+sleep_data <- read_csv(paste0(path, "health/sleep.csv"))
   # filter(str_detect(sourceName, "Watch"))
 
 glimpse(sleep_data)

@@ -4,6 +4,8 @@ description: |
   A (mostly) comprehensive list of federal housing legislation, in chronological order.
 categories:
   - law
+  - reference
+  - housing
 image: "img/hsg-acts.jpg" 
 date: "2021-11-07"
 bibliography: references.bib

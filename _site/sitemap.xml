@@ -1,55 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://sarahjohnson.io/census/surveys.html</loc>
-    <lastmod>2023-12-14T20:12:14.616Z</lastmod>
+    <loc>https://sarahjohnson.io/packages.html</loc>
+    <lastmod>2024-03-21T00:15:36.036Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/census/boundaries.html</loc>
+    <lastmod>2024-03-21T20:42:38.561Z</lastmod>
   </url>
   <url>
     <loc>https://sarahjohnson.io/census/variables.html</loc>
-    <lastmod>2023-12-14T20:15:50.899Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/housing.html</loc>
-    <lastmod>2024-02-05T20:02:45.547Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/other/apple-sleep-data.html</loc>
-    <lastmod>2024-03-13T16:58:22.057Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/law/URLTA.html</loc>
-    <lastmod>2023-12-14T20:16:45.924Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/law/hsg-acts.html</loc>
-    <lastmod>2023-12-14T20:14:08.909Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/law/npa.html</loc>
-    <lastmod>2023-12-14T20:15:10.905Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sarahjohnson.io/index.html</loc>
-    <lastmod>2024-02-07T21:48:57.355Z</lastmod>
+    <lastmod>2024-03-21T20:41:13.839Z</lastmod>
   </url>
   <url>
     <loc>https://sarahjohnson.io/r.html</loc>
     <lastmod>2024-02-05T20:04:19.613Z</lastmod>
   </url>
   <url>
-    <loc>https://sarahjohnson.io/census/boundaries.html</loc>
-    <lastmod>2023-12-14T20:05:46.196Z</lastmod>
+    <loc>https://sarahjohnson.io/index.html</loc>
+    <lastmod>2024-03-21T20:44:37.236Z</lastmod>
   </url>
   <url>
-    <loc>https://sarahjohnson.io/other/tidychas.html</loc>
-    <lastmod>2024-02-05T19:16:43.384Z</lastmod>
+    <loc>https://sarahjohnson.io/law/npa.html</loc>
+    <lastmod>2024-03-21T20:41:59.788Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/law/hsg-acts.html</loc>
+    <lastmod>2024-03-21T20:39:39.363Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/law/URLTA.html</loc>
+    <lastmod>2024-03-21T20:40:32.895Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/housing.html</loc>
+    <lastmod>2024-02-05T20:02:45.547Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sarahjohnson.io/posts.html</loc>
+    <lastmod>2024-03-21T01:18:15.703Z</lastmod>
   </url>
   <url>
     <loc>https://sarahjohnson.io/census/tidychas.html</loc>
     <lastmod>2024-02-05T20:00:29.616Z</lastmod>
   </url>
   <url>
-    <loc>https://sarahjohnson.io/other/code-enforcement.html</loc>
-    <lastmod>2024-02-15T02:28:28.365Z</lastmod>
+    <loc>https://sarahjohnson.io/census/surveys.html</loc>
+    <lastmod>2024-03-21T00:17:25.798Z</lastmod>
   </url>
 </urlset>

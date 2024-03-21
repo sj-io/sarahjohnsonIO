@@ -1,0 +1,17 @@
+---
+title: "Posts"
+listing: 
+  - id: all
+    contents: "*/*.qmd"
+    categories: true
+    type: grid
+    fields: [image, title, description, reading-time]
+    sort: "date desc"
+comments: false
+aliases: 
+  - r.html
+  - housing.html
+---
+
+:::{#all}
+:::

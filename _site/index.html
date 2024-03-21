@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -152,12 +152,12 @@ window.Quarto = {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./housing.html"> 
-<span class="menu-text">Housing</span></a>
+    <a class="nav-link" href="./posts.html"> 
+<span class="menu-text">Posts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./r.html"> 
-<span class="menu-text">R Analysis</span></a>
+    <a class="nav-link" href="./packages.html"> 
+<span class="menu-text">Packages</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -218,7 +218,7 @@ window.Quarto = {
   </a>
 </div>
       <div class="about-contents"><div id="hello">
-<p>Hello 🤠 I’m the Business Service Analyst at the Shelby County Department of Housing. I received my bachelor’s in economics and master’s in urban planning from the University of Memphis. I’m passionate about guaranteeing people access to healthy, safe, affordable housing.</p>
+<p>Hello 🤠 I’m a housing/urban analyst and an R developer. I received my bachelor’s in economics and master’s in urban planning from the University of Memphis. I’m passionate about guaranteeing people access to healthy, safe, affordable housing.</p>
 </div></div>
     </div>
     <img src="me.png" class="about-image
@@ -253,29 +253,7 @@ Feb 5, 2024
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-listing-date-sort="1702533600000" data-listing-file-modified-sort="1707342083384" data-listing-date-modified-sort="1707112800000" data-listing-reading-time-sort="22" data-listing-word-count-sort="4326">
-<a href="./other/apple-sleep-data.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./other/preview-image.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Analyze Apple Health sleep data with R
-</h5>
-<div class="card-text listing-description">
-I’ve always struggled with falling asleep early, so I purchased an Apple Watch to monitor my sleep. This post details how to access your Apple Health data and analyze it.
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Dec 14, 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="2" data-listing-date-sort="1667019600000" data-listing-file-modified-sort="1702584346196" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2192">
+<div class="g-col-1" data-index="1" data-categories="R,geospatial,census,memphis,sf,tigris,leaflet" data-listing-date-sort="1667019600000" data-listing-file-modified-sort="1711053758561" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2192">
 <a href="./census/boundaries.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -291,6 +269,28 @@ Geographic Boundaries
 <div class="card-attribution card-text-small end">
 <div class="listing-date">
 Oct 29, 2022
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="census,memphis,R,tidycensus,plotly" data-listing-date-sort="1655614800000" data-listing-file-modified-sort="1710980245798" data-listing-date-modified-sort="1697432400000" data-listing-reading-time-sort="7" data-listing-word-count-sort="1281">
+<a href="./census/surveys.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./census/img/survey.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Surveys &amp; Programs
+</h5>
+<div class="card-text listing-description">
+<p>Comparing Census surveys related to housing and population.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Jun 19, 2022
 </div>
 </div>
 </div>
@@ -381,6 +381,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/sarahjohnson\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -415,7 +433,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

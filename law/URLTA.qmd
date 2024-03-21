@@ -4,6 +4,8 @@ description: |
   Full text of Tennessee's Uniform Residential Landlord Tenant Act, which regulates rental housing in TN.
 categories:
   - law
+  - housing
+  - reference
 image: "img/urlta.jpg" 
 date: "2021-11-10"
 ---

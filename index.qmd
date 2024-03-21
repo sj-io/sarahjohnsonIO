@@ -27,7 +27,7 @@ toc: false
 
 :::{#hello}
 Hello 🤠
-I’m the Business Service Analyst at the Shelby County Department of Housing. I received my bachelor’s in economics and master’s in urban planning from the University of Memphis. I’m passionate about guaranteeing people access to healthy, safe, affordable housing.
+I’m a housing/urban analyst and an R developer. I received my bachelor’s in economics and master’s in urban planning from the University of Memphis. I’m passionate about guaranteeing people access to healthy, safe, affordable housing.
 :::
 
 ---

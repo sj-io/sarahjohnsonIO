@@ -14,10 +14,10 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: housing.qmd
-        text: Housing
-      - href: r.qmd
-        text: R Analysis
+      - href: posts.qmd
+        text: Posts
+      - href: packages.qmd
+        text: Packages
     right: 
       - icon: github
         href: https://github.com/sj-io
@@ -32,5 +32,5 @@ format:
     theme: [morph, custom.scss]
     
 comments: 
-  hypothesis: true
-
+  giscus:
+    repo: sj-io/sarahjohnsonIO

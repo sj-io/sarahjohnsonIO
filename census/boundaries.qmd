@@ -4,6 +4,14 @@ description: |
   Mapping all available Census boundaries for one area.
 image: "img/boundaries.png"
 date: "2022-10-29"
+categories: 
+  - R
+  - geospatial
+  - census
+  - memphis
+  - sf
+  - tigris
+  - leaflet
 bibliography: references.bib
 ---
 
