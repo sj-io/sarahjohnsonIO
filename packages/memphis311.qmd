@@ -1,7 +1,55 @@
 ---
-title: "`memphis311`: An R package for getting Memphis 311 Requests"
+title: "An R package for getting `memphis311` Data"
 date: "2024-03-21"
-draft: true
+image: "img/vacant-house.jpeg"
+description: "Quickly access Memphis's 311 dataset API."
+categories:
+  - R
+  - housing
+  - memphis
+  - httr
+  - api
+  - code-enforcement
 ---
 
-Blah blah blah
+## Intro
+
+Memphis code enforcement data is available in the [Service Requests since 2016](https://data.memphistn.gov/dataset/Service-Requests-since-2016/hmd4-ddta/about_data) dataset from Memphis Data Hub. The `memphis311` package was created as a simple way to access the dataset.
+
+You can install the package from github and access it like so:
+
+```{r load}
+# devtools::install_github("sj-io/memphis311")
+library(memphis311)
+```
+
+## `get_311`
+
+The package currently contains one function, `get_311()`. There are no default parameters; you can specify a variable for any column in the dataset. 
+
+If you do not specify any columns, the package will call for a csv file containing all rows. Note that this will take a long time, as the dataset has over 2 million rows. 
+
+```{r get311Example, eval=TRUE, echo=TRUE, message=FALSE}
+service_requests <- get_311(
+  department = "code enforcement", 
+  creation_date = "2024-03-09",
+  request_type = "CE-Substandard,Derelict Struc"
+  ) 
+
+dplyr::glimpse(service_requests)
+```
+
+## Important notes
+
+Any of the columns in the dataset can be selected, but only basic queries are available right now. This means you can call a specific value for a variable (`department = "code enforcement"`), including a specific date. 
+
+For more complex queries, I recommend using the [`RSocrata`](https://github.com/Chicago/RSocrata) package. This package is meant to be a simple way to access Memphis's code enforcement data.
+
+The main benefits of this package are:
+
+- The Memphis 311 API url is included in the package.
+- All date columns in the dataset are shortened to YYYY-MM-DD format, so you don't need to include times.
+- Text columns will make case-insensitive matches, so it will return requests where `department` is "CODE ENFORCEMENT" or "Code Enforcement".
+- Columns are sorted into a more logical order than alphabetical. Locations and times are grouped together so more relevant data can quickly be found.
+
+In the future I hope to add more flexibility for querying (especially dates), and helpers for tidying the dataset to find relevant information for housing research.
