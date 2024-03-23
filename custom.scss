@@ -1,3 +1,14 @@
 /*-- scss:defaults --*/
-// Code blocks
 $code-block-bg: #E5EBF4;
+$card-spacer-y: 1.2rem;
+$card-spacer-x: 1.2rem;
+
+/*-- scss:rules --*/
+.panel-caption, .figure-caption, .subfigure-caption, .table-caption, figcaption, caption {
+    color: #6c757d;
+    text-align: center;
+}
+
+.margin-caption, div.aside, aside, .column-margin {
+  color: #6c757d;
+}

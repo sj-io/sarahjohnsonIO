@@ -16,3 +16,5 @@ author:
 
 # Default fields for citation
 citation: true
+
+lightbox: true
