@@ -1,49 +1,129 @@
 ---
 title: "Getting Started with R"
+description: "A start-from-zero guide to Microsoft Office on steroids."
+date: 2024-03-22
+categories:
+  - R
+  - rstudio
+  - git
+  - github
+  - quarto
 draft: true
 ---
 
-To download R, go to:
-https://www.r-project.org/
+This post is for someone who has never used R and wants to try it, especially to collaborate and share your work. It assumes you have no programming experience and primarily use Microsoft Office products.
 
-Download by clicking on a link closest to your location:
-https://cran.r-project.org/mirrors.html
+## Overview
 
-For me it's the Oak Ridge mirror https://mirrors.nics.utk.edu/cran/
+1. Make an account on [**Github**](https://github.com/) for project storage and collaborating.
+2. Download [**Git**](http://git-scm.com/downloads) for version control
+3. Download [**R**](https://cran.r-project.org/mirrors.html) for the R programming language
+4. Download [**RStudio**](https://posit.co/download/rstudio-desktop/) to work on R stuff
+5. Download [**Quarto**](https://quarto.org/docs/download/) make shareable material with R
 
-Click Download R for Windows
-https://mirrors.nics.utk.edu/cran/
+All of these are **free and open-source**; no money or licenses required!
 
-Click "Base"
-Download R and install using the default settings.
+## Why?
 
-Download RStudio from:
-https://posit.co/download/rstudio-desktop/
+If you experience one or more of the following symptoms, R/RStudio might be right for you:
 
-Tools > Global Options
+- **Annoyance with outdated, confusing, or buggy software**: Have you ever tried to edit a table in Word? Have you spent 30 minutes clicking around ArcGIS to find the button you needed? Sometimes these problems can be addressed with one line of code, which can be copied, pasted, and rerun.
+- **Frustration with costs & licensing**: R and RStudio are free to download and use, no licenses required. They are also open-source and maintained by an active community who updates, improves, and expands their capabilities.
+- **Struggling to manage large datasets**: R was originally made for statistics. There are numerous ways to manage large datasets with millions of rows. R also makes it easy to keep separate your original datasets from the edits you need for analysis or visualization.
+- **Wanting to access data through APIs**: Accessing Census data through the old American Community Survey website was a painful experience, and the first reason I began using R in 2018. I stumbled across `tidycensus`, a tool to interact with the Census API, and couldn't believe how easily I could [find and download](https://walker-data.com/tidycensus/articles/basic-usage.html#searching-for-variables) the data I needed, and then change the [example code](https://walker-data.com/tidycensus/articles/spatial-data.html) to make maps.
+- **Desire to share your work online**: While products like Word are made for printed documents, Quarto extends R to allow you to convert files into many different web-friendly formats. While you can still export files to PDF, you can also create websites, slideshows, dashboards, reports, etc. There is seamless integration with Zotero for citation management. If you publish your code online, you can allow others to reproduce the results.
 
-General > Basic
+## Downloads
 
-- uncheck "Restore most recently opened project at startup"
-- uncheck "Restore previously open source documents at startup"
-- uncheck "Restore .RData into workspace at startup"
+At a bare minimum, you need to download **R** to use R. The rest of the stuff is technically optional, but will make your life significantly easier. 
 
-Create a "Projects" folder
+I recommend **Github** if you want to collaborate with other people and store your documents online. You'll need **Git**, a version control manager, to *git* that to work. **RStudio** is a way to write and share documents and run code. **Quarto** is a type of R project that makes beautiful and simple documents, websites, slideshows, etc.
 
-General > Advanced Tab
+I recently got a new computer so I'll walk through the downloads in the order that was best for a new install.
 
-Code > Editing
-- Check "Use native pipe operator, |>
+::: {.callout-warning}
+## Password Manager (optional)
 
-Appearance
-- Choose an Editor theme
+I also recommend getting a password manager if you do not already have one. I recommend [**1Password**](https://1password.com/);^[I also do not recommend LastPass due to less secure password storage and multiple data breaches in recent years. One breach lead me to spending a full day of my 2022 holidays changing all my passwords.] it keeps track of your log-in information across devices and is available on mobile.
 
-Install git
-http://git-scm.com/downloads
-- Use Notepad as the default editor
-- Override the default branch name, keep as "main"
+While not free, I use it multiple times a day and for me it's worth the \$3/month (charged as \$36/year). It's great at generating long, secure passwords, it can be used for two-factor authentication (with passkey), and for extra programming security measures like SSH keys.
+:::
 
-Download Quarto
-https://quarto.org/docs/download/
+### Github
 
-Install as administrator
+Github is a way to store files online. Files are grouped together into a project folder called a repository (**repo** for short). 
+
+You can create public projects, which allow anyone to see your code, or private projects that you can selectively share. You can allow (or reject) other people's contributions to your work; you can also create an organization and invite others to collaborate on a group of related repos.
+
+Each project can have **Issues** and **Discussions** tabs, which allow people to discuss problems or propose ideas related to a specific project.^[The comments section on my website is linked to the [Discussions tab for this repo](https://github.com/sj-io/sarahjohnsonIO/discussions) (by enabling Giscus in my Quarto project.)] **Projects** allow you to assign and keep track of tasks and goals, and link these items to issues. These tasks can be laid out into a kanban, roadmap, or list.
+
+::: {#fig-github}
+{{< video img/R-guide-github.mov >}}
+
+A glance at this website's Github repo.
+:::
+
+Scrolling through Github is also a great way to learn and find other cool projects. Looking through the code of other packages is a great way to learn how to adapt it for your need. I also enjoy going through the [Trending](https://github.com/trending) tab to see what's current popular, even if it's not in a language I work with.
+
+No downloads are required for Github, just [**create an account**](https://github.com/).
+
+### Git
+
+Git is used for version control. It keeps track of changes to a project you make on your computer. You can use Git to upload your changes online and download changes made by other people.
+
+If you're coming from Microsoft Office, you've probably collaborated on a document with another person. The document will automatically update when you're online, but I always experienced slight panic when a notification told me changes or versions needed to be reviewed.
+
+Version control through Git has been a much more pleasant experience for me. Changes are tracked locally until you commit them to a branch. A branch is a named collection of commits, such as a section of a project ("annual-plan") or one person's contributions on a document ("sarah-add-data"). 
+
+::: {#fig-version-control}
+![](img/R-guide-version-control)
+
+Use Git to keep track of additions, changes, or deletions.
+:::
+
+When you commit changes, add a descriptive comment to inform other people (or your future self) of what you altered. You can choose what files you want to include or exclude from a commit. This is useful if you want to post changes but are having issues with one file, or if you make a lot of changes and want to break up the commits into smaller, more logical chunks.
+
+::: {#fig-git-commits}
+![](img/R-guide-github-commits)
+
+View a repo's commit history to see changes over time.
+:::
+
+Git can be downloaded from its [website](http://git-scm.com/downloads). During setup, I kept all of the defaults settings except these **optional** changes:
+
+- **Switched the default editor to Notepad**: The default editor is a way to interact with Git. If you're following this guide, you'll interact with Git through RStudio and Github.
+- **Override the default branch name**: When you start a new project, the initial code will be on a default branch with this name. I prefer to use "main" instead of "master".
+
+### R
+
+To download R, [click a mirror link](https://cran.r-project.org/mirrors.html) closest to your location (for me it's the [Oak Ridge, TN](https://mirrors.nics.utk.edu/cran/) mirror). You'll be redirected to a page where you can download R for your system. 
+
+On the download page, download **Base** R. You can install using the default settings.
+
+### RStudio
+
+Download RStudio from the [website](https://posit.co/download/rstudio-desktop/).
+
+Once you install RStudio, there are some changes I *highly* recommend. 
+
+1. Go to **Tools > Global Options**.
+2. On **General > Basic**, uncheck the following options:
+    - [ ] "Restore most recently opened project at startup"
+    - [ ] "Restore previously open source documents at startup"
+    - [ ] "Restore .RData into workspace at startup"
+3. Under **Code > Editing**, check:
+    - [X] "Use native pipe operator, |>"
+4. Click on **Appearance** and choose an Editor theme you like.
+
+Click on Terminal. Enter the following:
+`git user.name thing`
+
+### Quarto
+
+Download Quarto from the [website](https://quarto.org/docs/download/)
+
+**Install as an administrator.**
+
+## Other
+
+- Create a "Projects" folder on your computer.
