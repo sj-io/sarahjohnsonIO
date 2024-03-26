@@ -51,13 +51,12 @@ $progress-bg:                 $secondary-bg !default;
 $code-bg:                     $tertiary-bg !default;
 $code-color:                  $teal !default;
 
-$link-color:                  lighten($teal, 15%) !default;
+$link-color:                  $teal !default;
 $link-hover-color:            lighten($link-color, 15%) !default;
 $heading-color:               $teal !default;
 
 $border-color:                $gray-700 !default;
 $border-color-translucent:    rgba(255, 255, 255, 0.15) !default;
-
 $border-radius: 0rem;
 
 $box-shadow-dark: 5px 5px 10px rgba(darken($dark, 50%), .2), -5px -5px 10px rgba($white, .05) !default;
@@ -86,8 +85,9 @@ $box-shadow-dark: 5px 5px 10px rgba(darken($dark, 50%), .2), -5px -5px 10px rgba
   transition: background-color .15s ease-in-out, border .15s ease-in-out, box-shadow .15s ease-in-out, color .15s ease-in-out;
 }
 
-.btn {
-    @include shadow($dark, $box-shadow-dark);
+// buttons
+.btn, .quarto-category {
+    // @include shadow($dark, $box-shadow-dark);
     color: $link-color;
   }
   
@@ -107,37 +107,6 @@ $box-shadow-dark: 5px 5px 10px rgba(darken($dark, 50%), .2), -5px -5px 10px rgba
     @include shadow($dark, $box-shadow-dark);
     color: $navbar-dark-color;
 }
-  
-.form-control {
-    &:disabled {
-      background-color: $gray-400;
-    }
-
-    &::file-selector-button {
-      box-shadow: 2px 2px 5px rgba($black, .2), inset 3px 3px 10px rgba(shade-color($form-range-thumb-bg, 50%), .1);
-    }
-}
-
-  .form-select:not([multiple]) {
-    box-shadow: $box-shadow-dark;
-  }
-
-.card, .list-group {
-    background-color: mix($black, $dark, 3%);
-    box-shadow: none;
-    border: solid 1px $navbar-fg;
-  }
-  
-.card {
-    &.bg-secondary,
-    &.bg-light {
-      color: $body-color;
-    }
-    
-    h5 {
-      color: $teal;
-    }
-  }
 
 .modal-content, .popover, .toast {
     background-color: mix($white, $dark, 3%);
@@ -148,16 +117,13 @@ $box-shadow-dark: 5px 5px 10px rgba(darken($dark, 50%), .2), -5px -5px 10px rgba
     color: $white;
 }
   
+// code 
 pre code {
     color: $gray-500;
 }
 
 code span.co {
   color: $gray-500;
-}
-  
-h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
-  color: $heading-color;
 }
 
 // reference section
@@ -184,7 +150,45 @@ h2,.h2 {
     padding-bottom: .5rem
 }
 
-img {
+h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
+  color: $heading-color;
+}
+
+// listing cards
+.card-img-top {
   border-bottom: 1px $navbar-fg solid;
   opacity: 0.7;
+}
+
+.card, .list-group {
+    background-color: mix($black, $dark, 3%);
+    box-shadow: none;
+    border: solid 1px $navbar-fg;
+}
+
+.card:hover {
+    border: solid 1px $navbar-hover-color;
+    h5 {
+      color: $navbar-hover-color;
+    }
+    .card-img-top {
+      border-bottom: 1px $navbar-hover-color solid;
+    }
+}
+  
+.card {
+    &.bg-secondary, &.bg-light {
+      color: $body-color;
+    }
+    h5 {
+      color: $navbar-fg;
+    }
+  }
+  
+// listing post
+div.quarto-post h3 a {
+  color: $navbar-fg;
+}
+div.quarto-post h3 a:hover {
+  color: $navbar-hover-color;
 }
