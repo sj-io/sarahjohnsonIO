@@ -184,6 +184,14 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
       color: $navbar-fg;
     }
   }
+
+.quarto-listing-category .category {
+  color: $navbar-fg;
+}
+
+.quarto-listing-category .category:hover {
+  color: $navbar-hover-color;
+}
   
 // listing post
 div.quarto-post h3 a {
