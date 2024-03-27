@@ -1,0 +1,11 @@
+/*-- scss:defaults --*/
+$code-block-bg: #E5EBF4;
+
+/*-- scss:rules --*/
+.panel-caption, .figure-caption, .subfigure-caption, .table-caption, figcaption, caption {
+    color: #6c757d;
+}
+
+.margin-caption, div.aside, aside, .column-margin {
+  color: #6c757d;
+}

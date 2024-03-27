@@ -1,0 +1,211 @@
+/*-- scss:defaults --*/
+
+//
+// Color system
+//
+$white:    #fff !default;
+$gray-100: #f2faf9 !default;
+$gray-200: #d8efec !default;
+$gray-300: #cbe9e6 !default;
+$gray-400: #bee4e0 !default;
+$gray-500: #adb5bd !default;
+$gray-600: #7f8a99 !default;
+$gray-700: #669999 !default;
+$gray-800: #444b40 !default;
+$gray-900: #212529 !default;
+$black:    #000 !default;
+
+$blue:    #378dfc !default;
+$indigo:  #6610f2 !default;
+$purple:  #5b62f4 !default;
+$pink:    #d63384 !default;
+$red:     #e52527 !default;
+$orange:  #fd7e14 !default;
+$yellow:  #ffc107 !default;
+$green:   #43cc29 !default;
+$teal:    #20c997 !default;
+$cyan:    #0dcaf0 !default;
+
+$primary:       $blue !default;
+$secondary:     $gray-200 !default;
+$success:       $green !default;
+$info:          $purple !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-100 !default;
+$dark:          $gray-900 !default;
+
+// Body
+
+$body-bg:                     $gray-900 !default; 
+$body-color:                  $gray-400 !default;
+$emphasis-color:              $white !default;
+$secondary-bg:                $gray-800 !default;
+$tertiary-bg:                 #1c3637 !default;
+
+$navbar-fg:                   rgba($teal, .6) !default;
+$navbar-hover-color:          $teal !default;
+$navbar-hl:                   $teal !default;
+$navbar-dark-color:           rgba($white, .75) !default;
+$progress-bg:                 $secondary-bg !default;
+$code-bg:                     $tertiary-bg !default;
+$code-color:                  $teal !default;
+
+$link-color:                  $teal !default;
+$link-hover-color:            lighten($link-color, 15%) !default;
+$heading-color:               $teal !default;
+
+$border-color:                $gray-700 !default;
+$border-color-translucent:    rgba(255, 255, 255, 0.15) !default;
+$border-radius: 0rem;
+
+$box-shadow-dark: 5px 5px 10px rgba(darken($dark, 50%), .2), -5px -5px 10px rgba($white, .05) !default;
+
+/*-- scss:rules --*/
+// Mixins
+
+@mixin shadow($bg: $gray-200, $shadow: $box-shadow) {
+  background-color: $bg;
+  border: none;
+  box-shadow: $shadow;
+  transition: background-color .15s ease-in-out, border .15s ease-in-out, box-shadow .15s ease-in-out, color .15s ease-in-out;
+}
+
+@mixin shadow-outline($bg: $body-bg, $shadow: $box-shadow) {
+  position: absolute;
+  top: -.5rem;
+  right: -.5rem;
+  bottom: -.5rem;
+  left: -.5rem;
+  z-index: -1;
+  content: "";
+  background-color: $bg;
+  border: 1px solid rgba($white, .1);
+  box-shadow: $shadow;
+  transition: background-color .15s ease-in-out, border .15s ease-in-out, box-shadow .15s ease-in-out, color .15s ease-in-out;
+}
+
+// buttons
+.btn {
+    // @include shadow($dark, $box-shadow-dark);
+    color: $link-color;
+  }
+  
+.btn-group,
+  .btn-group-vertical {
+    @include shadow($dark, $box-shadow-dark);
+    color: $navbar-dark-color;
+  }
+  
+.btn-check:not(:checked) + .btn,
+  .btn-check:not(:checked) + .btn:active {
+    color: $navbar-dark-color;
+    background-color: $dark;
+  }
+
+.nav-tabs, .nav-pills, .breadcrumb, .pagination {
+    @include shadow($dark, $box-shadow-dark);
+    color: $navbar-dark-color;
+}
+
+.modal-content, .popover, .toast {
+    background-color: mix($white, $dark, 3%);
+    box-shadow: 8px 8px 40px rgba(0, 0, 0, .15), inset 1px 1px 3px rgba(255, 255, 255, .05), inset -5px -5px 20px rgba(0, 0, 0, .05);
+}
+
+.popover-header, .toast-header {
+    color: $white;
+}
+  
+// code 
+pre code {
+    color: $gray-500;
+}
+
+code span.co {
+  color: $gray-500;
+}
+
+// reference section
+#quarto-appendix.default {
+  border-top: 1px dashed $tertiary-bg;
+  color: $gray-500;
+}
+
+#quarto-appendix.default {
+  .quarto-appendix-bibtex, .quarto-appendix-citeas {
+    border: 1px dashed $tertiary-bg; 
+  }
+}
+
+// about page
+div.quarto-about-solana .about-entity .about-link {
+    color: #14524f;
+    text-decoration: none;
+    border: solid 1px
+}
+
+h2,.h2 {
+    border-bottom: 1px dashed $tertiary-bg;
+    padding-bottom: .5rem
+}
+
+h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
+  color: $heading-color;
+}
+
+// listing cards
+.card-img-top {
+  border-bottom: 1px $navbar-fg solid;
+  opacity: 0.7;
+}
+
+.card, .list-group {
+    background-color: mix($black, $dark, 3%);
+    box-shadow: none;
+    border: solid 1px $navbar-fg;
+}
+
+.card:hover {
+    border: solid 1px $navbar-hover-color;
+    h5 {
+      color: $navbar-hover-color;
+    }
+    .card-img-top {
+      border-bottom: 1px $navbar-hover-color solid;
+      opacity: 1;
+    }
+}
+  
+.card {
+    &.bg-secondary, &.bg-light {
+      color: $body-color;
+    }
+    h5 {
+      color: $navbar-fg;
+    }
+  }
+
+.quarto-listing-category .category {
+  color: $navbar-fg;
+}
+
+.quarto-listing-category .category:hover {
+  color: $navbar-hover-color;
+}
+
+.quarto-category {
+  color: $navbar-fg;
+}
+
+.quarto-category:hover {
+  color: $navbar-hover-color;
+}
+  
+// listing post
+div.quarto-post h3 a {
+  color: $navbar-fg;
+}
+div.quarto-post h3 a:hover {
+  color: $navbar-hover-color;
+}

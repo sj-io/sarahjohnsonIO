@@ -29,7 +29,9 @@ website:
 
 format:
   html:
-    theme: [morph, custom.scss]
+    theme: 
+      light: [morph, custom.scss, theme-light.scss]
+      dark: [morph, custom.scss, theme-dark.scss]
     
 comments: 
   giscus:

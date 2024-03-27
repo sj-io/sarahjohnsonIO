@@ -1,14 +1,35 @@
 /*-- scss:defaults --*/
-$code-block-bg: #E5EBF4;
-$card-spacer-y: 1.2rem;
-$card-spacer-x: 1.2rem;
+$card-spacer-y: 1rem;
+$card-spacer-x: 1rem;
 
 /*-- scss:rules --*/
 .panel-caption, .figure-caption, .subfigure-caption, .table-caption, figcaption, caption {
-    color: #6c757d;
     text-align: center;
 }
 
-.margin-caption, div.aside, aside, .column-margin {
-  color: #6c757d;
+
+div.quarto-about-solana {
+  padding-bottom: 3rem;
+  
+  .about-entity {
+    .about-links {
+      // padding-top: 0rem;
+      padding-bottom: .2rem;
+    }
+    .about-contents {
+      padding-top: 1rem;
+      padding-right: 3rem;
+    }
+    img {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.card h5 {
+  padding-bottom: 1rem;
+}
+
+.sidebar {
+  margin-top: 2rem;
 }
