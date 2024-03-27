@@ -86,7 +86,7 @@ $box-shadow-dark: 5px 5px 10px rgba(darken($dark, 50%), .2), -5px -5px 10px rgba
 }
 
 // buttons
-.btn, .quarto-category {
+.btn {
     // @include shadow($dark, $box-shadow-dark);
     color: $link-color;
   }
@@ -173,6 +173,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
     }
     .card-img-top {
       border-bottom: 1px $navbar-hover-color solid;
+      opacity: 1;
     }
 }
   
@@ -190,6 +191,14 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 }
 
 .quarto-listing-category .category:hover {
+  color: $navbar-hover-color;
+}
+
+.quarto-category {
+  color: $navbar-fg;
+}
+
+.quarto-category:hover {
   color: $navbar-hover-color;
 }
   
