@@ -662,13 +662,58 @@ sleep_heatmap |>
 :::
 
 ```{r, echo=FALSE}
+all_nighters <- tibble(
+  creationDate = c(
+    "2023-08-03", "2023-08-11", "2023-10-22", "2023-11-18",
+    "2024-01-09", "2024-03-14", "2024-03-17", "2024-03-20"
+    ),
+  daily_sleep = c(
+    "0:00:00", "0:00:00", "3:00:00", "7:30:00",
+    "1:40:00", "0:00:00", "0:00:00", "3:00:00"
+    )
+) |> 
+  mutate(creationDate = date(creationDate),
+         daily_sleep = hms::as_hms(daily_sleep),
+         wday = wday(creationDate, abbr = TRUE, label = TRUE),
+         year = year(creationDate),
+         week = as.numeric(week(creationDate)),
+         week = ifelse(year == as.numeric(2024), week + 52, week)
+         )
+
 sleep_debt <- sleep_heatmap |> 
-  mutate(sleepy_debt = 25200 - as.numeric(daily_sleep)) |> 
+  bind_rows(all_nighters) |> 
+  # mutate(sleepy_debt = 28800 - as.numeric(daily_sleep))  # 8 hours
+  mutate(sleepy_debt = 25200 - as.numeric(daily_sleep)) # 7 hours
+weekly_sleep_debt <- sleep_debt |> 
   summarise(weekly_debt = sum(sleepy_debt), .by = week)
+weekday_sleep_debt <- sleep_debt |> 
+  filter(!str_starts(wday, "S")) |> 
+  summarise(weekly_debt = sum(sleepy_debt), .by = week)
+
+ggplot() +
+  # geom_col_rounded(data = weekly_sleep_debt, aes(x = week, y = weekly_debt)) +
+  geom_col_rounded(data = sleep_debt, aes(x = creationDate, y = sleepy_debt))
+```
+
+
+```{r, echo=FALSE}
+ggplot(data = weekday_sleep_debt, aes(x = week, y = weekly_debt, label = paste(week, "|", round(weekly_debt/3600, 2)))) +
+  geom_col_rounded(fill = "grey90") +
+  geom_text(size = 3, color = "red", check_overlap = TRUE, fontface = "bold", angle = 90, hjust = "inward") +
+  theme_void()
+```
+
+
+```{r, echo=FALSE}
+ggplot(data = weekly_sleep_debt, aes(x = week, y = weekly_debt, label = paste(week, "|", round(weekly_debt/3600, 2)))) +
+  geom_col_rounded(fill = "grey90") +
+  geom_text(size = 3, color = "red", check_overlap = TRUE, fontface = "bold", angle = 90, hjust = "inward") +
+  theme_void()
+  # geom_col_rounded(data = sleep_debt, aes(x = creationDate, y = sleepy_debt))
 ```
 To find my sleep debt, I subtracted by nightly sleep time by 7 hours. If I slept 4 hours, I would have 3 hours of sleep debt. 
 
-Since I began tracking my sleep, my total sleep debt is **`r round(sum(sleep_debt$weekly_debt)/3600, 2)` hours**.
+Since I began tracking my sleep, my total sleep debt is **`r round(sum(weekly_sleep_debt$weekly_debt)/3600, 2)` hours**.
 
 ## Acknowledgments {.appendix}
 
