@@ -58,33 +58,23 @@ This map combined four different data sources: shapefiles of districts, parcel-l
 
 <br>
 
-::: {.grid .column-screen-inset-shaded}
-
-::: {.g-col-6}
+::: {layout="[6,6]" layout-valign="center" .column-screen-inset-shaded}
 
 ::: {#vid-website}
 
-{{< video website-example.mov >}}
+{{< video website-example.mp4 >}}
 
 "Home rehabilitation program website."
 
 :::
 
-:::
-
-::: {.g-col-6}
-
 ## Website Example
 
-I previously worked for a government home rehabilitation program. Contractors would often run into the same problems for the numerous documents required to participate in our program. @vid-website shows a website I created to make the information easy to find, including examples docs and how to acquire the documentation.
-
-The website included: 
-
+I previously worked for a government home rehabilitation program. Contractors would often run into the same problems for the numerous documents required to participate in our program. @vid-website shows a website I created to make the information easy to find, including examples docs and how to acquire the documentation.<br><br>
+The website included: <br><br>
 - embedded presentations
 - example documents with assistance for each required document
 - tables which updated with the most recent internal data
 - interactive dashboard for current projects in our program
-
-:::
 
 :::
