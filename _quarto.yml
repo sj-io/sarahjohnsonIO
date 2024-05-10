@@ -18,6 +18,8 @@ website:
         text: Posts
       - href: packages.qmd
         text: Packages
+      - href: about/index.qmd
+        text: About
     right: 
       - icon: github
         href: https://github.com/sj-io

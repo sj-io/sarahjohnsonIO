@@ -2,7 +2,9 @@
 title: "Posts"
 listing: 
   - id: all
-    contents: "*/*.qmd"
+    contents: "p*/*.qmd"
+    exclude: 
+      filename: "about/*"
     categories: true
     type: grid
     fields: [image, title, description, reading-time]

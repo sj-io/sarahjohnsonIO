@@ -16,7 +16,7 @@ about:
       href: mailto:sarahviamemphis@gmail.com
 listing: 
   - id: all
-    contents: "*/*.qmd"
+    contents: "p*/*.qmd"
     type: grid
     fields: [image, title, description, date]
     max-items: 3

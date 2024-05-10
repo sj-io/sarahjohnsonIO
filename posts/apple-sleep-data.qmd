@@ -151,8 +151,8 @@ Congratulations! You now have all your health records saved in an easy format.
 To access the data again, just use `read_parquet()`.
 
 ```{r}
-sleep_data <- read_parquet(paste0(path, "health/sleep.parquet"))
-# sleep_data <- read_csv(paste0(path, "health/sleep.csv"))
+# sleep_data <- read_parquet(paste0(path, "health/sleep.parquet"))
+sleep_data <- read_csv(paste0(path, "health/sleep.csv"))
   # filter(str_detect(sourceName, "Watch"))
 
 glimpse(sleep_data)

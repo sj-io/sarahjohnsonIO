@@ -1,0 +1,112 @@
+---
+title: "Sarah Johnson"
+format: 
+  html:
+    toc: true
+  docx: 
+    toc: false
+comments: false
+---
+
+# Education
+
+**University of Memphis**
+
+Bachelor in Business Economics [**Aug 2015**]{.aside}
+
+Master of City and Regional Planning [**Aug 2021**]{.aside}
+
+- *Capstone: Addressing Neglect in the Private Rental Market*
+
+# Work Experience
+
+**Shelby County Department of Housing** *Memphis, TN* 
+
+*Business Service Analyst* [**Oct 2023 - Mar 2024**]{.aside}
+
+-	Developed a website to provide frequently requested information regarding our Home Rehabilitation Program for contractors, residents, and internal use.
+-	Wrote sections of annual plans and grant applications detailing the needs of the local housing community, purposes of our organization, and services we provided with planned expansions.
+-	Created and described maps, graphs, and tables in static and interactive formats for reports, grants, and local officials. Utilized data from a variety of sources including the Census Bureau, CHAS, and assessor’s database, using R to manage datasets and convert information into visuals.
+-	Aided a local nonprofit in fulfilling HUD grant application requirements, resulting in an $8M+ award for the agency.
+
+*Intake/Outreach Coordinator*   [**Apr 2022 - Sep 2023**]{.aside}
+
+-	Conducted intake for our home rehabilitation program and created a database to organize client and project information.
+-	Read and understood HUD regulations to ensure our program remained compliant with federal laws. Summarized these rules into clear terms to train my replacement upon promotion.
+-	Developed a needs-based ranking system to select applicants based on factors such as age, housing quality, and income, rather than the existing first-come first-serve method. 
+
+**University of Memphis** *Memphis, TN* [**Aug 2019 - Apr 2020**]{.aside}
+
+*Graduate Assistant*
+
+-	Researched St. Louis’ land banking practices and methods of revitalizing vacant land by the public, private, and nonprofit sectors, with a focus on public-private partnerships.
+
+**Shelby County Department of Housing** *Memphis, TN* [**Aug 2018 - Apr 2019**]{.aside}
+
+*Graduate Assistant*   
+
+-	Analyzed and described local housing needs and market conditions for the department’s Five-Year Comprehensive Plan.
+
+# Technical Skills
+
+**Programming languages/frameworks/software:** R, RStudio, Quarto, HTML, CSS, SCSS, Bootstrap, JS, VueJS, SQL, Git, Github, VSCode, Netlify, DigitalOcean
+
+R is my primary tool for data wrangling (including geospatial data), analysis, static and interactive graphing, web scraping, and accessing APIs. I utilize Quarto for publishing this information as websites, dashboards, and presentations.
+
+### R Packages
+
+R packages are a collection of functions that help users automate specified tasks. I developed the following R packages which are freely available to download and use via GitHub:
+
+- `tidychas`: Access HUD's CHAS dataset in a tidy format.
+- `memphis311`: Access Memphis 311 data via API.
+- `mk8dx`: Convert Mario Kart speedrunning data to tabular format.
+
+# Older Experience
+
+<!-- **DWJ Korean BBQ; Saltwater Crab; Boscos Squared**    *Memphis, TN*   [**Jan 2016 - Mar 2020**]{.aside} -->
+
+<!-- *Hostess, Server* -->
+
+<!-- - Intermittently worked over many years as a restaurant server, often solo managing the entire front of house for the restaurant. -->
+<!-- - Paid attention to customer’s needs and dissolved problems. -->
+<!-- - For customers unfamiliar with Korean BBQ, explained the process and provided instruction for proper use. -->
+
+**International Paper** *Memphis, TN* [**July 2017 - Jan 2019**]{.aside}
+
+*Training Administrator*
+
+-	Created training material for new hires and employees transferring positions within the company.
+-	Ensured material was understandable to someone unfamiliar with jargon, working with SMEs to verify accuracy while maintaining simplicity
+
+<!-- **University of Memphis** *Memphis, TN*  -->
+
+<!-- *Graduate Assistant* [**Aug 2015 - Oct 2015**]{.aside} -->
+
+<!-- - Assisted in health care economics research, collecting and organizing hospital data. -->
+
+<!-- *Research Assistant* [**Jan 2015 - Aug 2015**]{.aside} -->
+
+<!-- - Assisted with data collection and literary reviews for multiple publications related to police spending and bankruptcy. -->
+
+<!-- **Mississippi State University** *Starkville, MS*  -->
+
+<!-- *Research Assistant* [**Jan 2013 - May 2013**]{.aside} -->
+
+<!-- - Aided biological science researchers studying nearby butterfly populations. Tended to butterflies and maintained logs on population and egg counts. -->
+
+**Dragon Spirit Newspaper**    *Collierville, TN*   [**Aug 2010 - May 2012**]{.aside}
+
+*Editor, Photographer, Columnist* 
+
+-	Wrote and edited articles for high school newspaper, including a monthly column. 
+-	Pursued interviews with students and local community figures; photographed events.
+-	Assigned articles to writers, ensured timely delivery, and proofread stories.
+-	Sold newspapers classroom-to-classroom and persuaded local businesses to purchase ad space.
+-	Attended journalism camp at the University of Alabama to learn best practices.
+
+<!-- **Family Taekwondo Center** *Collierville, TN*  [**Sep 2008 - Jan 2012**]{.aside} -->
+
+<!-- *Instructor* -->
+
+<!-- - Instructed adult and children classes of all belt levels in patterns, techniques, and sparring. -->
+
