@@ -300,10 +300,12 @@ Housing variables start with "B25", or "C25" for condensed versions. Sometimes a
 │   │   ├── B25044-(2005-2022)
 │   │   └── C25045-(2005-2022)
 │   ├── Year-Householder-Moved-Into-Unit
+│   │   ├── B25029-(2010-2011)
 │   │   ├── B25038-(2005-2022)
 │   │   └── Units-In-Structure
 │   │       └── B25129-(2010-2022)
 │   └── Year-Structure-Built
+│       ├── B25028-(2010-2011)
 │       ├── B25036-(2005-2022)
 │       └── Units-In-Structure
 │           └── B25127-(2010-2022)
@@ -358,7 +360,8 @@ Housing variables start with "B25", or "C25" for condensed versions. Sometimes a
 └── Year-Structure-Built
     └── B25034-(2005-2022)
 
-297 directories
+299 directories, 0 files
+
 ```
 
 # How to make the tree
@@ -375,72 +378,73 @@ library(tidycensus)
 Use the `load_variables()` function to get Census variables.
 
 ```{r}
-# ACS1 data is available from 2005-2022, excluding 2020
-yrs <- c(2005:2019, 2021, 2022)
-names(yrs) <- yrs
+# acs1 data is available from 2005-2022, excluding 2020
+years <- c(2005:2019, 2021:2022)
+names(years) <- years
 
-# Get variables for ALL years
-vACS1 <- map_dfr(yrs, ~ {
-  load_variables(.x, "acs1") %>% 
-  filter(str_detect(name, "^[BC]25"))
-}, .id = "yr")
+# function to load variables for each year, filter for housing
+get_hsg_vars <- function(year, survey) {
+  hsg_vars <- load_variables(year, survey) |> 
+    filter(str_starts(name, "^[BC]25"))
+  hsg_vars$year <- year
+  hsg_vars
+}
+
+# Get variables for all years
+all_hsg_vars <- map2(years, "acs1", get_hsg_vars) |> bind_rows()
 ```
 
 Narrow for housing variables and clean up.
 
 ```{r}
 # Get the top level variables
-hsg_top <- vACS1 %>% 
+top_hsg_vars <- all_hsg_vars |> 
   filter(str_detect(name, "_001$"),           #' only top-level variables
          !str_detect(name, "[:alpha:]_"),     #' omit race variables
-         !str_detect(label, "Estimate!!Aggregate") #' omit aggregates, medians, etc.
-  ) %>% 
-  mutate(across(c(label, concept), 
-                ~ str_replace_all(.x, c("\\b20\\d{2}\\b" = "ACSYEAR",
-                                        "INCOME THE PAST 12 MONTHS" = "INCOME IN THE PAST 12 MONTHS")
-                                  ) %>% 
-                  str_to_title())) %>% 
-  select(-label)
+         !str_detect(label, "Estimate!!Aggregate")) |>  #' omit aggregates, medians, etc.
+  mutate(concept = 
+           str_replace_all(concept, c(
+             "\\b20\\d{2}\\b" = "ACSYEAR", "INCOME THE PAST 12 MONTHS" = "INCOME IN THE PAST 12 MONTHS")) |> 
+           str_to_title()) |> 
+  select(year, name, concept)
 ```
 
-Find the first and last year the variable appeared. Note that the "concept" column is currently broken for 2010 & 2011 ACS1, and a couple variables changed over the years, so group by name AND concept.
+Correct for missing variable names from the ACS 2010 and 2011 and create a new column for the year range.
 
 ```{r}
-min_yr <- hsg_top %>% 
-  filter(!is.na(concept)) %>% 
-  group_by(name, concept) %>% 
-  slice_min(yr) %>% 
-  mutate(nm = "min")
+vars12 <- filter(top_hsg_vars, year == 2012) |> select(-year)
 
-max_yr <- hsg_top %>% 
-  filter(!is.na(concept)) %>% 
-  group_by(name, concept) %>% 
-  slice_max(yr) %>% 
-  mutate(nm = "max")
+# Correct variable names for 2010 and 2011
+top_hsg_vars_fix <- top_hsg_vars |> 
+  filter(is.na(concept)) |> 
+  select(-concept) |> 
+  left_join(vars12, by = "name") |> 
+  mutate(concept = case_match(name,
+    "B25028_001" ~ "Tenure By Year Structure Built",
+    "B25029_001" ~ "Tenure By Year Householder Moved Into Unit",
+    .default = concept
+  ))
 
-#' Join together and combine the first and last year
-hsg_yrs <- rbind(min_yr, max_yr) %>% 
-  pivot_wider(names_from = nm, values_from = yr) %>% 
-  mutate(years = case_when(
-    min != max & min != 2012 ~ paste0("(", min, "-", max, ")"),
-    min != max & min == 2012 ~ paste0("(2010-", max, ")"),
-    TRUE ~ paste0("(", min, ")")
-  )) %>% 
-  arrange(name, min, max) %>% 
-  select(-c(min, max)) %>% 
-  distinct()
+hsg_var_years <- top_hsg_vars |> 
+  filter(!is.na(concept)) |> 
+  bind_rows(top_hsg_vars_fix) |> 
+  arrange(year, name) |> 
+  mutate(year_range = if_else(
+    min(year) != max(year), paste0("(", min(year), "-", max(year), ")"), paste0("(", min(year), ")")
+  ), .by = c("name", "concept")) |> 
+  select(-year) |> distinct()
 ```
 
 Format for the command line.
 
 ```{r}
-hsg_vs <- hsg_yrs %>% 
-  mutate(concept = str_replace_all(concept, "-(?=[:alpha:])", " ") %>% 
-         str_remove_all("[:punct:]") %>% 
-         str_replace_all(" By ", "/"),
+hsg_vs <- hsg_var_years |> 
+  mutate(concept = str_replace_all(concept, "-(?=[:alpha:])", " ") |> 
+          str_remove_all("[:punct:]") |> 
+          str_replace_all(" By ", "/"),
          name = str_remove(name, "_001")
          ) %>% 
-  unite(col = "name", name, years, sep = "-", na.rm = TRUE) %>% 
+  unite(col = "name", name, year_range, sep = "-", na.rm = TRUE) %>% 
   unite(col = "fileStr", concept, name, sep = "/", na.rm = TRUE) %>% 
   mutate(fileStr = str_replace_all(fileStr, "\\s", "-"),
          fileStr = str_replace_all(fileStr, "-{2,}", "-"))
@@ -470,7 +474,7 @@ xargs -I {} mkdir -p "{}" < "../vACS1.txt"
 Finally, create a tree of the file directory. Note: requires the [tree](https://formulae.brew.sh/formula/tree#default) package.
 
 ``` zsh
-tree
+tree > "../vACStree.txt"
 ```
 
 The output is the tree above.
