@@ -1,0 +1,85 @@
+---
+title: "Analyze Apple Health data with R"
+freeze: auto
+toc: true
+toc-location: left
+layout: full
+date: "2023-12-14"
+date-modified: "2024-07-09"
+image: "img/preview-image.png"
+categories:
+  - R
+  - health
+  - xml2
+  - ggplot2
+lightbox: true
+author: 
+  - name: Sarah Johnson
+    url: https://sarahjohnson.io
+citation: true
+execute: 
+  eval: false
+---
+
+# Access your data {#get-data}
+
+You can access your health data by exporting it from the Apple Health app. Click on your profile picture (top right) and scroll to the bottom for the export button. The exported file is a zip folder containing all of your health data, so it might take a moment.
+
+::: {layout-ncol=2}
+![Click your profile picture.](img/apple-health-get-sleep-data-1.PNG)
+
+![Scroll to the bottom and export data.](img/apple-health-get-sleep-data-2.PNG)
+:::
+
+I airdropped the file from my phone to my macbook, but you could also upload it to your cloud storage.
+
+The export is a zipped folder, which I airdropped to my Mac and unzipped. The file that contains your health data is `export.xml`.
+
+# Convert XML data to a table
+
+The `xml2` R package (included in the `tidyverse` package) can be used to access this data. I also use the `arrow` package to save the data as parquet files, which take up less space and load faster than csv files.
+
+First, load your libraries.
+
+```{r, message=FALSE, warning=FALSE}
+# install.packages(c("tidyverse", "arrow"))
+library(tidyverse)
+library(xml2)
+library(arrow) # optional
+```
+
+```{r, echo=FALSE, message=FALSE}
+path <- Sys.getenv("MY_DATA_FOLDER")
+```
+
+### Read the XML file
+
+Read the xml file using the `xml2::read_xml()` function.
+
+```{r echo=FALSE, eval=FALSE}
+# read your health data file
+xml <- read_xml(file.path(path, "apple_health_export/export.xml"))
+```
+
+```{r eval=FALSE}
+xml <- read_xml("/Users/JaneDoe/Data/apple_health_export/export.xml")
+```
+
+This file is large and takes up a lot of memory, so let's narrow down to the information we need and export the data to something easier to work with.
+
+### Access health records
+
+The top of the xml document shows what tables are included in the file and related metadata. This post will focus on the **Record** table, but other data available includes Activity Summary, Workout, Clinical Record, and more.
+
+Below are the attributes for the Records data, which we will turn into columns.
+
+![](img/apple-health-records-attributes.png)
+
+Use `xml_find_all("//Record")` to narrow the xml document to just your health records.
+
+```{r eval=FALSE}
+xml_records <- xml |> xml_find_all("//Record")
+col_names <- c("type", "sourceName", "sourceVersion", "creationDate", "startDate", "endDate", "value", "unit")
+```
+
+Create a `col_names` vector to list which information you want to pull from each element.

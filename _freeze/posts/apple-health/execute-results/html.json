@@ -1,0 +1,17 @@
+{
+  "hash": "c0fcab9823e76135da8a003a489ba254",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Analyze Apple Health data with R\"\nfreeze: auto\ntoc: true\ntoc-location: left\nlayout: full\ndate: \"2023-12-14\"\ndate-modified: \"2024-07-09\"\nimage: \"img/preview-image.png\"\ncategories:\n  - R\n  - health\n  - xml2\n  - ggplot2\nlightbox: true\nauthor: \n  - name: Sarah Johnson\n    url: https://sarahjohnson.io\ncitation: true\nexecute: \n  eval: false\n---\n\n\n\n\n\n# Access your data {#get-data}\n\nYou can access your health data by exporting it from the Apple Health app. Click on your profile picture (top right) and scroll to the bottom for the export button. The exported file is a zip folder containing all of your health data, so it might take a moment.\n\n::: {layout-ncol=2}\n![Click your profile picture.](img/apple-health-get-sleep-data-1.PNG)\n\n![Scroll to the bottom and export data.](img/apple-health-get-sleep-data-2.PNG)\n:::\n\nI airdropped the file from my phone to my macbook, but you could also upload it to your cloud storage.\n\nThe export is a zipped folder, which I airdropped to my Mac and unzipped. The file that contains your health data is `export.xml`.\n\n# Convert XML data to a table\n\nThe `xml2` R package (included in the `tidyverse` package) can be used to access this data. I also use the `arrow` package to save the data as parquet files, which take up less space and load faster than csv files.\n\nFirst, load your libraries.\n\n\n\n\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n\n:::\n\n\n\n\n\n### Read the XML file\n\nRead the xml file using the `xml2::read_xml()` function.\n\n\n\n\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n\n:::\n\n\n\n\n\nThis file is large and takes up a lot of memory, so let's narrow down to the information we need and export the data to something easier to work with.\n\n### Access health records\n\nThe top of the xml document shows what tables are included in the file and related metadata. This post will focus on the **Record** table, but other data available includes Activity Summary, Workout, Clinical Record, and more.\n\nBelow are the attributes for the Records data, which we will turn into columns.\n\n![](img/apple-health-records-attributes.png)\n\nUse `xml_find_all(\"//Record\")` to narrow the xml document to just your health records.\n\n\n\n\n\n::: {.cell}\n\n:::\n\n\n\n\n\nCreate a `col_names` vector to list which information you want to pull from each element.",
+    "supporting": [
+      "apple-health_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
