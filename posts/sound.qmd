@@ -1,0 +1,37 @@
+---
+title: "Sound vs. Population"
+---
+
+I saw a tiktok about a map of sound data provided by the National Park Service.
+
+The official post can be found [on the NPS website](https://www.nps.gov/subjects/sound/soundmap.htm), including a link to the [original data](https://irma.nps.gov/DataStore/Reference/Profile/2217356). The NPS has [an FAQ page](https://www.nps.gov/subjects/sound/mapfaq.htm) with additional information about the data.
+
+```{r}
+library(tidyverse)
+library(sf)
+library(raster)
+library(leaflet)
+```
+
+```{r}
+nps_fp <- list.files(file.path(Sys.getenv("MY_DATA_FOLDER"), "geom", "nps"), full.names = TRUE)
+nps1 <- nps_fp[[1]]
+nps2 <- nps_fp[[2]]
+nps3 <- nps_fp[[3]]
+
+test <- raster(nps1, resolution = 100)
+test2 <- raster(nps2)
+test3 <- raster(nps3)
+plot(test)
+plot(test2)
+plot(test3)
+
+test_proj <- st_transform(test, 5070)
+```
+
+```{r}
+leaflet() |> 
+  addTiles() |> 
+  addRasterImage(x = test)
+```
+
