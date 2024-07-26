@@ -1,0 +1,15 @@
+{
+  "hash": "964125a61b3c111629f3785b49cf6db8",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Development Financing Plan\"\ndraft: TRUE\nformat: \n  gfm: \n    mermaid-format: svg\n---\n\n\nThere are two types of money: **debt** and **equity**.\n\n\n```{mermaid}\nquadrantChart\n  x-axis Urgent --> Not Urgent\n  y-axis Not Important --> important\n  quadrant-1 Plan\n  quadrant-2 Do\n  quadrant-3 Deligate\n  quadrant-4 Delete\n```\n\n\n| Term                             | Definition                                                                                |\n| -------------------------------- | ----------------------------------------------------------------------------------------- |\n| Total Development Cost           | Total costs from ideation through offtake                                                 |\n| Net Operating Cost               | Annual cash that can flow \"off-site\"                                                      |\n| Loan-to-Value                    | Total debt financing / property's stabilized value                                        |\n| Debt Service Coverage Ratio      | Total annual debt service payments / property's NOI                                       |\n| RoC                              | Year 1 NOI relative to TDC                                                                |\n| Weighted Average Cost of Capital | Total annual interest payments / total debt outstanding                                   |\n| Capital stack                    | The configuration of capital instruments owned & outstanding by order of payment priority |\n| Mortgage                         | Security interest representing a conditional assignment of collateral (property title)    |\n| Note                             | Financial obligation expressed in terms of money, time, payments, and options             |\n| Collateral                       | Property that can be pledged as security to the lender(s) and seized on default           |\n| Non-recourse                     | A loan that is not a personal obligation of the borrower entity                           |\n| Tenor of a loan                  | The interval over which the loan must be repaid                                           |\n\n# Calculator\n\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n\n:::\n\n\n## Uses of Funds\n\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n\n:::\n\n\n## Sources of Funds (Development Phase)\n\n\n::: {.cell}\n\n:::\n\n\n\nDo you already have a construction loan?\n\nYes:\n\n\n::: {.cell}\n\n:::\n\n\nNo:\n\n\n::: {.cell}\n\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": null,
+    "postProcess": false
+  }
+}

@@ -1,0 +1,147 @@
+---
+title: "Development Financing Plan"
+draft: TRUE
+format: 
+  html: 
+    include-in-header:
+      - text: <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+---
+
+# Types of Money
+
+There are two types of money: **debt** and **equity**. Debt is money provided from lenders, while equity is an investment from partners.
+
+Debt and equity can further be split into **hard** money, which has an economic self-interest, and **soft** money, which has non-economic or altruistic motivations.
+
+```{mermaid}
+%%{init: {"quadrantChart": {"quadrantLabelFontSize": 13, "pointRadius": 0, "pointTextPadding": 0, "quadrantInternalBorderStrokeWidth": 0, "quadrantExternalBorderStrokeWidth": 0, "quadrantTextTopPadding": 10}, "themeVariables": {"quadrant2Fill": "#079992", "quadrant1Fill": "#38ada9", "quadrant3Fill": "#b71540", "quadrant4Fill": "#e55039", "quadrantPointTextFill": "#fad390", "quadrant1TextFill": "#0c2461", "quadrant2TextFill": "#0c2461", "quadrant3TextFill": "#0c2461", "quadrant4TextFill": "#0c2461", "quadrantTitleFill": "#0c2461", "quadrantXAxisTextFill": "#0c2461", "quadrantYAxisTextFill": "#0c2461"} }}%%
+quadrantChart
+  title Types of Financing
+  x-axis Hard --> Soft
+  y-axis Equity --> Debt
+  quadrant-2 Loans w/ collateral seeking yield
+  quadrant-1 Loans w/ favorable repayment
+  quadrant-3 Investment w/ ownership share
+  quadrant-4 Investment w/ multiple bottom lines
+  Pay... or else: [0.25, 0.9]
+  Make guarantees, post collateral: [0.25, 0.8]
+  Commercial lenders: [0.25, 0.7]
+  Risk-adjusted market rate of return: [0.25, 0.6]
+  Accrued rates, can pay w/ flexibility: [0.75, 0.9]
+  Pay from available cash: [0.75, 0.8]
+  Defer until capital event: [0.75, 0.7]
+  Forgivable by contract or 'by politics': [0.75, 0.6]
+  Hard cash injections: [0.25, 0.4]
+  Private equity funds: [0.25, 0.3]
+  Social-impact funds: [0.25, 0.2]
+  Risk-adjusted market rate of return: [0.25, 0.1]
+  Forgivable grants?: [0.75, 0.4]
+  Philanthropic, program-related: [0.75, 0.3]
+  investments: [0.75, 0.25]
+  Investments motivated by tax,: [0.75, 0.15]
+  regulation, or public-relations: [0.75, 0.1]
+```
+
+| Term                             | Definition                                                                                |
+| -------------------------------- | ----------------------------------------------------------------------------------------- |
+| Total Development Cost           | Total costs from ideation through offtake                                                 |
+| Net Operating Cost               | Annual cash that can flow "off-site"                                                      |
+| Loan-to-Value                    | Total debt financing / property's stabilized value                                        |
+| Debt Service Coverage Ratio      | Total annual debt service payments / property's NOI                                       |
+| RoC                              | Year 1 NOI relative to TDC                                                                |
+| Weighted Average Cost of Capital | Total annual interest payments / total debt outstanding                                   |
+| Capital stack                    | The configuration of capital instruments owned & outstanding by order of payment priority |
+| Mortgage                         | Security interest representing a conditional assignment of collateral (property title)    |
+| Note                             | Financial obligation expressed in terms of money, time, payments, and options             |
+| Collateral                       | Property that can be pledged as security to the lender(s) and seized on default           |
+| Non-recourse                     | A loan that is not a personal obligation of the borrower entity                           |
+| Tenor of a loan                  | The interval over which the loan must be repaid                                           |
+
+# Calculator
+
+```{r}
+library(tidyverse)
+
+tbl_dev_costs <- read_csv("data/developing-costs-example.csv")
+```
+
+
+```{r}
+total_sqft <- function(unit_count, unit_sqft) {
+  unit_count * unit_sqft
+}
+
+total_unit_cost <- function(cost_per_sqft, unit_count, unit_sqft) {
+  if (length(unit_count) != length(unit_sqft)) {
+    stop("Please provide an equal number of unit counts and square footage")
+  } else if (length(unit_count) == 1) {
+    total_cost <- cost_per_sqft * unit_count * unit_sqft
+  } else {
+    sq_footage <- map2_vec(unit_count, unit_sqft, total_sqft)
+    total_cost <- cost_per_sqft * sum(sq_footage)
+  }
+  total_cost
+}
+
+loan_amt <- function(total_dev_cost, pct_of_cost) {
+  total_dev_cost * pct_of_cost
+}
+```
+
+## Uses of Funds
+
+```{r eval=FALSE}
+construction_names <- c("land", "construction", "parking", "soft")
+```
+
+
+```{r eval=FALSE}
+cost_land <- 0
+cost_construction <- total_unit_cost(200, c(25, 5), c(500, 100))
+cost_parking <- 500000
+cost_soft <- 50000
+
+cost_subtotal <- sum(cost_construction, cost_land, cost_parking, cost_soft)
+cost_contingency <- cost_subtotal * .1
+
+total_dev_cost <- sum(costs, contingency_pct) {
+  subtotal * .1
+}
+```
+
+## Sources of Funds (Development Phase)
+
+```{r eval=FALSE}
+equity_add <- 100000
+loan_dev <- loan_amt(total_dev_cost, .5)
+
+funds <- function(total_dev_cost, additional_equity, cost_land, loan_amount) {
+  if (loan_amount == 0) {
+    subtotal <- sum(cost_land, additional_equity)
+    loan_needed <- total_dev_cost - subtotal
+    message("Construction loan needed: ", loan_needed)
+  } else {
+    subtotal <- total_dev_cost - loan_amount
+  }
+  
+  subtotal
+}
+```
+
+
+Do you already have a construction loan?
+
+Yes:
+
+```{r eval=FALSE}
+unknown_loan_pct <- 0
+construction_loan <- total_dev_cost * unknown_loan_pct
+```
+
+No:
+
+```{r eval=FALSE}
+construction_loan_needed <- total_dev_cost - equity_invested
+```
+
+
