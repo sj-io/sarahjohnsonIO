@@ -1,0 +1,124 @@
+---
+title: "fastLink"
+execute: 
+  eval: false
+---
+
+```{r}
+library(tidyverse)
+library(arrow)
+library(fastLink)
+```
+
+```{r}
+fp_adb <- file.path(Sys.getenv("MY_DATA_FOLDER"), "adb", "adb-2023.parquet")
+fp_idis <- file.path(Sys.getenv("MY_DATA_FOLDER"), "idis", "rehab-231129.parquet")
+db_adb <- read_parquet(fp_adb)
+db_adb <- db_adb |> rename(
+  "street_number" = "ADRNO",
+  "street_name" = "ADRSTR",
+  "direction" = "ADRDIR"
+)
+db_adb <- db_adb |> mutate(street_number = as.numeric(street_number))
+
+db_idis <- read_parquet(fp_idis)
+db_idis <- db_idis |> select(street_number, street_name) |> 
+  distinct() |> 
+  # unite(direction, c("dir_1", "dir_2"), na.rm = TRUE) |>
+  mutate(
+    street_number = as.numeric(street_number),
+    street_name = str_to_upper(street_name),
+    # direction = na_if(direction, ""),
+    # across(c("street_name", "direction"), ~ str_to_upper(.))
+  )
+```
+
+```{r}
+regular_join <- semi_join(db_idis, db_adb, by = c("street_number", "street_name"))
+```
+
+```{r}
+fl_out <- fastLink(
+  db_idis, db_adb, 
+  varnames = c("street_number", "street_name"),
+  stringdist.match = c("street_name"),
+  partial.match = "street_name",
+  threshold.match = 0.95,
+  address.field = "street_name"
+)
+```
+
+```{r}
+matches_1 <- fl_out$matches
+match_idis <- db_idis[matches_1$inds.a,]
+match_adb <- db_adb[matches_1$inds.b,]
+no_match_idis <- db_idis[!rownames(db_idis) %in% matches_1$inds.a,]
+no_match_adb <- db_adb[!rownames(db_adb) %in% matches_1$inds.a,]
+
+# add rowid to match by index
+clean_idis <- db_idis %>% rowid_to_column()
+clean_adb <- db_adb %>% rowid_to_column()
+
+complete_matches <- left_join(clean_idis, matches_1, by = c("rowid" = "inds.a"))
+complete_matches <- left_join(complete_matches, clean_adb, by = c("inds.b" = "rowid"))
+
+check_matches <- complete_matches |> 
+  mutate(street_name = if_else(street_name.x == street_name.y, street_name.x, 
+                               paste0(street_name.x, "; ", street_name.y)),
+         across(starts_with("street_number"), ~ as.character(.)),
+         street_number = if_else(street_number.x == street_number.y, street_number.x, 
+                               paste0(street_number.x, "; ", street_number.y))
+         )
+```
+
+```{r}
+idis_2 <- no_match_idis |> 
+  mutate(street_name = case_when(
+    street_number %in% c(5700:5750) & str_detect(street_name, "LOGAN") ~ "LOGAN",
+    street_number %in% c(11800:11899) & str_detect(street_name, "LOGAN") ~ "DOCTOR LOGAN",
+    street_number %in% c(4300:4699) & str_detect(street_name, "WAVERLY") ~ "WAVERLY FARMS",
+    str_detect(street_name, "WEST UNION") ~ "UNION",
+    str_detect(street_name, "PISGAH") ~ "PISGAH",
+    str_detect(street_name, "HARRIS") ~ "HARRIS",
+    str_detect(street_name, "DEVANT") ~ "DAVANT",
+    street_name == "E" ~ "EAST",
+    street_name == "S" ~ "CIRCLE",
+    street_name == "7TH" ~ "SEVENTH",
+    street_name == "OLD MILLINGTON" ~ "MILLINGTON",
+    street_name == "LA GRANGE" ~ "LAGRANGE HILL", # & year
+    .default = street_name
+  ))
+```
+
+
+```{r}
+fl_out <- fastLink(
+  idis_2, db_adb, 
+  varnames = c("street_number", "street_name"),
+  stringdist.match = c("street_name"),
+  partial.match = "street_name",
+  threshold.match = 0.65,
+  address.field = "street_name"
+)
+
+matches_2 <- fl_out$matches
+match_idis2 <- idis_2[matches_2$inds.a,]
+match_adb2 <- db_adb[matches_2$inds.b,]
+no_match_idis2 <- idis_2[!rownames(idis_2) %in% matches_2$inds.a,]
+no_match_adb2 <- db_adb[!rownames(db_adb) %in% matches_2$inds.a,]
+
+# add rowid to match by index
+clean_idis2 <- idis_2 %>% rowid_to_column()
+clean_adb <- db_adb %>% rowid_to_column()
+
+complete_matches2 <- left_join(clean_idis2, matches_2, by = c("rowid" = "inds.a"))
+complete_matches2 <- left_join(complete_matches2, clean_adb, by = c("inds.b" = "rowid"))
+
+check_matches2 <- complete_matches2 |> 
+  mutate(street_name = if_else(street_name.x == street_name.y, street_name.x, 
+                               paste0(street_name.x, "; ", street_name.y)),
+         across(starts_with("street_number"), ~ as.character(.)),
+         street_number = if_else(street_number.x == street_number.y, street_number.x, 
+                               paste0(street_number.x, "; ", street_number.y))
+         )
+```
