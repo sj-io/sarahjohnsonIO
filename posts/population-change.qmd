@@ -1,0 +1,132 @@
+---
+title: "U.S. Population Change, 2020-2024"
+---
+
+```{r}
+library(tidyverse)
+library(tidycensus)
+```
+
+```{r}
+v19 <- load_variables(2019, "acs1", cache = TRUE)
+```
+
+```{r}
+extract_remove <- function(df, extract_column, new_column, pattern) {
+  df |>
+    mutate(
+      {{new_column}} := str_extract({{extract_column}}, pattern),
+      {{extract_column}} := str_remove({{extract_column}}, pattern)
+    )
+}
+
+top_vars <- function(v19) {
+  the_vars <- v19
+  the_vars$census_code <- the_vars$name
+  the_vars$census_concept <- the_vars$concept
+  the_vars <- the_vars |> 
+    extract_remove(name, subcode, "_.*") |> 
+    mutate(max_vars = parse_number(subcode) |>  max(), .by = "name") |> 
+    distinct()
+  the_vars <- the_vars |> 
+    extract_remove(name, sum_level, "^[BC]")
+  the_vars <- the_vars |> 
+    select(
+      census_code, sum_level, name, subcode, census_concept, concept, 
+      everything()
+      )
+  
+  # allocation
+  allocated <- the_vars |> 
+    filter(str_starts(name, "9"))
+  the_vars <- the_vars |> 
+    filter(!str_starts(name, "9"))
+  
+  # puerto rico
+  the_vars <- the_vars |> 
+    extract_remove(name, pr_code, "PR$")
+  the_vars$pr_available <- the_vars$pr_code
+  the_vars$pr_available <- str_replace(the_vars$pr_available, "PR", "yea")
+  the_vars <- the_vars |> 
+    group_by(name) |> 
+    fill(pr_available, .direction = "updown") |> 
+    ungroup() 
+  puerto_rico <- the_vars|> 
+    filter(!is.na(pr_available)) |> 
+    extract_remove(concept, pr_label, "IN (PUERTO RICO|THE UNITED STATES)")
+  the_vars <- the_vars |> filter(is.na(pr_available)) |> bind_rows(puerto_rico)
+  the_vars <- the_vars |> 
+    select(
+      census_code:name, pr_code, subcode:concept, pr_label, everything()
+      )
+    
+  # checkpoint_pr <- the_vars
+  the_vars <- checkpoint_pr
+  
+  # race
+  the_vars <- the_vars |> 
+    extract_remove(name, race_code, "[:alpha:]$")
+  the_vars$race_available <- str_replace(the_vars$race_code, "[:alpha:]", "yea")
+  the_vars <- the_vars |> 
+    group_by(name) |> 
+    fill(race_available, .direction = "updown") |> 
+    ungroup() 
+  
+  race_vars_key <- the_vars |> slice_head(n = 1, by = "race_code")
+  race_vars_key$race_label <- str_sub(race_vars_key$concept, start = (min(str_length(race_vars_key$concept)) + 1)) |> str_remove_all(pattern = " \\(|\\)")
+  race_vars_key <- race_vars_key |> filter(!is.na(race_code)) |> select(race_code, race_label)
+  race_labels <- str_c(" \\((", str_flatten(race_vars_key$race_label, collapse = "|"), ")( HOUSEHOLDER)?\\)")
+  
+  the_vars$concept <- str_remove(the_vars$concept, race_labels)
+  the_vars <- the_vars |> left_join(race_vars_key, by = "race_code")
+  the_vars <- the_vars |> 
+    select(
+      census_code:name, race_code, pr_code:concept, 
+      race_label, pr_label, everything()
+      )
+  
+  # checkpoint_race <- the_vars
+  the_vars <- checkpoint_race
+  
+  # for x
+  the_vars$for_label <- str_extract(the_vars$concept, " FOR (?!(OWN GRANDCHILDREN|FIRST MAJOR)).*") |> str_remove(" BY .*") |> str_squish()
+  for_vars <- the_vars |> filter(!is.na(for_label))
+  for_vars$concept <- str_remove(for_vars$concept, fixed(for_vars$for_label))
+  the_vars <- the_vars |> 
+    filter(is.na(for_label)) |> 
+    bind_rows(for_vars) |> 
+    select(
+      census_code:race_label, for_label, pr_label, everything()
+      )
+  
+  # checkpoint_pop <- the_vars
+  the_vars <- checkpoint_pop
+  
+  # label time
+  the_vars_narrow <- the_vars |> 
+    select(-c(starts_with("pr_"), starts_with("race_"))) |>
+    filter(name != "PUMA5") |> 
+    mutate(census_label = label,
+           label = str_remove(label, "^Estimate!!")) |> 
+    select(census_code:for_label, census_label, everything())
+  the_vars_narrow$c_exclaim <- str_count(the_vars_narrow$label, "!!")
+  the_vars_narrow$c_by <- str_count(the_vars_narrow$concept, " BY ") + 1
+  
+  
+  summary_vars <- the_vars_narrow |> filter(subcode == "_001") |> select(-subcode)
+  summary_vars$concept <- str_remove_all(summary_vars$concept, " \\(IN \\d{4} INFLATION-ADJUSTED DOLLARS\\)")
+  summary_vars$concept <- str_remove_all(summary_vars$concept, " IN THE PAST 12 MONTHS") |> str_squish()
+  summary_vars <- extract_remove(summary_vars, concept, "geo_label", "--.*LEVEL")
+  summary_vars <- summary_vars |> 
+    select(census_code:concept, geo_label, everything()) |> distinct()
+  summary_vars$concept <- str_remove_all(summary_vars$concept, " \\(DOLLARS\\)") |> str_squish()
+  summary_vars$summary_value <- str_extract(summary_vars$concept, "(AGGREGATE|MEDIAN) .*") |> str_remove(" BY .*") |> str_squish()
+  summary_vars$concept <- str_remove(summary_vars$concept, "(AGGREGATE|MEDIAN)") |> str_squish()
+  summary_vars$concept <- str_replace_all(summary_vars$concept, " BY ", ">")
+  summary_vars <- summary_vars |> select(census_code:census_concept, summary_value, everything())
+  
+}
+```
+
+
+

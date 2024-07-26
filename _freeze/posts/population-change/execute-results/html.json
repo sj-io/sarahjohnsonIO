@@ -1,0 +1,15 @@
+{
+  "hash": "a4071454c6ff0be024c247f25bc13df5",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"U.S. Population Change, 2020-2024\"\n---\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
