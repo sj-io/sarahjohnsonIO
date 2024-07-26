@@ -9,7 +9,7 @@ categories:
   - R
 image: "img/variables.png"
 date: "2021-12-24"
-date-modified: "2023-10-16"
+date-modified: "2024-06-29"
 ---
 
 ```{r setup, include=FALSE}

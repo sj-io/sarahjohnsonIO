@@ -13,7 +13,7 @@ about:
       href: https://linkedin.com/in/sj-io
     - icon: envelope
       text: email
-      href: mailto:sarahviamemphis@gmail.com
+      href: mailto:sarah.johnson@hey.com
 listing: 
   - id: all
     contents: "p*/*.qmd"
