@@ -13,7 +13,7 @@ crossref:
       key: vid
 ---
 
-Hello! I am a 29 year old housing analyst from Memphis, TN who wants to help make housing more affordable, healthy, and safe.
+Hello! I am a housing analyst from Memphis, TN--now in New Jersey--who wants to help make housing more affordable, healthy, and safe. I use R to access, wrangle, and visualize data to better understand housing problems.
 
 [View my resume](resume.qmd)
 

@@ -1,6 +1,6 @@
 ---
 title: "Sarah Johnson"
-image: me.png
+image: me.jpeg
 about:
   id: hello
   template: solana
@@ -26,8 +26,8 @@ toc: false
 ---
 
 :::{#hello}
-Hello 🤠
-I’m a housing/urban analyst and an R developer. I received my bachelor’s in economics and master’s in urban planning from the University of Memphis. I’m passionate about guaranteeing people access to healthy, safe, affordable housing.
+Hello!
+I am a housing researcher and R developer at Princeton University's Eviction Lab. I received my bachelor’s in economics and master’s in urban planning from the University of Memphis. I’m passionate about guaranteeing people access to healthy, safe, and affordable housing.
 :::
 
 ---
