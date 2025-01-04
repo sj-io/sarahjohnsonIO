@@ -1,0 +1,12 @@
+---
+title: "addressr"
+format: html
+---
+
+I want addresses done right. I don't want to be the only one doing it.
+
+Backstory: I was creating the same methods as Ashley Gromis independently.
+
+I worked at the Shelby County Department of Housing. In the data world, an address is how we connect people to their homes. It's what they put on their ID. We put addresses on deeds and liens; they are the key to linking people and place. It is what we use to count filings. Anytime I need to link together datasets related to housing, I'm joining on the addresses.
+
+However, the way we write addresses has existed since long before the computer. Addresses are not optimized for data usage.
