@@ -31,10 +31,8 @@ website:
 
 format:
   html:
-    theme: 
-      light: [morph, custom.scss, theme-light.scss]
-      dark: [morph, custom.scss, theme-dark.scss]
-    
+    theme: [brand, custom.scss]
+  
 comments: 
   giscus:
     repo: sj-io/sarahjohnsonIO

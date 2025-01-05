@@ -1,0 +1,197 @@
+color:
+  palette:
+    white: "#fff"
+    gray-100: "#f2faf9"
+    gray-200: "#d8efec"
+    gray-300: "#cbe9e6"
+    gray-400: "#bee4e0"
+    gray-500: "#adb5bd"
+    gray-600: "#7f8a99"
+    gray-700: "#669999"
+    gray-800: "#444b40"
+    gray-900: "#212529"
+    black: "#000"
+    blue: "#378dfc"
+    indigo: "#6610f2"
+    purple: "#5b62f4"
+    pink: "#d63384"
+    red: "#e52527"
+    orange: "#fd7e14"
+    yellow: "#ffc107"
+    green: "#43cc29"
+    teal: "#20c997"
+    cyan: "#0dcaf0"
+  background: gray-900
+  foreground: gray-400
+  secondary: gray-200
+  primary: teal
+  light: gray-100
+  dark: gray-900
+  
+defaults:
+  bootstrap:
+    defaults:
+      enable-shadows: true
+      emphasis-color: $white
+      secondary-bg: $gray-800
+      tertiary-bg: "#1c3637"
+      progress-bg: $secondary-bg
+      code-bg: $tertiary-bg
+      code-color: $teal
+      navbar-bg: $background
+      navbar-fg: rgba($teal, .6)
+      link-color: $teal
+      link-hover-color: lighten($link-color, 15%)
+      headings-color: $link-color
+      border-color: $gray-700
+      border-color-translucent: rgba(255, 255, 255, 0.15)
+      box-shadow: 5px 5px 10px rgba(darken($dark, 50%), .2), -5px -5px 10px rgba($white, .05)
+    rules: |
+      strong {
+        color: mix($black, $primary, 15%)
+      }
+      hr {
+        opacity: 0;
+      }
+      btn {
+        color: $link-color;
+      }
+      .btn-group,
+        .btn-group-vertical {
+          @include shadow($dark, $box-shadow);
+          color: $navbar-dark-color;
+        }
+        
+      .btn-check:not(:checked) + .btn,
+        .btn-check:not(:checked) + .btn:active {
+          color: $navbar-dark-color;
+          background-color: $dark;
+        }
+      
+      .nav-tabs, .nav-pills, .breadcrumb, .pagination {
+          @include shadow($dark, $box-shadow);
+          color: $navbar-dark-color;
+      }
+      
+      .modal-content, .popover, .toast {
+          background-color: mix($white, $dark, 3%);
+          box-shadow: 8px 8px 40px rgba(0, 0, 0, .15), inset 1px 1px 3px rgba(255, 255, 255, .05), inset -5px -5px 20px rgba(0, 0, 0, .05);
+      }
+      
+      .popover-header, .toast-header {
+          color: $white;
+      }
+        
+      // code 
+      pre code {
+          color: $gray-500;
+      }
+      
+      code span.co {
+        color: $gray-500;
+      }
+      
+      // reference section
+      #quarto-appendix.default {
+        border-top: 1px dashed $tertiary-bg;
+        color: $gray-500;
+      }
+      
+      #quarto-appendix.default {
+        .quarto-appendix-bibtex, .quarto-appendix-citeas {
+          border: 1px dashed $tertiary-bg; 
+        }
+      }
+      // about page
+      div.quarto-about-solana .about-entity .about-link {
+        color: #14524f;
+        text-decoration: none;
+        border: solid 1px
+      }
+      h2 {
+        border-bottom: 1px dashed $tertiary-bg;
+        padding-bottom: .5rem
+      }
+      .card-img-top {
+        border-bottom: 1px $navbar-fg solid;
+        opacity: 0.7;
+      }
+      .card, .list-group {
+          background-color: mix($black, $dark, 3%);
+          box-shadow: none;
+          border: solid 1px $navbar-fg;
+          border-radius: 0rem;
+      }
+      .card:hover {
+          border: solid 1px $navbar-hover-color;
+          h5 {
+            color: $navbar-hover-color;
+          }
+          .card-img-top {
+            border-bottom: 1px $navbar-hover-color solid;
+            opacity: 1;
+          }
+      }
+      .card {
+          &.bg-secondary, &.bg-light {
+            color: $body-color;
+          }
+          h5 {
+            color: $navbar-fg;
+          }
+        }
+      .quarto-listing-category .category {
+        color: $navbar-fg;
+      }
+      
+      .quarto-listing-category .category:hover {
+        color: $navbar-hover-color;
+      }
+      
+      .quarto-category {
+        color: $navbar-fg;
+      }
+      
+      .quarto-category:hover {
+        color: $navbar-hover-color;
+      }
+        
+      // listing post
+      div.quarto-post h3 a {
+        color: $navbar-fg;
+      }
+      div.quarto-post h3 a:hover {
+        color: $navbar-hover-color;
+      }
+      
+      .column-screen-inset-shaded {
+        background: #3D5C5C !important;
+      }
+    mixins: |
+      @mixin shadow($bg: $gray-200, $shadow: $box-shadow) {
+        background-color: $bg;
+        border: none;
+        box-shadow: $shadow;
+        transition: background-color .15s ease-in-out, border .15s ease-in-out, box-shadow .15s ease-in-out, color .15s ease-in-out;
+      }
+      @mixin shadow-outline($bg: $body-bg, $shadow: $box-shadow) {
+        position: absolute;
+        top: -.5rem;
+        right: -.5rem;
+        bottom: -.5rem;
+        left: -.5rem;
+        z-index: -1;
+        content: "";
+        background-color: $bg;
+        border: 1px solid rgba($white, .1);
+        box-shadow: $shadow;
+        transition: background-color .15s ease-in-out, border .15s ease-in-out, box-shadow .15s ease-in-out, color .15s ease-in-out;
+      }
+      
+typography:
+  fonts:
+    - family: Nunito
+      source: google
+  base: Nunito
+  headings: Nunito
+  
