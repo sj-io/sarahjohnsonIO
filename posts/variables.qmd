@@ -9,7 +9,7 @@ categories:
   - R
 image: "img/variables.png"
 date: "2021-12-24"
-date-modified: "2024-06-29"
+date-modified: "2025-05-13"
 ---
 
 ```{r setup, include=FALSE}
@@ -30,17 +30,17 @@ Variables for the ACS Detailed Tables all begin with the same pattern: a letter 
 library(tidyverse)
 library(DT)
 
-v_acs <- read_csv("data/v_acs_categories.csv") %>% 
-  mutate(category = str_remove_all(category, " \\(Condensed\\)")) %>% 
-  separate(v_start, into = c("let", "num"), sep = 1) %>% 
-  pivot_wider(names_from = "let", values_from = "num") %>% 
+v_acs <- read_csv("data/v_acs_categories.csv") |> 
+  mutate(category = str_remove_all(category, " \\(Condensed\\)")) |> 
+  separate_wider_position(v_start, widths = c("let" = 1, "num" = 2)) |> 
+  pivot_wider(names_from = "let", values_from = "num") |> 
   mutate(v_start = ifelse(!is.na(C),
                           paste0("B", B, " & C", B),
                           paste0("B", B)
-                          )) %>% 
+                          )) |> 
   select(v_start, category)
 
-v_acs %>% 
+v_acs |> 
   datatable(
     colnames = c("Start of Variable", "Category"),
     rownames = FALSE,
@@ -49,276 +49,279 @@ v_acs %>%
                    autoWidth = TRUE,
                    dom = 'tp',
                    columnDefs = list(
-                     list(className = 'dt-right', targets = 0)
-                     )))
+                   list(className = 'dt-right', targets = 0)
+                   )
+                   )
+    )
   
 ```
 
 # Housing Variables
 
-Housing variables start with "B25", or "C25" for condensed versions. Sometimes a specific topic will have a lot of different subvariables. For instance, information on tenure (whether a household rents or owns) can be broken down by age, what year the structure was built, etc. I created a directory tree as a simple way to visualize how Census variable relate to each other. The following tree shows top-level ACS 1-Year variables related to housing (excluding condensed variables). The variables that start with "B" are usually also present in the 5-Year ACS.
+Housing variables start with "B25", or "C25" for condensed versions. Sometimes a specific topic will have a lot of different subvariables. For instance, information on tenure (whether a household rents or owns) can be broken down by age, what year the structure was built, etc. I created a directory tree as a simple way to visualize how Census variable relate to each other. The following tree shows top-level ACS 1-Year variables related to housing. The variables that start with "B" are usually also present in the 5-Year ACS.
 
 ```{zsh}
 #| column: page-right
 .
 ├── Age-Of-Householder
-│   ├── C25055-(2005-2022)
+│   ├── C25055-(2005-2023)
 │   ├── Gross-Rent-As-A-Percentage-Of-Household-Income-In-The-Past-12-Months
-│   │   ├── B25072-(2005-2022)
+│   │   ├── B25072-(2005-2023)
 │   │   └── C25072-(2005-2012)
 │   ├── Meals-Included-In-Rent
-│   │   └── B25055-(2005-2022)
+│   │   └── B25055-(2005-2023)
 │   └── Selected-Monthly-Owner-Costs-As-A-Percentage-Of-Household-Income-In-The-Past-12-Months
-│       ├── B25093-(2005-2022)
-│       └── C25093-(2005-2022)
+│       ├── B25093-(2005-2023)
+│       └── C25093-(2005-2023)
 ├── Annual-Other-Fuel-Costs
-│   └── B25135-(2021-2022)
+│   └── B25135-(2021-2023)
 ├── Annual-Water-And-Sewer-Costs
-│   └── B25134-(2021-2022)
+│   └── B25134-(2021-2023)
 ├── Average-Household-Size-Of-Occupied-Housing-Units
 │   └── Tenure
-│       └── B25010-(2005-2022)
+│       └── B25010-(2005-2023)
 ├── Bedrooms
-│   ├── B25041-(2005-2022)
+│   ├── B25041-(2005-2023)
 │   ├── Gross-Rent
-│   │   ├── B25068-(2005-2022)
-│   │   └── C25068-(2005-2022)
+│   │   ├── B25068-(2005-2023)
+│   │   └── C25068-(2005-2023)
 │   └── Occupancy-Status
-│       └── B25137-(2022)
+│       └── B25137-(2022-2023)
 ├── Contract-Rent
-│   ├── B25056-(2005-2022)
-│   └── C25056-(2005-2022)
+│   ├── B25056-(2005-2023)
+│   └── C25056-(2005-2023)
 ├── Gross-Rent
-│   └── B25063-(2005-2022)
+│   └── B25063-(2005-2023)
 ├── Gross-Rent-As-A-Percentage-Of-Household-Income-In-The-Past-12-Months
-│   └── B25070-(2005-2022)
+│   └── B25070-(2005-2023)
+├── Homeowners-Insurance-Costs
+│   └── Mortgage-Status
+│       └── B25141-(2023)
 ├── House-Heating-Fuel
-│   └── B25040-(2005-2022)
+│   └── B25040-(2005-2023)
 ├── Household-Income
 │   ├── Gross-Rent-As-A-Percentage-Of-Household-Income-In-The-Past-12-Months
-│   │   ├── B25074-(2005-2022)
-│   │   └── C25074-(2005-2022)
+│   │   ├── B25074-(2005-2023)
+│   │   └── C25074-(2005-2023)
 │   └── Selected-Monthly-Owner-Costs-As-A-Percentage-Of-Household-Income-In-The-Past-12-Months
-│       ├── B25095-(2009-2022)
-│       └── C25095-(2009-2022)
-├── Household-Income-In-The-Past-12-Months-In-Acsyear-Inflation-Adjusted-Dollars
+│       ├── B25095-(2009-2023)
+│       └── C25095-(2009-2023)
+├── Household-Income-In-The-Past-12-Months
 │   ├── Gross-Rent
-│   │   ├── B25122-(2005-2022)
-│   │   └── C25122-(2005-2022)
+│   │   ├── B25122-(2005-2023)
+│   │   └── C25122-(2005-2023)
 │   └── Value
-│       ├── B25121-(2005-2022)
-│       └── C25121-(2005-2022)
+│       ├── B25121-(2005-2023)
+│       └── C25121-(2005-2023)
 ├── Housing-Costs-As-A-Percentage-Of-Household-Income-In-The-Past-12-Months
-│   └── B25140-(2022)
+│   └── B25140-(2022-2023)
 ├── Housing-Units
-│   └── B25001-(2005-2022)
+│   └── B25001-(2005-2023)
 ├── Inclusion-Of-Utilities-In-Rent
-│   └── B25069-(2005-2022)
+│   └── B25069-(2005-2023)
 ├── Kitchen-Facilities
 │   ├── C25054-(2005-2012)
 │   └── Meals-Included-In-Rent
-│       └── B25054-(2005-2022)
+│       └── B25054-(2005-2023)
 ├── Kitchen-Facilities-For-All-Housing-Units
-│   └── B25051-(2005-2022)
+│   └── B25051-(2005-2023)
 ├── Kitchen-Facilities-For-Occupied-Housing-Units
-│   └── B25052-(2005-2022)
-├── Lower-Contract-Rent-Quartile-Dollars
-│   └── B25057-(2005-2022)
-├── Lower-Gross-Rent-Quartile-Dollars
-│   └── B25138-(2022)
-├── Lower-Value-Quartile-Dollars
-│   └── B25076-(2005-2022)
-├── Median-Contract-Rent-Dollars
-│   └── B25058-(2005-2022)
+│   └── B25052-(2005-2023)
+├── Lower-Contract-Rent-Quartile
+│   └── B25057-(2005-2023)
+├── Lower-Gross-Rent-Quartile
+│   └── B25138-(2022-2023)
+├── Lower-Value-Quartile
+│   └── B25076-(2005-2023)
+├── Median-Contract-Rent
+│   └── B25058-(2005-2023)
 ├── Median-Gross-Rent
+│   ├── B25064-(2005-2023)
 │   ├── Bedrooms
-│   │   └── B25031-(2015-2022)
+│   │   └── B25031-(2015-2023)
 │   ├── Year-Householder-Moved-Into-Unit
-│   │   └── B25113-(2005-2022)
+│   │   └── B25113-(2005-2023)
 │   └── Year-Structure-Built
-│       └── B25111-(2005-2022)
-├── Median-Gross-Rent-As-A-Percentage-Of-Household-Income-In-The-Past-12-Months-Dollars
-│   └── B25071-(2005-2022)
-├── Median-Gross-Rent-Dollars
-│   └── B25064-(2005-2022)
-├── Median-Household-Income-In-The-Past-12-Months-In-Acsyear-Inflation-Adjusted-Dollars
+│       └── B25111-(2005-2023)
+├── Median-Gross-Rent-As-A-Percentage-Of-Household-Income-In-The-Past-12-Months
+│   └── B25071-(2005-2023)
+├── Median-Household-Income-In-The-Past-12-Months
 │   └── Tenure
-│       └── B25119-(2005-2022)
-├── Median-Monthly-Housing-Costs-Dollars
-│   └── B25105-(2005-2022)
+│       └── B25119-(2005-2023)
+├── Median-Monthly-Housing-Costs
+│   └── B25105-(2005-2023)
 ├── Median-Number-Of-Rooms
-│   ├── B25018-(2005-2022)
+│   ├── B25018-(2005-2023)
 │   └── Tenure
-│       └── B25021-(2005-2022)
-├── Median-Selected-Monthly-Owner-Costs-As-A-Percentage-Of-Household-Income-In-The-Past-12-Months
-│   └── B25092-(2005-2022)
-├── Median-Selected-Monthly-Owner-Costs-Dollars
+│       └── B25021-(2005-2023)
+├── Median-Selected-Monthly-Owner-Costs
 │   └── Mortgage-Status
-│       └── B25088-(2005-2022)
+│       └── B25088-(2005-2023)
+├── Median-Selected-Monthly-Owner-Costs-As-A-Percentage-Of-Household-Income-In-The-Past-12-Months
+│   └── B25092-(2005-2023)
 ├── Median-Value
+│   ├── B25077-(2005-2023)
 │   ├── Year-Householder-Moved-Into-Unit
-│   │   └── B25109-(2005-2022)
+│   │   └── B25109-(2005-2023)
 │   └── Year-Structure-Built
-│       └── B25107-(2005-2022)
-├── Median-Value-Dollars
-│   └── B25077-(2005-2022)
-├── Median-Value-Dollars-For-Mobile-Homes
-│   └── B25083-(2005-2022)
+│       └── B25107-(2005-2023)
+├── Median-Value-For-Mobile-Homes
+│   └── B25083-(2005-2023)
 ├── Median-Year-Householder-Moved-Into-Unit
 │   └── Tenure
-│       └── B25039-(2005-2022)
+│       └── B25039-(2005-2023)
 ├── Median-Year-Structure-Built
-│   ├── B25035-(2005-2022)
+│   ├── B25035-(2005-2023)
 │   └── Tenure
-│       └── B25037-(2005-2022)
+│       └── B25037-(2005-2023)
 ├── Monthly-Electricity-Costs
-│   └── B25132-(2021-2022)
+│   └── B25132-(2021-2023)
 ├── Monthly-Gas-Costs
-│   └── B25133-(2021-2022)
+│   └── B25133-(2021-2023)
 ├── Monthly-Housing-Costs
-│   └── B25104-(2005-2022)
+│   └── B25104-(2005-2023)
 ├── Mortgage-Status
 │   ├── Age-Of-Householder
-│   │   ├── B25027-(2009-2022)
+│   │   ├── B25027-(2009-2023)
 │   │   └── C25027-(2009-2012)
-│   ├── B25081-(2005-2022)
-│   ├── Household-Income-In-The-Past-12-Months-In-Acsyear-Inflation-Adjusted-Dollars
-│   │   └── B25098-(2005-2022)
-│   ├── Median-Household-Income-In-The-Past-12-Months-In-Acsyear-Inflation-Adjusted-Dollars
-│   │   └── B25099-(2005-2022)
-│   ├── Median-Real-Estate-Taxes-Paid-Dollars
-│   │   └── B25103-(2005-2022)
-│   ├── Median-Value-Dollars
-│   │   └── B25097-(2005-2022)
+│   ├── B25081-(2005-2023)
+│   ├── Household-Income-In-The-Past-12-Months
+│   │   └── B25098-(2005-2023)
+│   ├── Median-Household-Income-In-The-Past-12-Months
+│   │   └── B25099-(2005-2023)
+│   ├── Median-Real-Estate-Taxes-Paid
+│   │   └── B25103-(2005-2023)
+│   ├── Median-Value
+│   │   └── B25097-(2005-2023)
 │   ├── Monthly-Housing-Costs-As-A-Percentage-Of-Household-Income-In-The-Past-12-Months
-│   │   └── B25101-(2005-2022)
+│   │   └── B25101-(2005-2023)
 │   ├── Ratio-Of-Value-To-Household-Income-In-The-Past-12-Months
-│   │   └── B25100-(2005-2022)
+│   │   └── B25100-(2005-2023)
 │   ├── Real-Estate-Taxes-Paid
-│   │   └── B25102-(2005-2022)
+│   │   └── B25102-(2005-2023)
 │   ├── Selected-Monthly-Owner-Costs-As-A-Percentage-Of-Household-Income-In-The-Past-12-Months
-│   │   └── B25091-(2005-2022)
+│   │   └── B25091-(2005-2023)
 │   └── Value
-│       └── B25096-(2005-2022)
+│       └── B25096-(2005-2023)
 ├── Mortgage-Status-And-Selected-Monthly-Owner-Costs
-│   └── B25087-(2005-2022)
+│   └── B25087-(2005-2023)
 ├── Occupancy-Status
-│   └── B25002-(2005-2022)
+│   └── B25002-(2005-2023)
 ├── Other-Vacancy-Status
-│   └── B25130-(2021-2022)
+│   └── B25130-(2021-2023)
 ├── Plumbing-Facilities
 │   └── Occupants-Per-Room
 │       ├── C25050-(2005-2012)
 │       └── Year-Structure-Built
-│           └── B25050-(2005-2022)
+│           └── B25050-(2005-2023)
 ├── Plumbing-Facilities-For-All-Housing-Units
-│   └── B25047-(2005-2022)
+│   └── B25047-(2005-2023)
 ├── Plumbing-Facilities-For-Occupied-Housing-Units
-│   └── B25048-(2005-2022)
+│   └── B25048-(2005-2023)
 ├── Price-Asked
-│   ├── B25085-(2005-2022)
-│   └── C25085-(2005-2022)
+│   ├── B25085-(2005-2023)
+│   └── C25085-(2005-2023)
 ├── Race-Of-Householder
-│   └── B25006-(2005-2022)
+│   └── B25006-(2005-2023)
 ├── Rent-Asked
-│   ├── B25061-(2005-2022)
+│   ├── B25061-(2005-2023)
 │   └── C25061-(2005-2012)
 ├── Rooms
-│   └── B25017-(2005-2022)
+│   └── B25017-(2005-2023)
 ├── Selected-Monthly-Owner-Costs
-│   └── B25094-(2005-2022)
+│   └── B25094-(2005-2023)
 ├── Structure-Type
 │   └── Occupancy-Status
-│       └── B25136-(2022)
+│       └── B25136-(2022-2023)
 ├── Tenure
 │   ├── Age-Of-Householder
-│   │   ├── B25007-(2005-2022)
+│   │   ├── B25007-(2005-2023)
 │   │   ├── Occupants-Per-Room
-│   │   │   ├── B25015-(2005-2022)
+│   │   │   ├── B25015-(2005-2023)
 │   │   │   └── C25015-(2005-2012)
 │   │   ├── Units-In-Structure
-│   │   │   └── B25125-(2010-2022)
+│   │   │   └── B25125-(2010-2023)
 │   │   ├── Year-Householder-Moved-Into-Unit
-│   │   │   └── B25128-(2010-2022)
+│   │   │   └── B25128-(2010-2023)
 │   │   └── Year-Structure-Built
-│   │       └── B25126-(2010-2022)
-│   ├── B25003-(2005-2022)
+│   │       └── B25126-(2010-2023)
+│   ├── B25003-(2005-2023)
 │   ├── Bedrooms
-│   │   └── B25042-(2005-2022)
+│   │   └── B25042-(2005-2023)
 │   ├── Educational-Attainment-Of-Householder
-│   │   └── B25013-(2005-2022)
+│   │   └── B25013-(2005-2023)
 │   ├── Families-And-Presence-Of-Own-Children
-│   │   └── B25012-(2005-2022)
+│   │   └── B25012-(2005-2023)
 │   ├── House-Heating-Fuel
-│   │   ├── B25117-(2005-2022)
+│   │   ├── B25117-(2005-2023)
 │   │   └── C25117-(2005-2012)
-│   ├── Household-Income-In-The-Past-12-Months-In-Acsyear-Inflation-Adjusted-Dollars
-│   │   └── B25118-(2005-2022)
+│   ├── Household-Income-In-The-Past-12-Months
+│   │   └── B25118-(2005-2023)
 │   ├── Household-Size
 │   │   ├── Age-Of-Householder
-│   │   │   ├── B25116-(2005-2022)
+│   │   │   ├── B25116-(2005-2023)
 │   │   │   └── C25116-(2005-2012)
-│   │   ├── B25009-(2005-2022)
+│   │   ├── B25009-(2005-2023)
 │   │   └── Units-In-Structure
-│   │       └── B25124-(2010-2022)
+│   │       └── B25124-(2010-2023)
 │   ├── Household-Type
 │   │   └── C25115-(2006-2012)
+│   ├── Household-Type-And-Age-Of-Householder
+│   │   └── B25011-(2005-2023)
 │   ├── Household-Type-And-Presence-And-Age-Of-Own-Children
-│   │   ├── B25115-(2005-2022)
+│   │   ├── B25115-(2005-2023)
 │   │   └── C25115-(2005)
-│   ├── Household-Type-Including-Living-Alone-And-Age-Of-Householder
-│   │   └── B25011-(2005-2022)
 │   ├── Housing-Costs-As-A-Percentage-Of-Household-Income-In-The-Past-12-Months
-│   │   └── B25106-(2005-2022)
+│   │   └── B25106-(2005-2023)
 │   ├── Kitchen-Facilities
-│   │   └── B25053-(2005-2022)
+│   │   └── B25053-(2005-2023)
 │   ├── Occupants-Per-Room
-│   │   ├── B25014-(2005-2022)
+│   │   ├── B25014-(2005-2023)
 │   │   └── C25014-(2005-2012)
 │   ├── Plumbing-Facilities
-│   │   ├── B25049-(2005-2022)
+│   │   ├── B25049-(2005-2023)
 │   │   └── Occupants-Per-Room
-│   │       ├── B25016-(2005-2022)
+│   │       ├── B25016-(2005-2023)
 │   │       └── C25016-(2005-2012)
 │   ├── Rooms
-│   │   ├── B25020-(2005-2022)
+│   │   ├── B25020-(2005-2023)
 │   │   └── C25020-(2005-2012)
 │   ├── Selected-Physical-And-Financial-Conditions
-│   │   ├── B25123-(2005-2022)
+│   │   ├── B25123-(2005-2023)
 │   │   └── C25123-(2005-2012)
 │   ├── Telephone-Service-Available
 │   │   ├── Age-Of-Householder
-│   │   │   ├── B25043-(2005-2022)
+│   │   │   ├── B25043-(2005-2023)
 │   │   │   └── C25043-(2005)
 │   │   └── C25043-(2006-2012)
 │   ├── Units-In-Structure
-│   │   ├── B25032-(2005-2022)
-│   │   └── C25032-(2005-2022)
+│   │   ├── B25032-(2005-2023)
+│   │   └── C25032-(2005-2023)
 │   ├── Vehicles-Available
 │   │   ├── Age-Of-Householder
-│   │   │   └── B25045-(2005-2022)
-│   │   ├── B25044-(2005-2022)
-│   │   └── C25045-(2005-2022)
+│   │   │   └── B25045-(2005-2023)
+│   │   ├── B25044-(2005-2023)
+│   │   └── C25045-(2005-2023)
 │   ├── Year-Householder-Moved-Into-Unit
 │   │   ├── B25029-(2010-2011)
-│   │   ├── B25038-(2005-2022)
+│   │   ├── B25038-(2005-2023)
 │   │   └── Units-In-Structure
-│   │       └── B25129-(2010-2022)
+│   │       └── B25129-(2010-2023)
 │   └── Year-Structure-Built
 │       ├── B25028-(2010-2011)
-│       ├── B25036-(2005-2022)
+│       ├── B25036-(2005-2023)
 │       └── Units-In-Structure
-│           └── B25127-(2010-2022)
+│           └── B25127-(2010-2023)
 ├── Total-Population-In-Occupied-Housing-Units
 │   └── Tenure
-│       ├── B25008-(2005-2022)
+│       ├── B25008-(2005-2023)
 │       ├── Units-In-Structure
-│       │   ├── B25033-(2005-2022)
-│       │   └── C25033-(2005-2022)
+│       │   ├── B25033-(2005-2023)
+│       │   └── C25033-(2005-2023)
 │       └── Year-Householder-Moved-Into-Unit
-│           └── B25026-(2009-2022)
+│           └── B25026-(2009-2023)
 ├── Units-In-Structure
-│   ├── B25024-(2005-2022)
+│   ├── B25024-(2005-2023)
 │   ├── Bedrooms
 │   │   ├── B25029-(2005)
 │   │   └── C25029-(2005)
@@ -341,27 +344,26 @@ Housing variables start with "B25", or "C25" for condensed versions. Sometimes a
 │   └── Year-Structure-Built
 │       ├── B25027-(2005)
 │       └── C25027-(2005)
-├── Upper-Contract-Rent-Quartile-Dollars
-│   └── B25059-(2005-2022)
-├── Upper-Gross-Rent-Quartile-Dollars
-│   └── B25139-(2022)
-├── Upper-Value-Quartile-Dollars
-│   └── B25078-(2005-2022)
+├── Upper-Contract-Rent-Quartile
+│   └── B25059-(2005-2023)
+├── Upper-Gross-Rent-Quartile
+│   └── B25139-(2022-2023)
+├── Upper-Value-Quartile
+│   └── B25078-(2005-2023)
 ├── Vacancy-Duration
-│   └── B25131-(2021-2022)
+│   └── B25131-(2021-2023)
 ├── Vacancy-Status
-│   ├── B25004-(2005-2022)
-│   └── C25004-(2005-2022)
+│   ├── B25004-(2005-2023)
+│   └── C25004-(2005-2023)
 ├── Vacant-Current-Residence-Elsewhere
-│   └── B25005-(2005-2022)
+│   └── B25005-(2005-2023)
 ├── Value
-│   ├── B25075-(2005-2022)
-│   └── C25075-(2006-2022)
+│   ├── B25075-(2005-2023)
+│   └── C25075-(2006-2023)
 └── Year-Structure-Built
-    └── B25034-(2005-2022)
+    └── B25034-(2005-2023)
 
-299 directories, 0 files
-
+300 directories, 0 files
 ```
 
 # How to make the tree
@@ -378,20 +380,18 @@ library(tidycensus)
 Use the `load_variables()` function to get Census variables.
 
 ```{r}
-# acs1 data is available from 2005-2022, excluding 2020
-years <- c(2005:2019, 2021:2022)
-names(years) <- years
+# acs1 data is available from 2005-2023, excluding 2020
+years <- c(2005:2019, 2021:2023)
 
 # function to load variables for each year, filter for housing
-get_hsg_vars <- function(year, survey) {
-  hsg_vars <- load_variables(year, survey) |> 
-    filter(str_starts(name, "^[BC]25"))
-  hsg_vars$year <- year
-  hsg_vars
+get_hsg_vars <- function(year) {
+  load_variables(year, "acs1") |> 
+    filter(str_starts(name, "^[BC]25")) |> 
+    mutate(year = {{ year }})
 }
 
 # Get variables for all years
-all_hsg_vars <- map2(years, "acs1", get_hsg_vars) |> bind_rows()
+all_hsg_vars <- map(years, get_hsg_vars) |> list_rbind()
 ```
 
 Narrow for housing variables and clean up.
@@ -402,56 +402,60 @@ top_hsg_vars <- all_hsg_vars |>
   filter(str_detect(name, "_001$"),           #' only top-level variables
          !str_detect(name, "[:alpha:]_"),     #' omit race variables
          !str_detect(label, "Estimate!!Aggregate")) |>  #' omit aggregates, medians, etc.
-  mutate(concept = 
-           str_replace_all(concept, c(
-             "\\b20\\d{2}\\b" = "ACSYEAR", "INCOME THE PAST 12 MONTHS" = "INCOME IN THE PAST 12 MONTHS")) |> 
-           str_to_title()) |> 
+  mutate(
+    concept = str_replace_all(concept, c(
+      "\\b20\\d{2}\\b" = "ACSYEAR", 
+      "INCOME THE PAST 12 MONTHS" = "INCOME IN THE PAST 12 MONTHS")
+      ) |> str_to_title()
+    ) |> 
   select(year, name, concept)
 ```
 
-Correct for missing variable names from the ACS 2010 and 2011 and create a new column for the year range.
+Use the 2012 ACS to fill in missing variable names for the 2010 and 2011 surveys.
 
 ```{r}
-vars12 <- filter(top_hsg_vars, year == 2012) |> select(-year)
-
-# Correct variable names for 2010 and 2011
 top_hsg_vars_fix <- top_hsg_vars |> 
-  filter(is.na(concept)) |> 
-  select(-concept) |> 
-  left_join(vars12, by = "name") |> 
-  mutate(concept = case_match(name,
-    "B25028_001" ~ "Tenure By Year Structure Built",
-    "B25029_001" ~ "Tenure By Year Householder Moved Into Unit",
+  group_by(name) |> 
+  fill(concept, .direction = "up") |> 
+  ungroup() |> 
+  mutate(concept = case_when(
+    is.na(concept) & name == "B25028_001" ~ "Tenure By Year Structure Built",
+    is.na(concept) & name == "B25029_001" ~ "Tenure By Year Householder Moved Into Unit",
     .default = concept
   ))
+```
 
-hsg_var_years <- top_hsg_vars |> 
-  filter(!is.na(concept)) |> 
-  bind_rows(top_hsg_vars_fix) |> 
-  arrange(year, name) |> 
-  mutate(year_range = if_else(
-    min(year) != max(year), paste0("(", min(year), "-", max(year), ")"), paste0("(", min(year), ")")
-  ), .by = c("name", "concept")) |> 
+Create a column for the year range.
+
+```{r}
+hsg_var_years <- top_hsg_vars_fix |> 
+  mutate(concept = str_remove_all(concept, "\\(.*\\)")) |> 
+  mutate(
+    year_range = case_when(
+      min(year) != max(year) ~ paste0("(", min(year), "-", max(year), ")"),
+      .default = paste0("(", min(year), ")")
+    ), .by = c("name", "concept")) |> 
   select(-year) |> distinct()
 ```
 
 Format for the command line.
 
 ```{r}
-hsg_vs <- hsg_var_years |> 
-  mutate(concept = str_replace_all(concept, "-(?=[:alpha:])", " ") |> 
-          str_remove_all("[:punct:]") |> 
-          str_replace_all(" By ", "/"),
-         name = str_remove(name, "_001")
-         ) %>% 
-  unite(col = "name", name, year_range, sep = "-", na.rm = TRUE) %>% 
-  unite(col = "fileStr", concept, name, sep = "/", na.rm = TRUE) %>% 
+v_acs1 <- hsg_var_years |> 
+  mutate(
+    concept = str_replace_all(concept, "-(?=[:alpha:])", " ") |> 
+      str_remove_all("[:punct:]") |> 
+      str_squish() |> 
+      str_replace_all(" By ", "/"),
+    name = str_remove(name, "_001")
+    ) |>  
+  unite(col = "name", name, year_range, sep = "-", na.rm = TRUE) |> 
+  unite(col = "fileStr", concept, name, sep = "/", na.rm = TRUE) |> 
   mutate(fileStr = str_replace_all(fileStr, "\\s", "-"),
-         fileStr = str_replace_all(fileStr, "-{2,}", "-"))
+         fileStr = str_replace_all(fileStr, "-{2,}", "-")) |> 
+  pull(fileStr)
 
-v_ACS1 <- hsg_vs$fileStr
-
-write_lines(v_ACS1, file = "~/Documents/vACS1.txt")
+write_lines(v_acs1, file = "~/Documents/v_acs1.txt")
 ```
 
 To make the tree, we will convert this text file to a directory structure.
@@ -461,20 +465,20 @@ To make the tree, we will convert this text file to a directory structure.
 In the terminal, make a new directory to house your Census tree.
 
 ``` zsh
-mkdir ~/Documents/census
-cd Documents/census
+mkdir ~/Documents/census-vars
+cd Documents/census-vars
 ```
 
 Convert the text file to a file directory using the following code.
 
 ``` zsh
-xargs -I {} mkdir -p "{}" < "../vACS1.txt"
+xargs -I {} mkdir -p "{}" < "../v_acs1.txt"
 ```
 
 Finally, create a tree of the file directory. Note: requires the [tree](https://formulae.brew.sh/formula/tree#default) package.
 
 ``` zsh
-tree > "../vACStree.txt"
+tree > "../v_acs1_tree.txt"
 ```
 
 The output is the tree above.
